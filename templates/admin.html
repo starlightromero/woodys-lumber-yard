@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+{% block head %}
+    {{ super() }}
+    <link rel="stylesheet" href="/static/admin.css">
+    <script src="/static/admin.js" charset="utf-8" defer></script>
+{% endblock %}
+{% block content %}
+    <h1>Admin</h1>
+    <div class="admin-nav">
+      <button type="button" id="products" name="products">Products</button>
+      <button type="button" id="find-products" name="find-products">Find Products</button>
+      <button type="button" id="add-products" name="add-products">Add Products</button>
+      <button type="button" id="delete-products" name="delete-products">Delete Products</button>
+    </div>
+{% endblock %}

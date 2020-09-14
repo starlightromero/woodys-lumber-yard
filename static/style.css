@@ -1,0 +1,136 @@
+* {
+  font-family: 'Heebo', sans-serif;
+}
+
+body {
+  margin: 0;
+  text-align: center;
+}
+
+nav {
+  background: url('./assets/nav-background.jpg') center center no-repeat;
+  background-size: cover;
+  margin: 0;
+  padding: 1rem;
+}
+
+h1 {
+  text-align: center;
+}
+
+h1 a {
+  color: black;
+  text-decoration: none;
+}
+
+h1 a:hover {
+  color: rgb(157, 136, 106);
+}
+
+nav ul {
+  align-items: center;
+  border-top: 1px solid white;
+  display: flex;
+  flex-direction: row;
+  height: 3rem;
+  justify-content: space-around;
+}
+
+nav li {
+  display: flex;
+}
+
+nav li a {
+  color: black;
+  text-decoration: none;
+}
+
+nav li a:hover {
+  color: rgb(157, 136, 106);
+}
+
+form {
+  background-color: rgb(99, 76, 41);
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 500px;
+  height: 500px;
+  line-height: 2;
+  text-align: center;
+}
+
+input, label {
+  width: 80%;
+  color: #fff;
+}
+
+input {
+  width: 80%;
+}
+
+input[type=text] {
+  background-color: transparent;
+  border: none;
+  border-bottom: 3px solid rgb(179, 153, 114);
+  outline: rgb(179, 153, 114);
+}
+
+.button {
+  width: 80%;
+  padding: 0.55rem 0;
+}
+
+button,
+input[type=submit] {
+  padding: 1rem 2rem;
+  width: 80%;
+}
+
+button,
+.button,
+input[type=submit] {
+  display: inline-block;
+  border: none;
+  margin: 0;
+  text-decoration: none;
+  background: rgb(179, 153, 114);
+  color: #fff;
+  font-family: sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background 150ms ease-in-out,
+            transform 50ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+button:hover,
+button:focus,
+.button:hover,
+.button:focus,
+input[type=submit]:hover,
+input[type=submit]:focus {
+    background: rgb(157, 136, 106);
+}
+
+button:focus,
+.button:focus,
+input[type=submit]:focus {
+    outline: 1px solid #fff;
+    outline-offset: -4px;
+}
+
+button:active
+.button:active,
+input[type=submit]:active {
+    transform: scale(0.95);
+}
+
+input[type="file"] {
+  z-index: -1;
+  display: none;
+}
