@@ -3,11 +3,21 @@
 {% block head %}
     {{ super() }}
     <script src="/static/home.js" charset="utf-8" defer></script>
+    <link rel="stylesheet" href="/static/product.css">
 {% endblock %}
 {% block content %}
     <h1>Welcome</h1>
     <p class="important">
       Welcome to Woody's Lumber Yard.
     </p>
+    <div class="product-grid">
+      {% for product in products %}
+      <div class="product-item">
+        <p><img src="../{{ product.img }}" alt="{{ product.title }}"></p>
+        <p>{{ product.title }}</p>
+        <p>${{ product.price }}</p>
+      </div>
+      {% endfor %}
+    </div>
     <button type="button" name="admin" id="admin-button">Admin</button>
 {% endblock %}
