@@ -19,30 +19,3 @@ ul {
 .admin-nav > button {
   width: 80%
 }
-
-.product-grid {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  flex-wrap: wrap;
-  background-color: rgb(99, 76, 41);
-}
-
-.product-item {
-  width: 240px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem;
-  background-color: rgb(179, 153, 114);
-  color: #fff;
-  font-size: 2rem;
-}
-
-.product-item img {
-  width: 300px;
-}
