@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Admin{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block nav %}
+<h1><a href="/admin">Admin</a></h1>
+<nav>
+  <ul>
+    <li><a href="/admin/find-products">Find Products</a></li>
+    <li><a href="/admin/add-products">Add Products</a></li>
+    <li><a href="/admin/delete-products">Delete Products</a></li>
+  </ul>
+</nav>
+{% endblock %}
+
+{% block content %}
+{% endblock %}
