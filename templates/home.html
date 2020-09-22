@@ -18,10 +18,11 @@
         <img src="../{{ product.img }}" alt="{{ product.title }}">
       </a>
     </p>
-    <p>
+    <p class="title">
       <a href="/products/{{ product.id }}">{{ product.title }}</a>
     </p>
-    <p>${{ product.price }}</p>
+    <p class="price">${{ product.price }}</p>
+    <button type="button" name="add-to-cart">Add To Cart</button>
   </div>
   {% endfor %}
 </div>
