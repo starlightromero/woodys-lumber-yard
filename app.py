@@ -67,6 +67,35 @@ def validate_image(stream):
     return '.' + (img_format if img_format != 'jpeg' else 'jpg')
 
 
+def save_file(file):
+    """Check security on file and save to upload path."""
+    filename = secure_filename(file.filename)
+    if filename:
+        file_ext = os.path.splitext(filename)[1]
+        if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
+                file_ext != validate_image(file.stream):
+            return "Invalid image", 400
+        file_path = os.path.join(
+            app.config['UPLOAD_PATH'], filename
+        )
+        file.save(file_path)
+        return file_path
+
+
+def add_product(title, price, file):
+    """Add product to database."""
+    file_path = save_file(file)
+    if file_path:
+        new_product = Product(title=title,
+                              price=price,
+                              img=file_path)
+        try:
+            db.session.add(new_product)
+            db.session.commit()
+        except(TypeError, ValueError):
+            print("error")
+
+
 ###############################################################################
 # ERROR HANDLING
 ###############################################################################
@@ -174,32 +203,11 @@ def admin():
         try:
             button = request.form["button"]
             title = request.form["title"]
-            if button == "Find Product":
-                pass
-            elif button == "Add Product":
+            if button == "Add Product":
                 price = request.form["price"]
                 uploaded_file = request.files['img']
-                filename = secure_filename(uploaded_file.filename)
-                if filename:
-                    file_ext = os.path.splitext(filename)[1]
-                    if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
-                            file_ext != validate_image(uploaded_file.stream):
-                        return "Invalid image", 400
-                    file_path = os.path.join(
-                        app.config['UPLOAD_PATH'], filename
-                    )
-                    uploaded_file.save(file_path)
-                    new_product = Product(title=title,
-                                          price=price,
-                                          img=file_path)
-                    try:
-                        db.session.add(new_product)
-                        db.session.commit()
-                    except(TypeError, ValueError):
-                        pass
+                add_product(title, price, uploaded_file)
             elif button == "Delete Product":
-                pass
-            elif button == "Delete All Products":
                 pass
         except(TypeError, ValueError):
             pass
