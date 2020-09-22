@@ -90,11 +90,23 @@ def too_large(e):
 ###############################################################################
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
     """Home page."""
-    products = Product.query.order_by(Product.date_created).all()
-    return render_template("home.html", products=products)
+    if request.method == "POST":
+        title = request.form["title"]
+        products = Product.query.filter(Product.title.contains(title))
+        message = title
+        context = {
+            'products': products,
+            'message': message
+        }
+    else:
+        products = Product.query.order_by(Product.date_created).all()
+        context = {
+            'products': products,
+        }
+    return render_template("home.html", **context)
 
 
 @app.route("/products/<product_id>", methods=['POST', 'GET'])
