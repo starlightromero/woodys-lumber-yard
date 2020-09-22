@@ -193,6 +193,18 @@ def lattice():
     return "Lattice"
 
 
+@app.route("/profile")
+def profile():
+    """Profile page."""
+    return render_template("profile.html")
+
+
+@app.route("/cart")
+def cart():
+    """Cart page."""
+    return render_template("cart.html")
+
+
 @app.route("/admin", methods=["POST", "GET"])
 def admin():
     """Admin page."""
