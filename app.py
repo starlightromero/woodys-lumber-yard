@@ -73,6 +73,13 @@ def home():
     return render_template("home.html", products=products)
 
 
+@app.route("/products/<product_id>", methods=['POST', 'GET'])
+def product_detail(product_id):
+    """Product detail page."""
+    product = Product.query.filter_by(id=product_id).first()
+    return render_template("product-details.html", product=product)
+
+
 @app.route("/boards")
 def boards():
     """Boards page."""
