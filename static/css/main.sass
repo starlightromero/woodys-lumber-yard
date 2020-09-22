@@ -8,9 +8,10 @@
 
 body
   background-color: $light-color
+  color: $dark-color
+  font-family: $font
   margin: 0
   text-align: center
-  font-family: $font
 
   header
     background-color: $light-color
@@ -203,6 +204,7 @@ body
           outline: $dark-color
 
         &[type=submit]
+          +appear(none)
           padding: 1rem 2rem
           width: 80%
           display: inline-block
@@ -216,8 +218,6 @@ body
           cursor: pointer
           text-align: center
           transition: background 150ms ease-in-out, transform 50ms ease
-          -webkit-appearance: none
-          -moz-appearance: none
 
           &:hover, &:focus
             background: $primary-color
@@ -250,7 +250,6 @@ body
         transform: scale(0.95)
 
     p
-      color: $dark-color
 
       a
         color: $dark-color

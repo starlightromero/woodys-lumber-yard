@@ -31,9 +31,10 @@ body main .product-grid .product-item button, body footer button {
 
 body {
   background-color: #FCDFB3;
+  color: #634C29;
+  font-family: "Open-Sans", sans-serif;
   margin: 0;
-  text-align: center;
-  font-family: "Open-Sans", sans-serif; }
+  text-align: center; }
   body header {
     background-color: #FCDFB3;
     padding: 36px;
@@ -202,6 +203,10 @@ body {
           border-bottom: 3px solid #634C29;
           outline: #634C29; }
         body main form input[type=submit] {
+          -ms-appearance: none;
+          -moz-appearance: none;
+          -webkit-appearance: none;
+          appearance: none;
           padding: 1rem 2rem;
           width: 80%;
           display: inline-block;
@@ -214,9 +219,7 @@ body {
           font-size: 1rem;
           cursor: pointer;
           text-align: center;
-          transition: background 150ms ease-in-out, transform 50ms ease;
-          -webkit-appearance: none;
-          -moz-appearance: none; }
+          transition: background 150ms ease-in-out, transform 50ms ease; }
           body main form input[type=submit]:hover, body main form input[type=submit]:focus {
             background: #B09C7D; }
           body main form input[type=submit]:focus {
@@ -235,10 +238,8 @@ body {
       outline: 1px solid #FFFFFF; }
     body footer button:active {
       transform: scale(0.95); }
-    body footer p {
-      color: #634C29; }
-      body footer p a {
-        color: #634C29;
-        text-decoration: none; }
+    body footer p a {
+      color: #634C29;
+      text-decoration: none; }
 
 /*# sourceMappingURL=main.css.map */
