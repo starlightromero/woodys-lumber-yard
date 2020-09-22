@@ -23,7 +23,10 @@ body
 
       form
         +flexbox(row)
+        justify-content: flex-start
         align-items: flex-end
+        flex-basis: 33%
+        margin: 0 10px
 
         input
 
@@ -35,7 +38,7 @@ body
             color: $dark-color
             font-size: 20px
             outline: none
-            widtH: 300px
+            widtH: 333px
 
             &::placeholder
               color: $primary-color
@@ -56,16 +59,25 @@ body
             height: 36px
 
     h1
+      flex-basis: 33%
       font-family: $heading-font
       margin: 0
       text-align: center
+      justify-self: center
 
     h1 a
       color: $dark-color
       text-decoration: none
 
+    .user-icons
+      +flexbox(row)
+      justify-content: flex-end
+      flex-basis: 33%
+
+      img
+        margin: 0 10px
+
     nav
-      background-size: cover
       margin: 0
 
       ul
@@ -86,7 +98,6 @@ body
 
             &:hover
               color: $primary-color
-
 
   main
     background-color: $primary-color
@@ -111,17 +122,38 @@ body
         background-color: $light-color
         color: $dark-color
         padding: 0 1rem
+        margin: 0 1rem
         width: 240px
 
-        p
-          font-size: 1.5rem
+        a
+          color: $dark-color
+          text-decoration: none
+
+          img
+            width: 100%
+
+        .title
 
           a
-            color: $dark-color
-            text-decoration: none
+            font-size: 1rem
 
-            img
-              width: 100%
+        .price
+          font-size: 1.2rem
+          font-weight: 900
+
+        button
+          @extend %btn
+          margin-bottom: 1rem
+          width: 100%
+
+          &:hover, &:focus
+            background-color: $primary-color
+
+          &:focus
+            outline: 1px solid $white
+
+          &:active
+            transform: scale(0.95)
 
     .product-detail
       +flexbox(row)
@@ -148,19 +180,21 @@ body
       margin: auto
       display: flex
       flex-direction: column
+      font-size: 1.5rem
       justify-content: space-around
       align-items: center
       width: 500px
       height: 500px
       line-height: 2
-      text-align: center
+      text-align: left
 
       input, label
         width: 80%
         color: $dark-color
 
       input
-        width: 80%
+        width: 70%
+        margin-left: 1rem
 
         &[type=text]
           background-color: transparent
