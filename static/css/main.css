@@ -58,7 +58,7 @@ body {
       body main .product-grid .product-item {
         align-items: center;
         background-color: #B08648;
-        color: #fff;
+        color: #FFFFFF;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -68,6 +68,36 @@ body {
           font-size: 1.5rem; }
           body main .product-grid .product-item p img {
             width: 100%; }
+    body main .admin-nav {
+      width: 500px;
+      height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      margin: auto;
+      background-color: #634C29; }
+      body main .admin-nav button {
+        padding: 1rem 2rem;
+        width: 80%;
+        display: inline-block;
+        border: none;
+        margin: 0;
+        text-decoration: none;
+        background: #B08648;
+        color: #FFFFFF;
+        font-size: 1rem;
+        cursor: pointer;
+        text-align: center;
+        transition: background 150ms ease-in-out, transform 50ms ease;
+        -webkit-appearance: none;
+        -moz-appearance: none; }
+        body main .admin-nav button:hover, body main .admin-nav button:focus {
+          background-color: #B09C7D; }
+        body main .admin-nav button:focus {
+          outline: 1px solid #FFFFFF; }
+        body main .admin-nav button:active {
+          transform: scale(0.95); }
   body footer {
     background-color: #634C29;
     padding: 20px; }

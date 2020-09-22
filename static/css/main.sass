@@ -65,7 +65,7 @@ body
       .product-item
         align-items: center
         background-color: $light-color
-        color: #fff
+        color: $white
         display: flex
         flex-direction: column
         justify-content: center
@@ -77,6 +77,42 @@ body
 
           img
             width: 100%
+
+    .admin-nav
+      width: 500px
+      height: 400px
+      display: flex
+      flex-direction: column
+      justify-content: space-around
+      align-items: center
+      margin: auto
+      background-color: $dark-color
+
+      button
+        padding: 1rem 2rem
+        width: 80%
+        display: inline-block
+        border: none
+        margin: 0
+        text-decoration: none
+        background: $light-color
+        color: $white
+        font-size: 1rem
+        cursor: pointer
+        text-align: center
+        transition: background 150ms ease-in-out, transform 50ms ease
+        -webkit-appearance: none
+        -moz-appearance: none
+
+        &:hover, &:focus
+          background-color: $primary-color
+
+        &:focus
+          outline: 1px solid $white
+
+        &:active
+          transform: scale(0.95)
+
 
   footer
     background-color: $dark-color

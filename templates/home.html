@@ -1,19 +1,24 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block head %}
-    {{ super() }}
-    <script src="/static/home.js" charset="utf-8" defer></script>
+{{ super() }}
+<script src="/static/home.js" charset="utf-8" defer></script>
 {% endblock %}
 {% block content %}
-    <h1>Welcome</h1>
-    <div class="product-grid">
-      {% for product in products %}
-      <div class="product-item">
-        <p><img src="../{{ product.img }}" alt="{{ product.title }}"></p>
-        <p>{{ product.title }}</p>
-        <p>${{ product.price }}</p>
-      </div>
-      {% endfor %}
-    </div>
-    <button type="button" name="admin" id="admin-button">Admin</button>
+<h1>Welcome</h1>
+<div class="product-grid">
+  {% for product in products %}
+  <div class="product-item">
+    <p>
+      <a href="/products/{{ product.id }}">
+        <img src="../{{ product.img }}" alt="{{ product.title }}">
+      </a>
+    </p>
+    <p>
+      <a href="/products/{{ product.id }}">{{ product.title }}</a>
+    </p>
+    <p>${{ product.price }}</p>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
