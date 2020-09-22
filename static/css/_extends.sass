@@ -1,0 +1,17 @@
+@import './mixins.sass'
+@import './colors.sass'
+
+%btn
+  +appear(none)
+  padding: 1rem 2rem
+  width: 80%
+  display: inline-block
+  border: none
+  margin: 0
+  text-decoration: none
+  background: $dark-color
+  color: $light-color
+  font-size: 1rem
+  cursor: pointer
+  text-align: center
+  transition: background 150ms ease-in-out, transform 50ms ease

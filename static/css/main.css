@@ -8,27 +8,49 @@
   src: url("../fonts/Open-Sans-Light.eot?#iefix") format("embedded-opentype");
   src: url("../fonts/OpenSans-Light.ttf") format("truetype");
   src: url("../fonts/OpenSans-Light.woff") format("woff"); }
+body footer button {
+  -ms-appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  padding: 1rem 2rem;
+  width: 80%;
+  display: inline-block;
+  border: none;
+  margin: 0;
+  text-decoration: none;
+  background: #634C29;
+  color: #FCDFB3;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+  transition: background 150ms ease-in-out, transform 50ms ease; }
+
+* {
+  box-sizing: border-box; }
+
 body {
-  background-color: #634C29;
+  background-color: #FCDFB3;
   margin: 0;
   text-align: center;
   font-family: "Open-Sans", sans-serif; }
   body header {
-    background-color: #634C29;
-    padding: 36px; }
+    background-color: #FCDFB3;
+    padding: 36px;
+    padding-bottom: 0; }
     body header h1 {
       font-family: "Ledgewood", sans-serif;
       margin: 0;
       text-align: center; }
     body header h1 a {
-      color: #FCDFB3;
+      color: #634C29;
       text-decoration: none; }
     body header nav {
       background-size: cover;
       margin: 0; }
       body header nav ul {
         align-items: center;
-        border-top: 1px solid #FCDFB3;
+        border-top: 1px solid #634C29;
         display: flex;
         flex-direction: row;
         height: 3rem;
@@ -36,12 +58,12 @@ body {
         body header nav ul li {
           display: flex; }
           body header nav ul li a {
-            color: #FCDFB3;
+            color: #634C29;
             text-decoration: none; }
             body header nav ul li a:hover {
-              color: #B08648; }
+              color: #B09C7D; }
   body main {
-    background-color: #FCDFB3;
+    background-color: #B09C7D;
     padding: 20px; }
     body main h1 {
       font-family: "Ledgewood", sans-serif;
@@ -53,58 +75,106 @@ body {
       flex-direction: row;
       flex-wrap: wrap;
       height: 100%;
-      justify-content: space-around;
+      justify-content: flex-start;
       width: 100%; }
       body main .product-grid .product-item {
-        align-items: center;
-        background-color: #B08648;
-        color: #FFFFFF;
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
+        background-color: #FCDFB3;
+        color: #634C29;
         padding: 0 1rem;
         width: 240px; }
         body main .product-grid .product-item p {
           font-size: 1.5rem; }
-          body main .product-grid .product-item p img {
-            width: 100%; }
-    body main .admin-nav {
-      width: 500px;
-      height: 400px;
+          body main .product-grid .product-item p a {
+            color: #634C29;
+            text-decoration: none; }
+            body main .product-grid .product-item p a img {
+              width: 100%; }
+    body main .product-detail {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      justify-content: space-between; }
+      body main .product-detail .product-detail-image {
+        width: 60%;
+        background-color: #FCDFB3;
+        padding: 10px; }
+        body main .product-detail .product-detail-image img {
+          width: 100%; }
+      body main .product-detail .product-detail-text {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        align-items: flex-start;
+        align-self: flex-start;
+        padding: 10px;
+        background-color: #FCDFB3;
+        width: 35%; }
+    body main form {
+      background-color: #FCDFB3;
+      margin: auto;
       display: flex;
       flex-direction: column;
       justify-content: space-around;
       align-items: center;
-      margin: auto;
-      background-color: #634C29; }
-      body main .admin-nav button {
-        padding: 1rem 2rem;
+      width: 500px;
+      height: 500px;
+      line-height: 2;
+      text-align: center; }
+      body main form input, body main form label {
         width: 80%;
-        display: inline-block;
-        border: none;
-        margin: 0;
-        text-decoration: none;
-        background: #B08648;
-        color: #FFFFFF;
-        font-size: 1rem;
-        cursor: pointer;
-        text-align: center;
-        transition: background 150ms ease-in-out, transform 50ms ease;
-        -webkit-appearance: none;
-        -moz-appearance: none; }
-        body main .admin-nav button:hover, body main .admin-nav button:focus {
-          background-color: #B09C7D; }
-        body main .admin-nav button:focus {
-          outline: 1px solid #FFFFFF; }
-        body main .admin-nav button:active {
-          transform: scale(0.95); }
+        color: #634C29; }
+      body main form input {
+        width: 80%; }
+        body main form input[type=text] {
+          background-color: transparent;
+          border: none;
+          border-bottom: 3px solid #634C29;
+          outline: #634C29; }
+        body main form input[type=submit] {
+          padding: 1rem 2rem;
+          width: 80%;
+          display: inline-block;
+          border: none;
+          margin: 0;
+          text-decoration: none;
+          background: #634C29;
+          color: #FCDFB3;
+          font-family: sans-serif;
+          font-size: 1rem;
+          cursor: pointer;
+          text-align: center;
+          transition: background 150ms ease-in-out, transform 50ms ease;
+          -webkit-appearance: none;
+          -moz-appearance: none; }
+          body main form input[type=submit]:hover, body main form input[type=submit]:focus {
+            background: #B09C7D; }
+          body main form input[type=submit]:focus {
+            outline: 1px solid #B09C7D;
+            outline-offset: -4px; }
+          body main form input[type=submit]:active {
+            transform: scale(0.95); }
+        body main form input[type="file"] {
+          z-index: -1;
+          display: none; }
   body footer {
-    background-color: #634C29;
+    background-color: #FCDFB3;
     padding: 20px; }
+    body footer button:hover, body footer button:focus {
+      background-color: #B09C7D; }
+    body footer button:focus {
+      outline: 1px solid #FFFFFF; }
+    body footer button:active {
+      transform: scale(0.95); }
     body footer p {
-      color: #FCDFB3; }
+      color: #634C29; }
       body footer p a {
-        color: #FCDFB3;
+        color: #634C29;
         text-decoration: none; }
 
 /*# sourceMappingURL=main.css.map */
