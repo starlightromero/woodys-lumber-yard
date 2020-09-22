@@ -57,8 +57,15 @@ def validate_image(stream):
 # ERROR HANDLING
 ###############################################################################
 
+@app.errorhandler(404)
+def page_not_found(e):
+    print(e)
+    return render_template("404.html")
+
+
 @app.errorhandler(413)
 def too_large(e):
+    print(e)
     return "File is too large", 413
 
 ###############################################################################
@@ -128,18 +135,12 @@ def lattice():
     return "Lattice"
 
 
-@app.route("/admin")
+@app.route("/admin", methods=["POST", "GET"])
 def admin():
     """Admin page."""
-    return render_template("admin.html")
-
-
-@app.route("/admin/products", methods=["POST", "GET"])
-def show_products():
-    """Admin products page."""
     if request.method == "GET":
         products = Product.query.order_by(Product.date_created).all()
-        return render_template("admin-products.html", products=products)
+        return render_template("admin.html", products=products)
     if request.method == "POST":
         try:
             button = request.form["button"]
@@ -175,7 +176,7 @@ def show_products():
             pass
         finally:
             products = Product.query.order_by(Product.date_created).all()
-        return render_template("admin-products.html", products=products)
+        return render_template("admin.html", products=products)
 
 
 @app.route('/admin/products/images/<filename>')
