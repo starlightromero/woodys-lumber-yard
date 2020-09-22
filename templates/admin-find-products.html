@@ -1,9 +1,6 @@
-{% extends "base.html" %}
-{% block title %}Admin - Find Products{% endblock %}
-{% block head %}
-    {{ super() }}
-    <script src="/static/admin.js" charset="utf-8" defer></script>
-{% endblock %}
+{% extends "base-admin.html" %}
+{% block title %}Admin{% endblock %}
+
 {% block content %}
     <h1>Admin - Find Products</h1>
     <form action="/admin/products" method="POST">
