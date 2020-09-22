@@ -222,12 +222,6 @@ def upload(filename):
     return send_from_directory(app.config['UPLOAD_PATH'], filename)
 
 
-@app.route("/admin/find-products")
-def show_find_products():
-    """Admin find products page."""
-    return render_template("admin-find-products.html")
-
-
 @app.route("/admin/add-products")
 def show_add_products():
     """Admin add products page."""
