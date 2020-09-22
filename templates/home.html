@@ -3,13 +3,9 @@
 {% block head %}
     {{ super() }}
     <script src="/static/home.js" charset="utf-8" defer></script>
-    <link rel="stylesheet" href="/static/product.css">
 {% endblock %}
 {% block content %}
     <h1>Welcome</h1>
-    <p class="important">
-      Welcome to Woody's Lumber Yard.
-    </p>
     <div class="product-grid">
       {% for product in products %}
       <div class="product-item">

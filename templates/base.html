@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    {% block head %}
-    <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/static/style.css">
-    <title>{% block title %}{% endblock %} - Woody's Lumber Yard</title>
-    {% endblock %}
-  </head>
-  <body>
+
+<head>
+  {% block head %}
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/main.css">
+  <title>{% block title %}{% endblock %} - Woody's Lumber Yard</title>
+  {% endblock %}
+</head>
+
+<body>
+
+  <header>
+    <h1><a href="/">Woody's Lumber Yard</a></h1>
     <nav>
-      <h1><a href="/">Woody's Lumber Yard</a></h1>
       <ul>
         <li><a href="/boards">Boards</a></li>
         <li><a href="/plywood">Plywood</a></li>
@@ -22,13 +26,16 @@
         <li><a href="/lattice">Lattice</a></li>
       </ul>
     </nav>
-    <section id="content">
-      {% block content %}{% endblock %}
-    </section>
-    <footer>
-      {% block footer %}
-        &copy; Copyright 2020 by <a href="/">Woody's Lumber Yard</a>.
-      {% endblock %}
-    </footer>
-  </body>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>&copy; Copyright 2020 by <a href="/">Woody's Lumber Yard</a>.</p>
+  </footer>
+
+</body>
+
 </html>
