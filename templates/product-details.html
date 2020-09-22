@@ -6,8 +6,12 @@
 
 {% block content %}
   <div class="product-detail">
-    <p><img src="../{{ product.img }}" alt="{{ product.title }}"></p>
-    <p>{{ product.title }}</p>
-    <p>${{ product.price }}</p>
+    <div class="product-detail-image">
+      <img src="../{{ product.img }}" alt="{{ product.title }}">
+    </div>
+    <div class="product-detail-text">
+      <p>{{ product.title }}</p>
+      <p>${{ product.price }}</p>
+    </div>
   </div>
 {% endblock %}
