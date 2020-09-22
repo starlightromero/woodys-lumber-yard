@@ -17,6 +17,8 @@ db = SQLAlchemy(app)
 
 
 class User(db.Model):
+    """User database class."""
+
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -24,10 +26,17 @@ class User(db.Model):
     password = db.Column(db.String(60), nullable=False)
 
     def __repr__(self):
+        """Return username and email for User."""
+        return f"User('{self.username}', '{self.email}')"
+
+    def __str__(self):
+        """Return username and email for User."""
         return f"User('{self.username}', '{self.email}')"
 
 
 class Product(db.Model):
+    """Product database class."""
+
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     price = db.Column(db.Float, nullable=False)
@@ -35,6 +44,11 @@ class Product(db.Model):
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
+        """Return title and price for Product."""
+        return f"Product('{self.title}', '{self.price}')"
+
+    def __str__(self):
+        """Return title and price for Product."""
         return f"Product('{self.title}', '{self.price}')"
 
 
@@ -47,24 +61,27 @@ def validate_image(stream):
     """Validate a given image to jpg."""
     header = stream.read(512)
     stream.seek(0)
-    format = what(None, header)
-    if not format:
+    img_format = what(None, header)
+    if not img_format:
         return None
-    return '.' + (format if format != 'jpeg' else 'jpg')
+    return '.' + (img_format if img_format != 'jpeg' else 'jpg')
 
 
 ###############################################################################
 # ERROR HANDLING
 ###############################################################################
 
+
 @app.errorhandler(404)
 def page_not_found(e):
+    """Page not found page."""
     print(e)
     return render_template("404.html")
 
 
 @app.errorhandler(413)
 def too_large(e):
+    """File is too large page."""
     print(e)
     return "File is too large", 413
 
@@ -179,8 +196,9 @@ def admin():
         return render_template("admin.html", products=products)
 
 
-@app.route('/admin/products/images/<filename>')
+@app.route('/admin/images/<filename>')
 def upload(filename):
+    """Upload image for new product."""
     return send_from_directory(app.config['UPLOAD_PATH'], filename)
 
 
