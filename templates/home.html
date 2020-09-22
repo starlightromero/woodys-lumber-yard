@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
+
 {% block head %}
 {{ super() }}
 <script src="/static/home.js" charset="utf-8" defer></script>
 {% endblock %}
+
 {% block content %}
+{% if message %}
+<h3>Search Results for: {{ message }}</h3>
+{% endif %}
 <div class="product-grid">
   {% for product in products %}
   <div class="product-item">
