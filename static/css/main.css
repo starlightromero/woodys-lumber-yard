@@ -38,6 +38,43 @@ body {
     background-color: #FCDFB3;
     padding: 36px;
     padding-bottom: 0; }
+    body header .top-row {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      justify-content: space-between; }
+      body header .top-row form {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        align-items: flex-end; }
+        body header .top-row form input[type=text] {
+          -ms-appearance: none;
+          -moz-appearance: none;
+          -webkit-appearance: none;
+          appearance: none;
+          background: transparent;
+          border: none;
+          border-bottom: 1px solid #634C29;
+          color: #634C29;
+          font-size: 20px;
+          outline: none;
+          widtH: 300px; }
+          body header .top-row form input[type=text]::placeholder {
+            color: #B09C7D; }
+        body header .top-row form input[type=image] {
+          margin-left: 10px;
+          width: 36px; }
+      body header .top-row .user-icons {
+        padding: 0;
+        margin: 0; }
+        body header .top-row .user-icons a {
+          margin: 0 10px;
+          text-decoration: none; }
+          body header .top-row .user-icons a img {
+            height: 36px; }
     body header h1 {
       font-family: "Ledgewood", sans-serif;
       margin: 0;

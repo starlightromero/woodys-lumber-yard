@@ -12,7 +12,21 @@
 <body>
 
   <header>
-    <h1><a href="/">Woody's Lumber Yard</a></h1>
+    <div class="top-row">
+      <form method="GET">
+        <input type="text" name="title" value="" placeholder="What can we help you find today?">
+        <input type="image" src="/static/assets/search.svg" alt="Submit Form" />
+      </form>
+      <h1><a href="/">Woody's Lumber Yard</a></h1>
+      <div class="user-icons">
+        <a href="#">
+          <img src="/static/assets/user.svg" alt="My Account">
+        </a>
+        <a href="#">
+          <img src="/static/assets/shopping-cart.svg" alt="Shopping Cart">
+        </a>
+      </div>
+    </div>
     <nav>
       <ul>
         <li><a href="/boards">Boards</a></li>

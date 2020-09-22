@@ -17,6 +17,44 @@ body
     padding: 36px
     padding-bottom: 0
 
+    .top-row
+      +flexbox(row)
+      justify-content: space-between
+
+      form
+        +flexbox(row)
+        align-items: flex-end
+
+        input
+
+          &[type=text]
+            +appear(none)
+            background: transparent
+            border: none
+            border-bottom: 1px solid $dark-color
+            color: $dark-color
+            font-size: 20px
+            outline: none
+            widtH: 300px
+
+            &::placeholder
+              color: $primary-color
+
+          &[type=image]
+            margin-left: 10px
+            width: 36px
+
+      .user-icons
+        padding: 0
+        margin: 0
+
+        a
+          margin: 0 10px
+          text-decoration: none
+
+          img
+            height: 36px
+
     h1
       font-family: $heading-font
       margin: 0
