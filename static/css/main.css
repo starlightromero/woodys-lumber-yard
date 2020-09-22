@@ -197,8 +197,7 @@ body {
           body main form input[type=submit]:active {
             transform: scale(0.95); }
         body main form input[type="file"] {
-          z-index: -1;
-          display: none; }
+          z-index: 0; }
   body footer {
     background-color: #FCDFB3;
     padding: 20px; }
