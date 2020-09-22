@@ -1,15 +1,20 @@
-{% extends "base.html" %}
+{% extends "base-admin.html" %}
 {% block title %}Admin{% endblock %}
-{% block head %}
-    {{ super() }}
-    <script src="/static/admin.js" charset="utf-8" defer></script>
-{% endblock %}
+
 {% block content %}
-    <h1>Admin</h1>
-    <div class="admin-nav">
-      <button type="button" id="products" name="products">Products</button>
-      <button type="button" id="find-products" name="find-products">Find Products</button>
-      <button type="button" id="add-products" name="add-products">Add Products</button>
-      <button type="button" id="delete-products" name="delete-products">Delete Products</button>
-    </div>
+<div class="product-grid">
+  {% for product in products %}
+  <div class="product-item">
+    <p>
+      <a href="/products/{{ product.id }}">
+        <img src="../{{ product.img }}" alt="{{ product.title }}">
+      </a>
+    </p>
+    <p>
+      <a href="/products/{{ product.id }}">{{ product.title }}</a>
+    </p>
+    <p>${{ product.price }}</p>
+  </div>
+  {% endfor %}
+</div>
 {% endblock %}
