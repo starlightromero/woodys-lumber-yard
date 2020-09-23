@@ -146,6 +146,8 @@ def too_large(e):
 ###############################################################################
 
 
+# TODO: Add templated to all pages
+
 @app.route("/", methods=["GET", "POST"])
 def home():
     """Home page."""
