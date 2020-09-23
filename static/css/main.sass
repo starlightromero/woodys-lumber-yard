@@ -22,31 +22,38 @@ body
       +flexbox(row)
       justify-content: space-between
 
-      form
+      .search
         +flexbox(row)
-        justify-content: flex-start
-        align-items: flex-end
         flex-basis: 33%
+        justify-content: flex-start
         margin: 0 10px
 
-        input
+        img
+          height: 36px
+          cursor: pointer
 
-          &[type=text]
-            +appear(none)
-            background: transparent
-            border: none
-            border-bottom: 1px solid $dark-color
-            color: $dark-color
-            font-size: 20px
-            outline: none
-            widtH: 333px
+        .search-form
+          display: none
+          width: 380px
 
-            &::placeholder
-              color: $primary-color
+          input
 
-          &[type=image]
-            margin-left: 10px
-            width: 36px
+            &[type=text]
+              +appear(none)
+              background: transparent
+              border: none
+              border-bottom: 1px solid $dark-color
+              color: $dark-color
+              font-size: 20px
+              outline: none
+              width: 333px
+
+              &::placeholder
+                color: $primary-color
+
+            &[type=image]
+              margin-left: 10px
+              width: 36px
 
       .user-icons
         padding: 0
@@ -276,3 +283,42 @@ body
       a
         color: $dark-color
         text-decoration: none
+
+// Keyframe Classes
+
+.slideOutRight
+  @extend %animated
+  -webkit-animation-name: slideOutRight
+  animation-name: slideOutRight
+
+.fadeIn
+  @extend %animated
+  -webkit-animation-name: fadeIn
+  animation-name: fadeIn
+
+// Keyframes
+
+@keyframes slideOutRight
+  from
+    -webkit-transform: translate(0)
+    transform: translate(0)
+
+  to
+    visibility: hidden
+    display: none
+    -webkit-transform: translate(380px)
+    transform: translate(380px)
+
+@keyframes fadeIn
+  from
+    display: hidden
+    opacity: 0%
+
+  1%
+    display: flex
+
+  50%
+    opacity: 0%
+
+  to
+    opacity: 100%
