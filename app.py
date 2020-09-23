@@ -7,6 +7,7 @@ from flask import Flask, request, render_template, send_from_directory, \
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, current_user, login_user, \
     logout_user
+from passlib.hash import sha256_crypt
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -222,13 +223,17 @@ def lattice():
 @app.route("/account", methods=['POST', 'GET'])
 def profile():
     """Account page."""
-    message = None
+    # if session['logged_in']:
+    #     return render_template("account.html")
+    # else:
+    print(session)
+    if request.method == 'GET':
+        return render_template("log-in.html")
     if request.method == 'POST':
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
-        # user_password = None
-        # user_password = sha256_crypt.hash(pass_one)
+        password = sha256_crypt.hash(password)
 
         new_user = User(username=username,
                         email=email,
@@ -241,7 +246,7 @@ def profile():
             message = "You have successfully logged in!"
         except(TypeError, ValueError):
             print("error")
-    return render_template("account.html", message=message)
+        return render_template("account.html", message=message)
 
 
 @app.route("/cart")
