@@ -37,8 +37,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    is_admin = db.Column(db.Boolean, nullable=False, default=False)
-    is_superadmin = db.Column(db.Boolean, nullable=False, default=False)
+    is_admin = db.Column(db.Boolean, nullable=False)
+    is_superadmin = db.Column(db.Boolean, nullable=False)
 
     def __repr__(self):
         """Return username and email for User."""
@@ -48,19 +48,15 @@ class User(db.Model, UserMixin):
         """Return username and email for User."""
         return f"User('{self.username}', '{self.email}')"
 
-    def set_superadmin(self):
-        """Set Super Admin Privileges."""
-        if self.email == "starlightromero@gmail.com":
-            self.is_superadmin = True
-
 
 class Product(db.Model):
     """Product database class."""
 
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
+    category = db.Column(db.String(20), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    img = db.Column(db.String(20), nullable=False)
+    img = db.Column(db.String(40), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
@@ -266,7 +262,6 @@ def profile():
     # if session['logged_in']:
     #     return render_template("account.html")
     # else:
-    print(session)
     if request.method == 'GET':
         return render_template("log-in.html")
     if request.method == 'POST':
@@ -274,10 +269,17 @@ def profile():
         email = request.form['email']
         password = request.form['password']
         password = sha256_crypt.hash(password)
+        is_admin = False
+        is_superadmin = False
+        if email == "starlightromero@gmail.com":
+            is_superadmin = True
+            is_admin = True
 
         new_user = User(username=username,
                         email=email,
-                        password=password)
+                        password=password,
+                        is_admin=is_admin,
+                        is_superadmin=is_superadmin)
         try:
             db.session.add(new_user)
             db.session.commit()
