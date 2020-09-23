@@ -179,6 +179,32 @@ body {
         padding: 10px;
         background-color: #FCDFB3;
         width: 35%; }
+    body main .signup {
+      display: none; }
+      body main .signup small {
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        user-select: none;
+        color: #4A381E; }
+        body main .signup small a {
+          color: #FCDFB3;
+          cursor: pointer;
+          text-decoration: underline; }
+    body main .login small {
+      -khtml-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      -webkit-touch-callout: none;
+      -webkit-user-select: none;
+      user-select: none;
+      color: #4A381E; }
+      body main .login small a {
+        color: #FCDFB3;
+        cursor: pointer;
+        text-decoration: underline; }
     body main form {
       background-color: #FCDFB3;
       margin: auto;
@@ -195,8 +221,8 @@ body {
         width: 80%;
         color: #634C29; }
       body main form input {
-        width: 70%;
-        margin-left: 1rem; }
+        width: 100%;
+        font-size: 1.5rem; }
         body main form input[type=text], body main form input[type=email], body main form input[type=password] {
           background-color: transparent;
           border: none;
@@ -216,7 +242,6 @@ body {
           background: #634C29;
           color: #FCDFB3;
           font-family: sans-serif;
-          font-size: 1rem;
           cursor: pointer;
           text-align: center;
           transition: background 150ms ease-in-out, transform 50ms ease; }
