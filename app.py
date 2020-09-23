@@ -259,9 +259,6 @@ def lattice():
 @app.route("/account", methods=['POST', 'GET'])
 def profile():
     """Account page."""
-    # if session['logged_in']:
-    #     return render_template("account.html")
-    # else:
     if request.method == 'GET':
         return render_template("log-in.html")
     if request.method == 'POST':
@@ -300,10 +297,10 @@ def cart():
 @app.route("/admin", methods=["POST", "GET"])
 def admin():
     """Admin page."""
-    if request.method == "GET":
+    if session['logged_in'] and request.method == "GET":
         products = Product.query.order_by(Product.date_created).all()
         return render_template("admin.html", products=products)
-    if request.method == "POST":
+    if session['logged_in'] and request.method == "POST":
         try:
             button = request.form["button"]
             title = request.form["title"]
@@ -318,7 +315,7 @@ def admin():
         finally:
             products = Product.query.order_by(Product.date_created).all()
         return render_template("admin.html", products=products)
-    return render_template("account.html")
+    return render_template("log-in.html")
 
 
 @app.route('/admin/images/<filename>')
@@ -337,7 +334,6 @@ def show_add_products():
 def show_delete_products():
     """Admin delete projects page."""
     return render_template("admin-delete-products.html")
-
 
 if __name__ == "__main__":
     app.run(debug=True)
