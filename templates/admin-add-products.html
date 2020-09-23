@@ -8,9 +8,13 @@
         Title
       <input type="text" name="title" required>
       </label>
+      <select name="category">
+        <option value="" selected disabled hidden>Choose a product category &nbsp;&nbsp;&nbsp;&nbsp; ▼</option>
+        <option value="">Category</option>
+      </select>
       <label>
         Price
-        $<input type="text" name="price" required>
+        <input type="number" name="price" min="0.01" step="0.01" placeholder="$" required>
       </label>
       <label for="img" class="button">Upload Image</label>
       <input type="file" name="img" id="img" accept="image/*" required>
