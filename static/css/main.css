@@ -197,7 +197,7 @@ body {
       body main form input {
         width: 70%;
         margin-left: 1rem; }
-        body main form input[type=text] {
+        body main form input[type=text], body main form input[type=email], body main form input[type=password] {
           background-color: transparent;
           border: none;
           border-bottom: 3px solid #634C29;
