@@ -2,8 +2,11 @@
 import os
 from imghdr import what
 from datetime import datetime
-from flask import Flask, request,  render_template, send_from_directory
+from flask import Flask, request, render_template, send_from_directory, \
+    session
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager, UserMixin, current_user, login_user, \
+    logout_user
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
@@ -12,11 +15,20 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
 app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png']
 app.config['UPLOAD_PATH'] = 'static/product-images'
+app.config['SECRET_KEY'] = os.urandom(24)
 
 db = SQLAlchemy(app)
 
+login_manager = LoginManager(app)
+login_manager.init_app(app)
 
-class User(db.Model):
+
+###############################################################################
+# DATABASE CLASSES
+###############################################################################
+
+
+class User(db.Model, UserMixin):
     """User database class."""
 
     id = db.Column(db.Integer, primary_key=True)
@@ -24,6 +36,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
+    is_superadmin = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):
         """Return username and email for User."""
@@ -32,6 +46,11 @@ class User(db.Model):
     def __str__(self):
         """Return username and email for User."""
         return f"User('{self.username}', '{self.email}')"
+
+    def set_superadmin(self):
+        """Set Super Admin Privileges."""
+        if self.email == "starlightromero@gmail.com":
+            self.is_superadmin = True
 
 
 class Product(db.Model):
@@ -57,11 +76,18 @@ class Product(db.Model):
 ###############################################################################
 
 
+@login_manager.user_loader
+def load_user(id):
+    return User.query.filter_by(id=id).first()
+
+
 def validate_image(stream):
     """Validate a given image to jpg."""
+    print("IN VALIDATE")
     header = stream.read(512)
     stream.seek(0)
     img_format = what(None, header)
+    print(img_format)
     if not img_format:
         return None
     return '.' + (img_format if img_format != 'jpeg' else 'jpg')
@@ -193,10 +219,29 @@ def lattice():
     return "Lattice"
 
 
-@app.route("/account")
+@app.route("/account", methods=['POST', 'GET'])
 def profile():
     """Account page."""
-    return render_template("account.html")
+    message = None
+    if request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        # user_password = None
+        # user_password = sha256_crypt.hash(pass_one)
+
+        new_user = User(username=username,
+                        email=email,
+                        password=password)
+        try:
+            db.session.add(new_user)
+            db.session.commit()
+            login_user(new_user)
+            session['logged_in'] = True
+            message = "You have successfully logged in!"
+        except(TypeError, ValueError):
+            print("error")
+    return render_template("account.html", message=message)
 
 
 @app.route("/cart")
@@ -208,10 +253,10 @@ def cart():
 @app.route("/admin", methods=["POST", "GET"])
 def admin():
     """Admin page."""
-    if request.method == "GET":
+    if session['logged_in'] and request.method == "GET":
         products = Product.query.order_by(Product.date_created).all()
         return render_template("admin.html", products=products)
-    if request.method == "POST":
+    if session['logged_in'] and request.method == "POST":
         try:
             button = request.form["button"]
             title = request.form["title"]
@@ -226,6 +271,7 @@ def admin():
         finally:
             products = Product.query.order_by(Product.date_created).all()
         return render_template("admin.html", products=products)
+    return render_template("account.html")
 
 
 @app.route('/admin/images/<filename>')
