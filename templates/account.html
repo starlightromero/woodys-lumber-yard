@@ -1,24 +1,9 @@
 {% extends "base.html" %}
-{% block title %}Cart{% endblock %}
+{% block title %}Account{% endblock %}
 
 {% block content %}
 {% if message %}
   {{ message }}
 {% endif %}
-<h1>Sign Up</h1>
-<form method="POST">
-  <label>
-    Username
-    <input type="text" name="username" required>
-  </label>
-  <label>
-    Email
-    <input type="email" name="email" required>
-  </label>
-  <label>
-    Password
-    <input type="password" name="password" required>
-  </label>
-  <input type="submit" name="submit" value="Create Account">
-</form>
+<h1>Account</h1>
 {% endblock %}
