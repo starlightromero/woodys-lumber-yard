@@ -4,7 +4,8 @@
 <head>
   {% block head %}
   <meta charset="utf-8">
-  <link rel="stylesheet" href="/static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+  <script type="text/javascript" charset="utf-8" src="/static/main.js" defer></script>
   <title>{% block title %}{% endblock %} - Woody's Lumber Yard</title>
   {% endblock %}
 </head>
@@ -13,10 +14,13 @@
 
   <header>
     <div class="top-row">
-      <form method="POST">
-        <input type="text" name="title" value="" placeholder="What can we help you find today?">
-        <input type="image" src="/static/assets/search.svg" alt="Submit Form" />
-      </form>
+      <div class="search">
+        <img class="search-btn" src="/static/assets/search.svg" alt="Search Button">
+        <form class="search-form" method="POST">
+          <input type="text" name="title" value="" placeholder="What can we help you find today?">
+          <input class="search-submit" type="image" src="/static/assets/search.svg" alt="Submit Form" />
+        </form>
+      </div>
       <h1><a href="/">Woody's Lumber Yard</a></h1>
       <div class="user-icons">
         <a href="/account">
