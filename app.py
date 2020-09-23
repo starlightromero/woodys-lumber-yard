@@ -146,8 +146,6 @@ def too_large(e):
 ###############################################################################
 
 
-# TODO: Add templated to all pages
-
 @app.route("/", methods=["GET", "POST"])
 def home():
     """Home page."""
@@ -177,49 +175,89 @@ def product_detail(product_id):
 @app.route("/boards")
 def boards():
     """Boards page."""
-    return render_template("boards.html")
+    products = Product.query.order_by(Product.date_created).all()
+    context = {
+        'products': products,
+        'title': 'Boards'
+    }
+    return render_template("home.html", **context)
 
 
 @app.route("/plywood")
 def plywood():
     """Plywood page."""
-    return "Plywood"
+    products = Product.query.order_by(Product.date_created).all()
+    context = {
+        'products': products,
+        'title': 'Plywood'
+    }
+    return render_template("home.html", **context)
 
 
 @app.route("/pressure-treated")
 def pressure_treated():
     """Pressure treated page."""
-    return "Pressure treated"
+    products = Product.query.order_by(Product.date_created).all()
+    context = {
+        'products': products,
+        'title': 'Pressure Treated'
+    }
+    return render_template("home.html", **context)
 
 
 @app.route("/dimensional-lumber")
 def dimensional_lumber():
     """Dimensional lumber page."""
-    return "Dimensional lumber"
+    products = Product.query.order_by(Product.date_created).all()
+    context = {
+        'products': products,
+        'title': 'Dimensional Lumber'
+    }
+    return render_template("home.html", **context)
 
 
 @app.route("/decking")
 def decking():
     """Decking page."""
-    return "Decking"
+    products = Product.query.order_by(Product.date_created).all()
+    context = {
+        'products': products,
+        'title': 'Decking'
+    }
+    return render_template("home.html", **context)
 
 
 @app.route("/fencing")
 def fencing():
     """Fencing page."""
-    return "Fencing"
+    products = Product.query.order_by(Product.date_created).all()
+    context = {
+        'products': products,
+        'title': 'Fencing'
+    }
+    return render_template("home.html", **context)
 
 
 @app.route("/paneling")
 def paneling():
     """Paneling page."""
-    return "Paneling"
+    products = Product.query.order_by(Product.date_created).all()
+    context = {
+        'products': products,
+        'title': 'Paneling'
+    }
+    return render_template("home.html", **context)
 
 
 @app.route("/lattice")
 def lattice():
     """Lattice page."""
-    return "Lattice"
+    products = Product.query.order_by(Product.date_created).all()
+    context = {
+        'products': products,
+        'title': 'Lattice'
+    }
+    return render_template("home.html", **context)
 
 
 @app.route("/account", methods=['POST', 'GET'])
@@ -260,10 +298,10 @@ def cart():
 @app.route("/admin", methods=["POST", "GET"])
 def admin():
     """Admin page."""
-    if session['logged_in'] and request.method == "GET":
+    if request.method == "GET":
         products = Product.query.order_by(Product.date_created).all()
         return render_template("admin.html", products=products)
-    if session['logged_in'] and request.method == "POST":
+    if request.method == "POST":
         try:
             button = request.form["button"]
             title = request.form["title"]
