@@ -23,11 +23,11 @@
   <div class="product-item">
     <p>
       <a href="/products/{{ product.id }}">
-        <img src="../{{ product.img }}" alt="{{ product.title }}">
+        <img src="../{{ product.img }}" alt="{{ product.name }}">
       </a>
     </p>
-    <p class="title">
-      <a href="/products/{{ product.id }}">{{ product.title }}</a>
+    <p class="name">
+      <a href="/products/{{ product.id }}">{{ product.name }}</a>
     </p>
     <p class="price">${{ product.price }}</p>
     <button type="button" name="add-to-cart">Add To Cart</button>

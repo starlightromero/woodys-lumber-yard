@@ -4,8 +4,10 @@
 {% block content %}
     <h1>Admin - Delete Products</h1>
     <form  action="/admin/products" method="POST">
-      <label for="title">Enter product title:</label>
-      <input type="text" name="title" id="title">
+      <label for="name">
+        Enter product name:
+        <input type="text" name="name" id="name">
+      </label>
       <input type="submit" name="button" value="Delete Product">
     </form>
 {% endblock %}
