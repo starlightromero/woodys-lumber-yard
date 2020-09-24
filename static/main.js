@@ -9,6 +9,13 @@ searchBtn.addEventListener('click', () => {
 
 const adminButton = document.getElementById('admin-button')
 
-adminButton.addEventListener('click', function () {
+adminButton.addEventListener('click', () => {
   window.location.href = '/admin'
+})
+
+const cart = document.querySelector('.cart')
+const addToCart = document.querySelector('button[name=\'add-to-cart\']')
+
+addToCart.addEventListener('click', () => {
+  console.log('added')
 })
