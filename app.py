@@ -3,7 +3,7 @@ import os
 from imghdr import what
 from datetime import datetime
 from flask import Flask, request, render_template, send_from_directory, \
-    session
+    session, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, current_user, login_user, \
     logout_user
@@ -17,6 +17,7 @@ app.config['MAX_CONTENT_LENGTH'] = 1024 * 1024
 app.config['UPLOAD_EXTENSIONS'] = ['.jpg', '.png']
 app.config['UPLOAD_PATH'] = 'static/product-images'
 app.config['SECRET_KEY'] = os.urandom(24)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 
 db = SQLAlchemy(app)
 
@@ -32,6 +33,7 @@ login_manager.init_app(app)
 class User(db.Model, UserMixin):
     """User database class."""
 
+    __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -39,6 +41,8 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(60), nullable=False)
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     is_superadmin = db.Column(db.Boolean, nullable=False, default=False)
+    categories = db.relationship('Category', backref='created_by', lazy=True)
+    products = db.relationship('Product', backref='created_by', lazy=True)
 
     def __repr__(self):
         """Return username and email for User."""
@@ -52,22 +56,33 @@ class User(db.Model, UserMixin):
 class Category(db.Model):
     """Product Category database class."""
 
+    __tablename__ = 'category'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
+    products = db.relationship('Product', backref='category', lazy=True)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    created_by = db.relationship('User', backref='category', lazy=True)
+    created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __repr__(self):
+        """Return name for Category."""
+        return f"Product('{self.name}')"
+
+    def __str__(self):
+        """Return name for Category."""
+        return f"Product('{self.name}')"
 
 
 class Product(db.Model):
     """Product database class."""
 
+    __tablename__ = 'product'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    category = db.relationship('Category', backref='product', lazy=True)
+    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
     price = db.Column(db.Float, nullable=False)
     img = db.Column(db.String(40), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    created_by = db.relationship('User', backref='product', lazy=True)
+    created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         """Return name and price for Product."""
@@ -267,35 +282,44 @@ def lattice():
 
 
 @app.route("/account", methods=['POST', 'GET'])
-def profile():
+def account():
     """Account page."""
-    if request.method == 'GET':
-        return render_template("log-in.html")
-    if request.method == 'POST':
-        username = request.form['username']
-        email = request.form['email']
-        password = request.form['password']
-        password = sha256_crypt.hash(password)
-        is_admin = False
-        is_superadmin = False
-        if email == "starlightromero@gmail.com":
-            is_superadmin = True
-            is_admin = True
+    try:
+        if session['logged_in']:
+            return render_template("account.html")
+    except KeyError:
+        if request.method == 'GET':
+            return render_template("log-in.html")
+        if request.method == 'POST':
+            button = request.form['submit']
+            message = "There was an error with accessing your account."
+            if button == 'Sign Up':
+                username = request.form['username']
+                email = request.form['email']
+                password = request.form['password']
+                password = sha256_crypt.hash(password)
+                is_admin = False
+                is_superadmin = False
+                if email == "starlightromero@gmail.com":
+                    is_superadmin = True
+                    is_admin = True
 
-        new_user = User(username=username,
-                        email=email,
-                        password=password,
-                        is_admin=is_admin,
-                        is_superadmin=is_superadmin)
-        try:
-            db.session.add(new_user)
-            db.session.commit()
-            login_user(new_user)
-            session['logged_in'] = True
-            message = "You have successfully logged in!"
-        except(TypeError, ValueError):
-            print("error")
-        return render_template("account.html", message=message)
+                new_user = User(username=username,
+                                email=email,
+                                password=password,
+                                is_admin=is_admin,
+                                is_superadmin=is_superadmin)
+                try:
+                    db.session.add(new_user)
+                    db.session.commit()
+                    login_user(new_user)
+                    session['logged_in'] = True
+                    message = "You have successfully signed up!"
+                except(TypeError, ValueError):
+                    print("error")
+            elif button == 'Log In':
+                message = 'You have successfully logged in!'
+            return render_template("account.html", message=message)
 
 
 @app.route("/cart")
@@ -307,25 +331,27 @@ def cart():
 @app.route("/admin", methods=["POST", "GET"])
 def admin():
     """Admin page."""
-    if session['logged_in'] and request.method == "GET":
-        products = Product.query.order_by(Product.date_created).all()
-        return render_template("admin.html", products=products)
-    if session['logged_in'] and request.method == "POST":
-        try:
-            button = request.form["button"]
-            name = request.form["name"]
-            if button == "Add Product":
-                price = request.form["price"]
-                uploaded_file = request.files['img']
-                add_product(name, price, uploaded_file)
-            elif button == "Delete Product":
-                pass
-        except(TypeError, ValueError):
-            pass
-        finally:
+    try:
+        if session['logged_in'] and request.method == "GET":
             products = Product.query.order_by(Product.date_created).all()
-        return render_template("admin.html", products=products)
-    return render_template("log-in.html")
+            return render_template("admin.html", products=products)
+        if session['logged_in'] and request.method == "POST":
+            try:
+                button = request.form["button"]
+                name = request.form["name"]
+                if button == "Add Product":
+                    price = request.form["price"]
+                    uploaded_file = request.files['img']
+                    add_product(name, price, uploaded_file)
+                elif button == "Delete Product":
+                    pass
+            except(TypeError, ValueError):
+                pass
+            finally:
+                products = Product.query.order_by(Product.date_created).all()
+            return render_template("admin.html", products=products)
+    except KeyError:
+        return redirect(url_for('account'))
 
 
 @app.route('/admin/images/<filename>')
