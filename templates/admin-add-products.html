@@ -5,12 +5,14 @@
     <h1>Add Product</h1>
     <form action="/admin" method="POST" enctype="multipart/form-data">
       <label>
-        Title
-      <input type="text" name="title" required>
+        Name
+      <input type="text" name="name" required>
       </label>
       <select name="category">
         <option value="" selected disabled hidden>Choose a product category &nbsp;&nbsp;&nbsp;&nbsp; ▼</option>
-        <option value="">Category</option>
+        {% for category in categories %}
+        <option value="{{ category.id }}">{{ category.name }}</option>
+        {% endfor %}
       </select>
       <label>
         Price
