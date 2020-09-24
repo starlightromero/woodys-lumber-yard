@@ -345,6 +345,15 @@ def admin():
                     add_product(name, price, uploaded_file)
                 elif button == "Delete Product":
                     pass
+                elif button == "Add Category":
+                    new_category = Category(name=name)
+                    try:
+                        db.session.add(new_category)
+                        db.session.commit()
+                    except(TypeError, ValueError):
+                        print("error")
+                elif button == "Delete Category":
+                    pass
             except(TypeError, ValueError):
                 pass
             finally:
@@ -358,6 +367,18 @@ def admin():
 def upload(filename):
     """Upload image for new product."""
     return send_from_directory(app.config['UPLOAD_PATH'], filename)
+
+
+@app.route("/admin/add-category")
+def show_add_category():
+    """Admin add category page."""
+    return render_template("admin-add-category.html")
+
+
+@app.route("/admin/delete-category")
+def show_delete_category():
+    """Admin delete category page."""
+    return render_template("admin-delete-category.html")
 
 
 @app.route("/admin/add-products")
