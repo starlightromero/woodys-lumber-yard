@@ -5,12 +5,12 @@
 {% endblock %}
 
 {% block content %}
-{% if message %}
-  {{ message }}
-{% endif %}
 
 <div class="login">
   <h1>Log In</h1>
+  {% if message %}
+    {{ message }}
+  {% endif %}
   <form action="/account" method="POST">
     <label>
       Username
@@ -27,6 +27,9 @@
 
 <div class="signup">
   <h1>Sign Up</h1>
+  {% if message %}
+    {{ message }}
+  {% endif %}
   <form action="/account" method="POST">
     <label>
       Username
