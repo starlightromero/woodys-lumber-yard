@@ -64,16 +64,16 @@ class Category(db.Model):
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        """Return name for Category."""
+        '''Return name for Category.'''
         return f"Product('{self.name}')"
 
     def __str__(self):
-        """Return name for Category."""
+        '''Return name for Category.'''
         return f"Product('{self.name}')"
 
 
 class Product(db.Model):
-    """Product database class."""
+    '''Product database class.'''
 
     __tablename__ = 'product'
     id = db.Column(db.Integer, primary_key=True)
@@ -105,7 +105,7 @@ def load_user(id):
 
 def validate_image(stream):
     """Validate a given image to jpg."""
-    print("IN VALIDATE")
+    print('IN VALIDATE')
     header = stream.read(512)
     stream.seek(0)
     img_format = what(None, header)
@@ -122,7 +122,7 @@ def save_file(file):
         file_ext = os.path.splitext(filename)[1]
         if file_ext not in app.config['UPLOAD_EXTENSIONS'] or \
                 file_ext != validate_image(file.stream):
-            return "Invalid image", 400
+            return 'Invalid image', 400
         file_path = os.path.join(
             app.config['UPLOAD_PATH'], filename
         )
@@ -130,18 +130,19 @@ def save_file(file):
         return file_path
 
 
-def add_product(name, price, file):
+def add_product(name, category, price, file):
     """Add product to database."""
     file_path = save_file(file)
     if file_path:
         new_product = Product(name=name,
+                              category=category,
                               price=price,
                               img=file_path)
         try:
             db.session.add(new_product)
             db.session.commit()
         except(TypeError, ValueError):
-            print("error")
+            print('error')
 
 
 ###############################################################################
@@ -153,25 +154,25 @@ def add_product(name, price, file):
 def page_not_found(e):
     """Page not found page."""
     print(e)
-    return render_template("404.html")
+    return render_template('404.html')
 
 
 @app.errorhandler(413)
 def too_large(e):
     """File is too large page."""
     print(e)
-    return "File is too large", 413
+    return 'File is too large', 413
 
 ###############################################################################
 # ROUTES
 ###############################################################################
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route('/', methods=['GET', 'POST'])
 def home():
     """Home page."""
-    if request.method == "POST":
-        name = request.form["name"]
+    if request.method == 'POST':
+        name = request.form['name']
         products = Product.query.filter(Product.name.contains(name))
         message = name
         context = {
@@ -183,17 +184,17 @@ def home():
         context = {
             'products': products,
         }
-    return render_template("home.html", **context)
+    return render_template('home.html', **context)
 
 
-@app.route("/products/<product_id>", methods=['POST', 'GET'])
+@app.route('/products/<product_id>', methods=['POST', 'GET'])
 def product_detail(product_id):
     """Product detail page."""
     product = Product.query.filter_by(id=product_id).first()
-    return render_template("product-details.html", product=product)
+    return render_template('product-details.html', product=product)
 
 
-@app.route("/boards")
+@app.route('/boards')
 def boards():
     """Boards page."""
     products = Product.query.order_by(Product.date_created).all()
@@ -201,10 +202,10 @@ def boards():
         'products': products,
         'title': 'Boards'
     }
-    return render_template("home.html", **context)
+    return render_template('home.html', **context)
 
 
-@app.route("/plywood")
+@app.route('/plywood')
 def plywood():
     """Plywood page."""
     products = Product.query.order_by(Product.date_created).all()
@@ -212,10 +213,10 @@ def plywood():
         'products': products,
         'title': 'Plywood'
     }
-    return render_template("home.html", **context)
+    return render_template('home.html', **context)
 
 
-@app.route("/pressure-treated")
+@app.route('/pressure-treated')
 def pressure_treated():
     """Pressure treated page."""
     products = Product.query.order_by(Product.date_created).all()
@@ -223,10 +224,10 @@ def pressure_treated():
         'products': products,
         'title': 'Pressure Treated'
     }
-    return render_template("home.html", **context)
+    return render_template('home.html', **context)
 
 
-@app.route("/dimensional-lumber")
+@app.route('/dimensional-lumber')
 def dimensional_lumber():
     """Dimensional lumber page."""
     products = Product.query.order_by(Product.date_created).all()
@@ -234,10 +235,10 @@ def dimensional_lumber():
         'products': products,
         'title': 'Dimensional Lumber'
     }
-    return render_template("home.html", **context)
+    return render_template('home.html', **context)
 
 
-@app.route("/decking")
+@app.route('/decking')
 def decking():
     """Decking page."""
     products = Product.query.order_by(Product.date_created).all()
@@ -245,10 +246,10 @@ def decking():
         'products': products,
         'title': 'Decking'
     }
-    return render_template("home.html", **context)
+    return render_template('home.html', **context)
 
 
-@app.route("/fencing")
+@app.route('/fencing')
 def fencing():
     """Fencing page."""
     products = Product.query.order_by(Product.date_created).all()
@@ -256,10 +257,10 @@ def fencing():
         'products': products,
         'title': 'Fencing'
     }
-    return render_template("home.html", **context)
+    return render_template('home.html', **context)
 
 
-@app.route("/paneling")
+@app.route('/paneling')
 def paneling():
     """Paneling page."""
     products = Product.query.order_by(Product.date_created).all()
@@ -267,10 +268,10 @@ def paneling():
         'products': products,
         'title': 'Paneling'
     }
-    return render_template("home.html", **context)
+    return render_template('home.html', **context)
 
 
-@app.route("/lattice")
+@app.route('/lattice')
 def lattice():
     """Lattice page."""
     products = Product.query.order_by(Product.date_created).all()
@@ -278,21 +279,21 @@ def lattice():
         'products': products,
         'title': 'Lattice'
     }
-    return render_template("home.html", **context)
+    return render_template('home.html', **context)
 
 
-@app.route("/account", methods=['POST', 'GET'])
+@app.route('/account', methods=['POST', 'GET'])
 def account():
     """Account page."""
     try:
         if session['logged_in']:
-            return render_template("account.html")
+            return render_template('account.html')
     except KeyError:
         if request.method == 'GET':
-            return render_template("log-in.html")
+            return render_template('log-in.html')
         if request.method == 'POST':
             button = request.form['submit']
-            message = "There was an error with accessing your account."
+            message = 'There was an error with accessing your account.'
             if button == 'Sign Up':
                 username = request.form['username']
                 email = request.form['email']
@@ -300,7 +301,7 @@ def account():
                 password = sha256_crypt.hash(password)
                 is_admin = False
                 is_superadmin = False
-                if email == "starlightromero@gmail.com":
+                if email == 'starlightromero@gmail.com':
                     is_superadmin = True
                     is_admin = True
 
@@ -314,9 +315,9 @@ def account():
                     db.session.commit()
                     login_user(new_user)
                     session['logged_in'] = True
-                    message = "You have successfully signed up!"
+                    message = 'You have successfully signed up!'
                 except(TypeError, ValueError):
-                    print("error")
+                    print('error')
             elif button == 'Log In':
                 username = request.form['username']
                 password = request.form['password']
@@ -327,50 +328,57 @@ def account():
                         session['logged_in'] = True
                     else:
                         message = 'The password is invalid.'
-                        return render_template("login-in.html", message=message)
+                        return render_template('login-in.html', message=message)
                 except ValueError:
                     message = 'The username could not be found.'
-                    return render_template("log-in.html", message=message)
-            return render_template("account.html", message=message)
+                    return render_template('log-in.html', message=message)
+            return render_template('account.html', message=message)
 
 
-@app.route("/cart")
+@app.route('/cart')
 def cart():
     """Cart page."""
-    return render_template("cart.html")
+    return render_template('cart.html')
 
 
-@app.route("/admin", methods=["POST", "GET"])
+###############################################################################
+# ADMIN ROUTES
+###############################################################################
+
+
+@app.route('/admin', methods=['POST', 'GET'])
 def admin():
     """Admin page."""
     try:
-        if session['logged_in'] and request.method == "GET":
+        if session['logged_in'] and request.method == 'GET':
             products = Product.query.order_by(Product.date_created).all()
-            return render_template("admin.html", products=products)
-        if session['logged_in'] and request.method == "POST":
+            return render_template('admin.html', products=products)
+        if session['logged_in'] and request.method == 'POST':
             try:
-                button = request.form["button"]
-                name = request.form["name"]
-                if button == "Add Product":
-                    price = request.form["price"]
+                button = request.form['button']
+                name = request.form['name']
+                if button == 'Add Product':
+                    category_id = request.form['category']
+                    category = Category.query.filter_by(id=category_id).first()
+                    price = request.form['price']
                     uploaded_file = request.files['img']
-                    add_product(name, price, uploaded_file)
-                elif button == "Delete Product":
+                    add_product(name, category, price, uploaded_file)
+                elif button == 'Delete Product':
                     pass
-                elif button == "Add Category":
+                elif button == 'Add Category':
                     new_category = Category(name=name)
                     try:
                         db.session.add(new_category)
                         db.session.commit()
                     except(TypeError, ValueError):
-                        print("error")
-                elif button == "Delete Category":
+                        print('error')
+                elif button == 'Delete Category':
                     pass
             except(TypeError, ValueError):
                 pass
             finally:
                 products = Product.query.order_by(Product.date_created).all()
-            return render_template("admin.html", products=products)
+            return render_template('admin.html', products=products)
     except KeyError:
         return redirect(url_for('account'))
 
@@ -381,30 +389,30 @@ def upload(filename):
     return send_from_directory(app.config['UPLOAD_PATH'], filename)
 
 
-@app.route("/admin/add-category")
+@app.route('/admin/add-category')
 def show_add_category():
     """Admin add category page."""
-    return render_template("admin-add-category.html")
+    return render_template('admin-add-category.html')
 
 
-@app.route("/admin/delete-category")
+@app.route('/admin/delete-category')
 def show_delete_category():
     """Admin delete category page."""
-    return render_template("admin-delete-category.html")
+    return render_template('admin-delete-category.html')
 
 
-@app.route("/admin/add-products")
+@app.route('/admin/add-products')
 def show_add_products():
     """Admin add products page."""
     categories = Category.query.order_by(Category.name).all()
-    return render_template("admin-add-products.html", categories=categories)
+    return render_template('admin-add-products.html', categories=categories)
 
 
-@app.route("/admin/delete-products")
+@app.route('/admin/delete-products')
 def show_delete_products():
     """Admin delete projects page."""
-    return render_template("admin-delete-products.html")
+    return render_template('admin-delete-products.html')
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app.run(debug=True)
