@@ -37,8 +37,8 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(120), unique=True, nullable=False)
     image = db.Column(db.String(20), nullable=False, default='default.jpg')
     password = db.Column(db.String(60), nullable=False)
-    is_admin = db.Column(db.Boolean, nullable=False)
-    is_superadmin = db.Column(db.Boolean, nullable=False)
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
+    is_superadmin = db.Column(db.Boolean, nullable=False, default=False)
 
     def __repr__(self):
         """Return username and email for User."""
@@ -47,25 +47,35 @@ class User(db.Model, UserMixin):
     def __str__(self):
         """Return username and email for User."""
         return f"User('{self.username}', '{self.email}')"
+
+
+class Category(db.Model):
+    """Product Category database class."""
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(20), nullable=False)
+    date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    created_by = db.relationship('User', backref='category', lazy=True)
 
 
 class Product(db.Model):
     """Product database class."""
 
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    category = db.Column(db.String(20), nullable=False)
+    name = db.Column(db.String(100), nullable=False)
+    category = db.relationship('Category', backref='product', lazy=True)
     price = db.Column(db.Float, nullable=False)
     img = db.Column(db.String(40), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
+    created_by = db.relationship('User', backref='product', lazy=True)
 
     def __repr__(self):
-        """Return title and price for Product."""
-        return f"Product('{self.title}', '{self.price}')"
+        """Return name and price for Product."""
+        return f"Product('{self.name}', '{self.price}')"
 
     def __str__(self):
-        """Return title and price for Product."""
-        return f"Product('{self.title}', '{self.price}')"
+        """Return name and price for Product."""
+        return f"Product('{self.name}', '{self.price}')"
 
 
 ###############################################################################
@@ -105,11 +115,11 @@ def save_file(file):
         return file_path
 
 
-def add_product(title, price, file):
+def add_product(name, price, file):
     """Add product to database."""
     file_path = save_file(file)
     if file_path:
-        new_product = Product(title=title,
+        new_product = Product(name=name,
                               price=price,
                               img=file_path)
         try:
@@ -146,9 +156,9 @@ def too_large(e):
 def home():
     """Home page."""
     if request.method == "POST":
-        title = request.form["title"]
-        products = Product.query.filter(Product.title.contains(title))
-        message = title
+        name = request.form["name"]
+        products = Product.query.filter(Product.name.contains(name))
+        message = name
         context = {
             'products': products,
             'message': message
@@ -303,11 +313,11 @@ def admin():
     if session['logged_in'] and request.method == "POST":
         try:
             button = request.form["button"]
-            title = request.form["title"]
+            name = request.form["name"]
             if button == "Add Product":
                 price = request.form["price"]
                 uploaded_file = request.files['img']
-                add_product(title, price, uploaded_file)
+                add_product(name, price, uploaded_file)
             elif button == "Delete Product":
                 pass
         except(TypeError, ValueError):
@@ -327,13 +337,15 @@ def upload(filename):
 @app.route("/admin/add-products")
 def show_add_products():
     """Admin add products page."""
-    return render_template("admin-add-products.html")
+    categories = Category.query.order_by(Category.name).all()
+    return render_template("admin-add-products.html", categories=categories)
 
 
 @app.route("/admin/delete-products")
 def show_delete_products():
     """Admin delete projects page."""
     return render_template("admin-delete-products.html")
+
 
 if __name__ == "__main__":
     app.run(debug=True)
