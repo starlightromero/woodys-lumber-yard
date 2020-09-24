@@ -318,7 +318,19 @@ def account():
                 except(TypeError, ValueError):
                     print("error")
             elif button == 'Log In':
-                message = 'You have successfully logged in!'
+                username = request.form['username']
+                password = request.form['password']
+                try:
+                    user = User.query.filter_by(username=username).first()
+                    if sha256_crypt.verify(password, user.password):
+                        message = 'You have successfully logged in!'
+                        session['logged_in'] = True
+                    else:
+                        message = 'The password is invalid.'
+                        return render_template("login-in.html", message=message)
+                except ValueError:
+                    message = 'The username could not be found.'
+                    return render_template("log-in.html", message=message)
             return render_template("account.html", message=message)
 
 
