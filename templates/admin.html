@@ -2,6 +2,10 @@
 {% block title %}Admin{% endblock %}
 
 {% block content %}
+{% if message %}
+<h3>{{ message }}</h3>
+{% endif %}
+
 <div class="product-grid">
   {% for product in products %}
   <div class="product-item">
