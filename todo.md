@@ -1,6 +1,6 @@
 # TODO
 
-* filter each category page by product category
+* render category nav links dynamically
 * allow admin to update products
 * allow admin to update categories
 * allow sign in by username or email
