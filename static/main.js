@@ -17,5 +17,5 @@ const cart = document.querySelector('.cart')
 const addToCart = document.querySelector('button[name=\'add-to-cart\']')
 
 addToCart.addEventListener('click', () => {
-  console.log('added')
+  alert('added')
 })
