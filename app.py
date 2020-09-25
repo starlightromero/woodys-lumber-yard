@@ -107,11 +107,9 @@ def load_user(id):
 
 def validate_image(stream):
     """Validate a given image to jpg."""
-    print('IN VALIDATE')
     header = stream.read(512)
     stream.seek(0)
     img_format = what(None, header)
-    print(img_format)
     if not img_format:
         return None
     return '.' + (img_format if img_format != 'jpeg' else 'jpg')
@@ -178,7 +176,6 @@ def too_large(e):
 def home():
     """Home page."""
     categories = Category.query.all()
-    print(categories)
     if request.method == 'POST':
         name = request.form['name']
         products = Product.query.filter(Product.name.contains(name))
@@ -217,7 +214,6 @@ def boards(category):
     try:
         products = Product.query.filter_by(link=category)\
             .order_by(Product.date_created).all()
-        print(products)
         context = {
             'products': products,
             'title': title,
