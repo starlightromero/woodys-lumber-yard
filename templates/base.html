@@ -32,18 +32,15 @@
         </a>
       </div>
     </div>
+    {% if categories %}
     <nav>
       <ul>
-        <li><a href="/category/boards">Boards</a></li>
-        <li><a href="/category/plywood">Plywood</a></li>
-        <li><a href="/category/pressure-treated">Pressure Treated</a></li>
-        <li><a href="/category/dimensional-lumber">Dimensional Lumber</a></li>
-        <li><a href="/category/decking">Decking</a></li>
-        <li><a href="/category/fencing">Fencing</a></li>
-        <li><a href="/category/paneling">Paneling</a></li>
-        <li><a href="/category/lattice">Lattice</a></li>
+        {% for category in categories %}
+        <li><a href="/category/{{ category.link }}">{{ category.name }}</a></li>
+        {% endfor %}
       </ul>
     </nav>
+    {% endif %}
     {% block nav %}{% endblock %}
   </header>
 
