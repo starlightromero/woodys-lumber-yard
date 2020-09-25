@@ -396,14 +396,14 @@ def show_delete_category():
     return render_template('admin-delete-category.html', **context)
 
 
-@app.route('/admin/add-products')
+@app.route('/admin/add-product')
 def show_add_product():
     """Admin add products page."""
     categories = Category.query.order_by(Category.name).all()
     return render_template('admin-add-product.html', categories=categories)
 
 
-@app.route('/admin/delete-products')
+@app.route('/admin/delete-product')
 def show_delete_product():
     """Admin delete projects page."""
     categories = Category.query.all()
