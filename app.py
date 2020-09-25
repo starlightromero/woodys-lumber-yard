@@ -65,16 +65,16 @@ class Category(db.Model):
     created_by_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        '''Return name for Category.'''
-        return f"Product('{self.name}')"
+        """Return name for Category."""
+        return f"Category('{self.name}')"
 
     def __str__(self):
-        '''Return name for Category.'''
-        return f"Product('{self.name}')"
+        """Return name for Category."""
+        return f"Category('{self.name}')"
 
 
 class Product(db.Model):
-    '''Product database class.'''
+    """Product database class."""
 
     __tablename__ = 'product'
     id = db.Column(db.Integer, primary_key=True)
@@ -87,11 +87,11 @@ class Product(db.Model):
 
     def __repr__(self):
         """Return name and price for Product."""
-        return f"Product('{self.name}', '{self.price}')"
+        return f"Product('{self.name}', '{self.category}','{self.price}')"
 
     def __str__(self):
         """Return name and price for Product."""
-        return f"Product('{self.name}', '{self.price}')"
+        return f"Product('{self.name}', '{self.category}', '{self.price}')"
 
 
 ###############################################################################
@@ -155,7 +155,7 @@ def add_product(name, category, price, file):
 def page_not_found(e):
     """Page not found page."""
     print(e)
-    return render_template('404.html')
+    return render_template('404.html'), 404
 
 
 @app.errorhandler(413)
@@ -195,92 +195,22 @@ def product_detail(product_id):
     return render_template('product-details.html', product=product)
 
 
-@app.route('/boards')
-def boards():
-    """Boards page."""
-    products = Product.query.order_by(Product.date_created).all()
-    context = {
-        'products': products,
-        'title': 'Boards'
-    }
-    return render_template('home.html', **context)
-
-
-@app.route('/plywood')
-def plywood():
-    """Plywood page."""
-    products = Product.query.order_by(Product.date_created).all()
-    context = {
-        'products': products,
-        'title': 'Plywood'
-    }
-    return render_template('home.html', **context)
-
-
-@app.route('/pressure-treated')
-def pressure_treated():
-    """Pressure treated page."""
-    products = Product.query.order_by(Product.date_created).all()
-    context = {
-        'products': products,
-        'title': 'Pressure Treated'
-    }
-    return render_template('home.html', **context)
-
-
-@app.route('/dimensional-lumber')
-def dimensional_lumber():
-    """Dimensional lumber page."""
-    products = Product.query.order_by(Product.date_created).all()
-    context = {
-        'products': products,
-        'title': 'Dimensional Lumber'
-    }
-    return render_template('home.html', **context)
-
-
-@app.route('/decking')
-def decking():
-    """Decking page."""
-    products = Product.query.order_by(Product.date_created).all()
-    context = {
-        'products': products,
-        'title': 'Decking'
-    }
-    return render_template('home.html', **context)
-
-
-@app.route('/fencing')
-def fencing():
-    """Fencing page."""
-    products = Product.query.order_by(Product.date_created).all()
-    context = {
-        'products': products,
-        'title': 'Fencing'
-    }
-    return render_template('home.html', **context)
-
-
-@app.route('/paneling')
-def paneling():
-    """Paneling page."""
-    products = Product.query.order_by(Product.date_created).all()
-    context = {
-        'products': products,
-        'title': 'Paneling'
-    }
-    return render_template('home.html', **context)
-
-
-@app.route('/lattice')
-def lattice():
-    """Lattice page."""
-    products = Product.query.order_by(Product.date_created).all()
-    context = {
-        'products': products,
-        'title': 'Lattice'
-    }
-    return render_template('home.html', **context)
+@app.route('/category/<category>')
+def boards(category):
+    """Category page."""
+    title = category.replace('-', ' ').title()
+    try:
+        category = Category.query.filter_by(name=title).first()
+        print(category)
+        products = Product.query.filter_by(category=category).order_by(Product.date_created).all()
+        print(products)
+        context = {
+            'products': products,
+            'title': title
+        }
+        return render_template('home.html', **context)
+    except AttributeError:
+        return render_template('404.html')
 
 
 @app.route('/account', methods=['POST', 'GET'])
