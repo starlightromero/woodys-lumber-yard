@@ -9,9 +9,14 @@
 <h1>{{ title }}</h1>
 {% endif %}
 
-{% if message %}
-<h1>Search Results for: {{ message }}</h1>
+{% if search_message %}
+<h1>Search Results for: {{ search_message }}</h1>
 {% endif %}
+
+{% if message %}
+<h3>{{ message }}</h3>
+{% endif %}
+
 
 <div class="product-grid">
   {% for product in products %}
