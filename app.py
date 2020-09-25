@@ -330,6 +330,7 @@ def admin():
         if session['logged_in'] and request.method == 'GET':
             products = Product.query.order_by(Product.date_created).all()
             context = {
+                'products': products,
                 'categories': categories
             }
             return render_template('admin.html', **context)
@@ -343,6 +344,7 @@ def admin():
                     price = request.form['price']
                     uploaded_file = request.files['img']
                     add_product(name, category, price, uploaded_file)
+                    message = f"{name} has been successfully added."
                 elif button == 'Delete Product':
                     pass
                 elif button == 'Add Category':
@@ -353,6 +355,7 @@ def admin():
                     try:
                         db.session.add(new_category)
                         db.session.commit()
+                        message = f"{name} has been successfully added."
                     except(TypeError, ValueError):
                         print('error')
                 elif button == 'Delete Category':
@@ -363,7 +366,8 @@ def admin():
                 products = Product.query.order_by(Product.date_created).all()
                 context = {
                     'categories': categories,
-                    'product': products
+                    'products': products,
+                    'message': message
                 }
             return render_template('admin.html', **context)
     except KeyError:
