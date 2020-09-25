@@ -1,10 +1,15 @@
 {% extends "base.html" %}
 {% block title %}Account{% endblock %}
 
+{% block head %}
+{{ super() }}
+<script src="static/account.js" type="text/javascript" charset="utf-8" defer></script>
+{% endblock %}
+
 {% block content %}
 <h1>Account</h1>
 {% if message %}
   {{ message }}
 {% endif %}
-<p>Log Out</p>
+<button type="button" name="logout" id="logout-btn">Log Out</button>
 {% endblock %}
