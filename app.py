@@ -397,20 +397,20 @@ def show_delete_category():
 
 
 @app.route('/admin/add-products')
-def show_add_products():
+def show_add_product():
     """Admin add products page."""
     categories = Category.query.order_by(Category.name).all()
-    return render_template('admin-add-products.html', categories=categories)
+    return render_template('admin-add-product.html', categories=categories)
 
 
 @app.route('/admin/delete-products')
-def show_delete_products():
+def show_delete_product():
     """Admin delete projects page."""
     categories = Category.query.all()
     context = {
         'categories': categories
     }
-    return render_template('admin-delete-products.html', **context)
+    return render_template('admin-delete-productshtml', **context)
 
 
 if __name__ == '__main__':
