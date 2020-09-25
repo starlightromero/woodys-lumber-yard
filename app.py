@@ -23,6 +23,7 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager(app)
 login_manager.init_app(app)
+login_manager.session_protection = "strong"
 
 
 ###############################################################################
@@ -287,6 +288,7 @@ def account():
     """Account page."""
     try:
         if session['logged_in']:
+            print(current_user)
             return render_template('account.html')
     except KeyError:
         if request.method == 'GET':
