@@ -6,7 +6,6 @@
 * create cart db class
 * add products to cart
 * show details on cart page
-* create new route and nav link for new product category
 * break up admin route
 * break up account route
 * add details to account page
