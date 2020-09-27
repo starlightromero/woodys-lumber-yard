@@ -6,7 +6,11 @@
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="/static/css/main.css">
   <script type="text/javascript" charset="utf-8" src="/static/main.js" defer></script>
-  <title>{% block title %}{% endblock %} - Woody's Lumber Yard</title>
+  {% if title %}
+    <title>Woody's Lumber Yard - {{ title }}</title>
+  {% else %}
+    <title>Woody's Lumber Yard</title>
+  {% endif %}
   {% endblock %}
 </head>
 
@@ -21,12 +25,12 @@
           <input class="search-submit" type="image" src="/static/assets/search.svg" alt="Submit Form" />
         </form>
       </div>
-      <h1><a href="/">Woody's Lumber Yard</a></h1>
+      <h1><a href="{{ url_for('home') }}">Woody's Lumber Yard</a></h1>
       <div class="user-icons">
-        <a href="/account">
+        <a href="{{ url_for('account') }}">
           <img src="/static/assets/user.svg" alt="My Account">
         </a>
-        <a href="/cart">
+        <a href="{{ url_for('cart') }}">
           <img class="cart" src="/static/assets/shopping-cart.svg" alt="Shopping Cart">
           <div class="circle">1</div>
         </a>
@@ -41,7 +45,6 @@
       </ul>
     </nav>
     {% endif %}
-    {% block nav %}{% endblock %}
   </header>
 
   <main>
