@@ -22,7 +22,7 @@ from online_store.forms import (
 )
 
 ###############################################################################
-# HELPER FUNCTIONS
+#                           HELPER FUNCTIONS
 ###############################################################################
 
 
@@ -210,7 +210,7 @@ def cart():
 
 
 @app.route("/admin", methods=["POST", "GET"])
-# @login_required
+@login_required
 def admin():
     """Admin page."""
     categories = Category.query.all()
@@ -220,7 +220,7 @@ def admin():
 
 
 @app.route("/admin/add-category", methods=["GET", "POST"])
-# @login_required
+@login_required
 def add_category():
     """Admin add category page."""
     categories = Category.query.all()
@@ -242,14 +242,14 @@ def add_category():
 
 
 @app.route("/admin/<category_id>/delete", methods=["POST"])
-# @login_required
+@login_required
 def delete_category(category_id):
     """Admin delete category."""
     return redirect(url_for("admin"))
 
 
 @app.route("/admin/add-product", methods=["GET", "POST"])
-# @login_required
+@login_required
 def add_product():
     """Admin add products page."""
     categories = Category.query.all()
@@ -278,7 +278,7 @@ def add_product():
 
 
 @app.route("/admin/<product_id>/delete", methods=["POST"])
-# @login_required
+@login_required
 def delete_product(product_id):
     """Admin delete projects."""
     return redirect(url_for("admin"))
