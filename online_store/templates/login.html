@@ -1,9 +1,4 @@
 {% extends "base.html" %}
-{% block head %}
-{{ super() }}
-<script type="text/javascript" src="/static/login.js" defer></script>
-{% endblock %}
-
 {% block content %}
 
 <div class="login">
@@ -11,35 +6,34 @@
     {{ form.hidden_tag() }}
     <fieldset>
       <legend>Login</legend>
-      <div>
-        {{ form.email.label }}
-        {% if form.email.errors %}
-          {{ form.email(class="is-invalid") }}
-          <div class="invalid-feedback">
-            {% for error in form.email.errors %}
-              {{ error }}
-            {% endfor %}
-          </div>
-        {% else %}
-          {{ form.email }}
-        {% endif %}
-      </div>
-      <div>
-        {{ form.password.label }}
-        {% if form.password.errors %}
-          {{ form.password(class="is-invalid") }}
-          <div class="invalid-feedback">
-            {% for error in form.password.errors %}
-              {{ error }}
-            {% endfor %}
-          </div>
-        {% else %}
-          {{ form.password }}
-        {% endif %}
-      </div>
-      <div>
-        {{ form.remember }}
+      {{ form.email.label }}
+      {% if form.email.errors %}
+        {{ form.email(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.email.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.email }}
+      {% endif %}
+      {{ form.password.label }}
+      {% if form.password.errors %}
+        {{ form.password(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.password.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.password }}
+      {% endif %}
+      <div class="remember">
         {{ form.remember.label }}
+        <div class="switch">
+          {{ form.remember }}
+          <span class="slider"></span>
+        </div>
       </div>
     </fieldset>
     <div>
@@ -47,34 +41,11 @@
     </div>
     <small><a href="#">Forgot Password?</a></small>
   </form>
-  <div>
+  <div class="change-form">
     <small>
       Need an account? <a href="{{ url_for('register') }}">Sign Up</a>
     </small>
   </div>
-</div>
-
-<div class="signup">
-  <h1>Sign Up</h1>
-  {% if message %}
-    {{ message }}
-  {% endif %}
-  <form action="/account" method="POST">
-    <label>
-      Username
-      <input type="text" name="username" required>
-    </label>
-    <label>
-      Email
-      <input type="email" name="email" required>
-    </label>
-    <label>
-      Password
-      <input type="password" name="password" required>
-    </label>
-    <input type="submit" name="submit" value="Sign Up">
-  </form>
-  <small>Already have an account? <a id="goToLogin">Log In</a></small>
 </div>
 
 {% endblock %}
