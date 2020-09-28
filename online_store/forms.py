@@ -17,6 +17,7 @@ from wtforms.validators import (
     EqualTo,
     ValidationError,
 )
+from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from online_store.models import User, Category
 
 
@@ -110,8 +111,10 @@ class AddProductForm(FlaskForm):
     name = StringField(
         "Name", validators=[DataRequired(), Length(min=2, max=100)]
     )
-    category = SelectField(
+    category = QuerySelectField(
         "Category",
+        query_factory=lambda: Category.query,
+        allow_blank=False,
         validators=[DataRequired()],
     )
     price = DecimalField("Price", validators=[DataRequired()])
