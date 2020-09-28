@@ -1,13 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{{ product.title }}{% endblock %}
-{% block head %}
-    {{ super() }}
-{% endblock %}
 
 {% block content %}
   <div class="product-detail">
     <div class="product-detail-image">
-      <img src="../{{ product.img }}" alt="{{ product.name }}">
+      <img src="{{ url_for('static', filename='product-images/' + product.image) }}" alt="{{ product.name }}">
     </div>
     <div class="product-detail-text">
       <p>{{ product.name }}</p>
