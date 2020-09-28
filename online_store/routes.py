@@ -1,6 +1,5 @@
 import os
 import secrets
-from werkzeug.utils import secure_filename
 from PIL import Image
 from flask import (
     render_template,
@@ -14,7 +13,13 @@ from flask import (
 from flask_login import login_user, current_user, logout_user, login_required
 from online_store import app, db
 from online_store.models import User, Category, Product
-from online_store.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from online_store.forms import (
+    RegistrationForm,
+    LoginForm,
+    UpdateAccountForm,
+    AddProductForm,
+    AddCategoryForm,
+)
 
 ###############################################################################
 # HELPER FUNCTIONS
@@ -36,46 +41,8 @@ def save_image(form_image, folder, size):
     return image_filename
 
 
-def validate_image(stream):
-    """Validate a given image to jpg."""
-    header = stream.read(512)
-    stream.seek(0)
-    img_format = what(None, header)
-    if not img_format:
-        return None
-    return "." + (img_format if img_format != "jpeg" else "jpg")
-
-
-def save_file(file):
-    """Check security on file and save to upload path."""
-    filename = secure_filename(file.filename)
-    if filename:
-        file_ext = os.path.splitext(filename)[1]
-        if file_ext not in app.config[
-            "UPLOAD_EXTENSIONS"
-        ] or file_ext != validate_image(file.stream):
-            return "Invalid image", 400
-        file_path = os.path.join(app.config["UPLOAD_PATH"], filename)
-        file.save(file_path)
-        return file_path
-
-
-def add_product(name, category, price, file):
-    """Add product to database."""
-    file_path = save_file(file)
-    if file_path:
-        new_product = Product(
-            name=name, category=category, price=price, img=file_path
-        )
-        try:
-            db.session.add(new_product)
-            db.session.commit()
-        except (TypeError, ValueError):
-            print("error")
-
-
 ###############################################################################
-# ERROR HANDLING
+#                           ERROR HANDLING
 ###############################################################################
 
 
@@ -96,7 +63,7 @@ def too_large(e):
 
 
 ###############################################################################
-# ROUTES
+#                           `   ROUTES
 ###############################################################################
 
 
@@ -130,7 +97,7 @@ def product_detail(product_id):
 
 
 @app.route("/category/<category>")
-def boards(category):
+def product_category(category):
     """Category page."""
     categories = Category.query.all()
     title = category.replace("-", " ").title()
@@ -154,6 +121,11 @@ def boards(category):
             "message": message,
         }
         return render_template("home.html", **context)
+
+
+###############################################################################
+#                               ACCOUNT ROUTES
+###############################################################################
 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -218,10 +190,10 @@ def account():
         db.session.commit()
         flash("Your account has been updated!")
         return redirect(url_for("account"))
-    elif request.method == "GET":
-        form.username.data = current_user.username
-        form.email.data = current_user.email
-    return render_template("account.html", title="Account", form=form)
+    form.username.data = current_user.username
+    form.email.data = current_user.email
+    context = {"title": "Account", "form": form, "categories": categories}
+    return render_template("account.html", **context)
 
 
 @app.route("/cart")
@@ -233,98 +205,80 @@ def cart():
 
 
 ###############################################################################
-# ADMIN ROUTES
+#                               ADMIN ROUTES
 ###############################################################################
 
 
 @app.route("/admin", methods=["POST", "GET"])
-@login_required
+# @login_required
 def admin():
     """Admin page."""
     categories = Category.query.all()
-    try:
-        if session["logged_in"] and request.method == "GET":
-            products = Product.query.order_by(Product.date_created).all()
-            context = {"products": products, "categories": categories}
-            return render_template("admin.html", **context)
-        if session["logged_in"] and request.method == "POST":
-            try:
-                button = request.form["button"]
-                name = request.form["name"]
-                if button == "Add Product":
-                    category_id = request.form["category"]
-                    category = Category.query.filter_by(
-                        id=category_id
-                    ).first()
-                    price = request.form["price"]
-                    uploaded_file = request.files["img"]
-                    add_product(name, category, price, uploaded_file)
-                    message = f"{name} has been successfully added."
-                elif button == "Delete Product":
-                    pass
-                elif button == "Add Category":
-                    name = name.title()
-                    link = name.lower().replace(" ", "-")
-                    new_category = Category(name=name, link=link)
-                    try:
-                        db.session.add(new_category)
-                        db.session.commit()
-                        message = f"{name} has been successfully added."
-                    except (TypeError, ValueError):
-                        print("error")
-                elif button == "Delete Category":
-                    pass
-            except (TypeError, ValueError):
-                message = "In the except"
-            finally:
-                products = Product.query.order_by(Product.date_created).all()
-                context = {
-                    "categories": categories,
-                    "products": products,
-                    "message": message,
-                }
-            return render_template("admin.html", **context)
-    except KeyError:
-        return redirect(url_for("account"))
+    products = Product.query.order_by(Product.date_created).all()
+    context = {"products": products, "categories": categories}
+    return render_template("admin.html", **context)
 
 
-@app.route("/admin/images/<filename>")
-@login_required
-def upload(filename):
-    """Upload image for new product."""
-    return send_from_directory(app.config["UPLOAD_PATH"], filename)
-
-
-@app.route("/admin/add-category")
-@login_required
-def show_add_category():
+@app.route("/admin/add-category", methods=["GET", "POST"])
+# @login_required
+def add_category():
     """Admin add category page."""
     categories = Category.query.all()
-    context = {"categories": categories}
+    form = AddCategoryForm()
+    if form.validate_on_submit():
+        name = form.name.data.title()
+        new_category = Category(name=name)
+        new_category.add_link()
+        db.session.add(new_category)
+        db.session.commit()
+        flash(f"{name} category has been added!")
+        return redirect(url_for("add_category"))
+    context = {
+        "title": "Add Category",
+        "form": form,
+        "categories": categories,
+    }
     return render_template("admin-add-category.html", **context)
 
 
-@app.route("/admin/delete-category")
-@login_required
-def show_delete_category():
-    """Admin delete category page."""
-    categories = Category.query.all()
-    context = {"categories": categories}
-    return render_template("admin-delete-category.html", **context)
+@app.route("/admin/<category_id>/delete", methods=["POST"])
+# @login_required
+def delete_category(category_id):
+    """Admin delete category."""
+    return redirect(url_for("admin"))
 
 
-@app.route("/admin/add-product")
-@login_required
-def show_add_product():
+@app.route("/admin/add-product", methods=["GET", "POST"])
+# @login_required
+def add_product():
     """Admin add products page."""
-    categories = Category.query.order_by(Category.name).all()
-    return render_template("admin-add-product.html", categories=categories)
-
-
-@app.route("/admin/delete-product")
-@login_required
-def show_delete_product():
-    """Admin delete projects page."""
     categories = Category.query.all()
-    context = {"categories": categories}
-    return render_template("admin-delete-productshtml", **context)
+    form = AddProductForm()
+    if form.validate_on_submit():
+        image_file = None
+        if form.image.data:
+            image_file = save_image(form.image.data, "product-images", 800)
+        name = form.name.data.title()
+        new_product = Product(
+            name=name,
+            category=form.category.data,
+            price=form.price.data,
+            image=image_file,
+        )
+        db.session.add(new_product)
+        db.session.commit()
+        flash(f"{name} product has been added!")
+        return redirect(url_for("add_category"))
+    context = {
+        "title": "Add Product",
+        "form": form,
+        "categories": categories,
+    }
+    return render_template("admin-add-product.html", **context)
+
+
+@app.route("/admin/<product_id>/delete", methods=["POST"])
+# @login_required
+def delete_product(product_id):
+    """Admin delete projects."""
+    return redirect(url_for("admin"))
