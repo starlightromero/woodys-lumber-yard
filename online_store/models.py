@@ -55,7 +55,7 @@ class Category(db.Model):
 
     def __str__(self):
         """Return name for Category."""
-        return f"Category('{self.name}', '{self.link}')"
+        return self.name
 
     def add_link(self):
         """Add link based on category name."""
