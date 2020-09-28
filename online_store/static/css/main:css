@@ -8,7 +8,7 @@
   src: url("../fonts/Open-Sans-Light.eot?#iefix") format("embedded-opentype");
   src: url("../fonts/OpenSans-Light.ttf") format("truetype");
   src: url("../fonts/OpenSans-Light.woff") format("woff"); }
-body main .product-grid .product-item button, body main form input[type=submit], body footer button {
+body main .product-grid .product-item button, body footer button {
   -ms-appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -200,137 +200,97 @@ body {
         padding: 10px;
         background-color: #FCDFB3;
         width: 35%; }
-    body main form {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      background-color: #FCDFB3;
-      margin: auto;
-      padding: 1rem;
-      font-size: 1.5rem;
-      justify-content: space-around;
-      width: 500px;
-      line-height: 2; }
-      body main form * {
-        margin: 0.5rem 0; }
-      body main form fieldset {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        border: none;
-        width: 80%; }
-        body main form fieldset legend {
-          border: none;
-          font-size: 2rem; }
-        body main form fieldset select {
-          -ms-appearance: none;
-          -moz-appearance: none;
-          -webkit-appearance: none;
-          appearance: none;
-          background-color: #634C29;
-          border: none;
-          box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-          color: #FCDFB3;
-          cursor: pointer;
-          font-size: 1.5rem;
-          padding: 12px; }
-          body main form fieldset select:hover {
-            background-color: #B09C7D; }
-          body main form fieldset select:focus {
-            outline: none; }
-        body main form fieldset input, body main form fieldset label {
-          color: #634C29; }
-        body main form fieldset input {
-          font-size: 1.5rem;
-          text-align: left; }
-          body main form fieldset input[type=text], body main form fieldset input[type=email], body main form fieldset input[type=password], body main form fieldset input[type=number] {
-            background-color: transparent;
-            border: none;
-            border-bottom: 3px solid #634C29;
-            outline: #634C29; }
-          body main form fieldset input[type="file"] {
-            z-index: 0; }
-        body main form fieldset .remember {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-          align-items: center;
-          justify-content: space-around;
-          width: 100%; }
-          body main form fieldset .remember .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px; }
-            body main form fieldset .remember .switch input {
-              opacity: 0;
-              width: 0;
-              height: 0; }
-            body main form fieldset .remember .switch input:checked + .slider {
-              background-color: #634C29; }
-            body main form fieldset .remember .switch input:focus + .slider {
-              box-shadow: 0 0 1px #634C29; }
-            body main form fieldset .remember .switch input:checked + .slider:before {
-              -webkit-transform: translateX(26px);
-              -ms-transform: translateX(26px);
-              transform: translateX(26px); }
-            body main form fieldset .remember .switch .slider {
-              position: absolute;
-              cursor: pointer;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              background-color: #B09C7D;
-              -webkit-transition: 0.4s;
-              transition: 0.4s;
-              border-radius: 34px; }
-              body main form fieldset .remember .switch .slider:before {
-                position: absolute;
-                content: "";
-                height: 26px;
-                width: 26px;
-                left: 4px;
-                bottom: 4px;
-                background-color: #FCDFB3;
-                -webkit-transition: 0.4s;
-                transition: 0.4s;
-                border-radius: 50%; }
-      body main form input[type=submit] {
-        width: 100%; }
-        body main form input[type=submit]:hover, body main form input[type=submit]:focus {
-          background: #B09C7D; }
-        body main form input[type=submit]:focus {
-          outline: 1px solid #B09C7D;
-          outline-offset: -4px; }
-        body main form input[type=submit]:active {
-          transform: scale(0.95); }
-      body main form small a {
+    body main .signup {
+      display: block; }
+      body main .signup small {
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         user-select: none;
-        color: #634C29;
-        cursor: pointer;
-        text-decoration: underline;
-        font-size: 0.8rem; }
-    body main .change-form small {
+        color: #4A381E; }
+        body main .signup small a {
+          color: #FCDFB3;
+          cursor: pointer;
+          text-decoration: underline; }
+    body main .login small {
       -khtml-user-select: none;
       -moz-user-select: none;
       -ms-user-select: none;
       -webkit-touch-callout: none;
       -webkit-user-select: none;
       user-select: none;
-      color: #4A381E;
-      font-size: 0.8rem; }
-      body main .change-form small a {
+      color: #4A381E; }
+      body main .login small a {
         color: #FCDFB3;
         cursor: pointer;
         text-decoration: underline; }
+    body main form {
+      background-color: #FCDFB3;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      font-size: 1.5rem;
+      justify-content: space-around;
+      align-items: center;
+      width: 500px;
+      height: 500px;
+      line-height: 2;
+      text-align: left; }
+      body main form select {
+        -ms-appearance: none;
+        -moz-appearance: none;
+        -webkit-appearance: none;
+        appearance: none;
+        background-color: #634C29;
+        border: none;
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+        color: #FCDFB3;
+        cursor: pointer;
+        font-size: 1.5rem;
+        padding: 12px; }
+        body main form select:hover {
+          background-color: #B09C7D; }
+        body main form select:focus {
+          outline: none; }
+      body main form input, body main form label {
+        width: 80%;
+        color: #634C29; }
+      body main form input {
+        width: 100%;
+        font-size: 1.5rem; }
+        body main form input[type=text], body main form input[type=email], body main form input[type=password], body main form input[type=number] {
+          background-color: transparent;
+          border: none;
+          border-bottom: 3px solid #634C29;
+          outline: #634C29; }
+        body main form input[type=submit] {
+          -ms-appearance: none;
+          -moz-appearance: none;
+          -webkit-appearance: none;
+          appearance: none;
+          padding: 1rem 2rem;
+          width: 80%;
+          display: inline-block;
+          border: none;
+          margin: 0;
+          text-decoration: none;
+          background: #634C29;
+          color: #FCDFB3;
+          font-family: sans-serif;
+          cursor: pointer;
+          text-align: center;
+          transition: background 150ms ease-in-out, transform 50ms ease; }
+          body main form input[type=submit]:hover, body main form input[type=submit]:focus {
+            background: #B09C7D; }
+          body main form input[type=submit]:focus {
+            outline: 1px solid #B09C7D;
+            outline-offset: -4px; }
+          body main form input[type=submit]:active {
+            transform: scale(0.95); }
+        body main form input[type="file"] {
+          z-index: 0; }
   body footer {
     background-color: #FCDFB3;
     padding: 20px; }
@@ -372,4 +332,4 @@ body {
   to {
     opacity: 100%; } }
 
-/*# sourceMappingURL=main.css.map */
+/*# sourceMappingURL=main:css.map */
