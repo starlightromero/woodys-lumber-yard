@@ -7,6 +7,8 @@ from wtforms import (
     SubmitField,
     BooleanField,
     TextAreaField,
+    DecimalField,
+    SelectField,
 )
 from wtforms.validators import (
     DataRequired,
@@ -15,11 +17,11 @@ from wtforms.validators import (
     EqualTo,
     ValidationError,
 )
-from online_store.models import User
+from online_store.models import User, Category
 
 
 class RegistrationForm(FlaskForm):
-    """User Resistration Form."""
+    """User resistration form."""
 
     username = StringField(
         "Username", validators=[DataRequired(), Length(min=2, max=20)]
@@ -55,7 +57,7 @@ class RegistrationForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    """User Login Form."""
+    """User login form."""
 
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField(
@@ -66,7 +68,7 @@ class LoginForm(FlaskForm):
 
 
 class UpdateAccountForm(FlaskForm):
-    """Update User Account Form."""
+    """Update user account form."""
 
     username = StringField(
         "Username", validators=[DataRequired(), Length(min=2, max=20)]
@@ -100,3 +102,29 @@ class UpdateAccountForm(FlaskForm):
                     page and click \"Forgot Password\".
                     """
                 )
+
+
+class AddProductForm(FlaskForm):
+    """Add product form."""
+
+    name = StringField(
+        "Name", validators=[DataRequired(), Length(min=2, max=100)]
+    )
+    category = SelectField(
+        "Category",
+        validators=[DataRequired()],
+    )
+    price = DecimalField("Price", validators=[DataRequired()])
+    image = FileField(
+        "Add Product Image", validators=[FileAllowed(["jpg", "png"])]
+    )
+    submit = SubmitField("Add Product")
+
+
+class AddCategoryForm(FlaskForm):
+    """Add category form."""
+
+    name = StringField(
+        "Name", validators=[DataRequired(), Length(min=2, max=20)]
+    )
+    submit = SubmitField("Add Category")
