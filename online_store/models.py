@@ -13,7 +13,6 @@ def load_user(user_id):
 class User(db.Model, UserMixin):
     """User database class."""
 
-    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -43,10 +42,9 @@ class User(db.Model, UserMixin):
 class Category(db.Model):
     """Product Category database class."""
 
-    __tablename__ = "category"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20), nullable=False)
-    link = db.Column(db.String(20), nullable=False)
+    link = db.Column(db.String(20), nullable=True)
     products = db.relationship("Product", backref="category", lazy=True)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     created_by_id = db.Column(db.Integer, db.ForeignKey("user.id"))
@@ -59,16 +57,19 @@ class Category(db.Model):
         """Return name for Category."""
         return f"Category('{self.name}', '{self.link}')"
 
+    def add_link(self):
+        """Add link based on category name."""
+        self.link = self.name.lower().replace(" ", "-")
+
 
 class Product(db.Model):
     """Product database class."""
 
-    __tablename__ = "product"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
     price = db.Column(db.Float, nullable=False)
-    img = db.Column(db.String(40), nullable=False)
+    image = db.Column(db.String(40), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     created_by_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
