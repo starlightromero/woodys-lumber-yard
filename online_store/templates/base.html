@@ -4,7 +4,7 @@
 <head>
   {% block head %}
   <meta charset="utf-8">
-  <link rel="stylesheet" type="text/css" href="/static/css/main.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
   <script type="text/javascript" charset="utf-8" src="/static/main.js" defer></script>
   {% if title %}
     <title>Woody's Lumber Yard - {{ title }}</title>
@@ -28,10 +28,10 @@
       <h1><a href="{{ url_for('home') }}">Woody's Lumber Yard</a></h1>
       <div class="user-icons">
         <a href="{{ url_for('account') }}">
-          <img src="/static/assets/user.svg" alt="My Account">
+          <img src="{{ url_for('static', filename='assets/user.svg') }}" alt="My Account">
         </a>
         <a href="{{ url_for('cart') }}">
-          <img class="cart" src="/static/assets/shopping-cart.svg" alt="Shopping Cart">
+          <img class="cart" src="{{ url_for('static', filename='assets/shopping-cart.svg') }}" alt="Shopping Cart">
           <div class="circle">1</div>
         </a>
       </div>
@@ -45,6 +45,7 @@
       </ul>
     </nav>
     {% endif %}
+    {% block nav %}{% endblock %}
   </header>
 
   <main>
