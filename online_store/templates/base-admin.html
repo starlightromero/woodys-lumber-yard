@@ -1,18 +1,14 @@
 {% extends "base.html" %}
 {% block title %}Admin{% endblock %}
 
-{% block head %}
-{{ super() }}
-{% endblock %}
-
 {% block nav %}
 <h1><a href="/admin">Admin</a></h1>
 <nav>
   <ul>
-    <li><a href="/admin/add-category">Add Category</a></li>
-    <li><a href="/admin/delete-category">Delete Category</a></li>
-    <li><a href="/admin/add-product">Add Product</a></li>
-    <li><a href="/admin/delete-product">Delete Product</a></li>
+    <li><a href="{{ url_for('add_category') }}">Add Category</a></li>
+    <li><a href="{{ url_for('delete_category') }}">Delete Category</a></li>
+    <li><a href="{{ url_for('add_product') }}">Add Product</a></li>
+    <li><a href="{{ url_for('delete_product') }}">Delete Product</a></li>
   </ul>
 </nav>
 {% endblock %}
