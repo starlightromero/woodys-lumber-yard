@@ -6,7 +6,4 @@
 * create cart db class
 * add products to cart
 * show details on cart page
-* break up admin route
-* break up account route
-* add details to account page
 * add small notification (js) to cart on click "Add to Cart"
