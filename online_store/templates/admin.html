@@ -2,16 +2,13 @@
 {% block title %}Admin{% endblock %}
 
 {% block content %}
-{% if message %}
-<h3>{{ message }}</h3>
-{% endif %}
 
 <div class="product-grid">
   {% for product in products %}
   <div class="product-item">
     <p>
       <a href="/products/{{ product.id }}">
-        <img src="../{{ product.img }}" alt="{{ product.name }}">
+        <img src="../{{ product.image }}" alt="{{ product.name }}">
       </a>
     </p>
     <p>
@@ -23,4 +20,5 @@
   </div>
   {% endfor %}
 </div>
+
 {% endblock %}
