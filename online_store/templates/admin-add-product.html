@@ -2,24 +2,63 @@
 {% block title %}Add Product - Admin{% endblock %}
 
 {% block content %}
-    <h1>Add Product</h1>
-    <form action="/admin" method="POST" enctype="multipart/form-data">
-      <label>
-        Name
-      <input type="text" name="name" required>
-      </label>
-      <select name="category" required>
-        <option value="" selected disabled hidden>Choose a product category &nbsp;&nbsp;&nbsp;&nbsp; ▼</option>
-        {% for category in categories %}
-        <option value="{{ category.id }}">{{ category.name }}</option>
+
+<form method="POST" enctype="multipart/form-data">
+  {{ form.hidden_tag() }}
+  <fieldset>
+    <legend>{{ title }}</legend>
+    <div>
+      {{ form.name.label }}
+      {% if form.name.errors %}
+        {{ form.name(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.name.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.name }}
+      {% endif %}
+    </div>
+    <div>
+      {{ form.category.label }}
+      {% if form.category.errors %}
+        {{ form.category(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.category.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.category }}
+      {% endif %}
+    </div>
+    <div>
+      {{ form.price.label }}
+      {% if form.price.errors %}
+        {{ form.price(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.price.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.price }}
+      {% endif %}
+    </div>
+    <div>
+      {{ form.image.label }}
+      {{ form.image }}
+      {% if form.image.errors %}
+        {% for error in form.image.errors %}
+          {{ error }}
         {% endfor %}
-      </select>
-      <label>
-        Price
-        <input type="number" name="price" min="0.01" step="0.01" placeholder="$" required>
-      </label>
-      <label for="img" class="button">Upload Image</label>
-      <input type="file" name="img" id="img" accept="image/*" required>
-      <input type="submit" name="button" value="Add Product">
-    </form>
+      {% endif %}
+    </div>
+  </fieldset>
+  <div>
+    {{ form.submit }}
+  </div>
+</form>
+
 {% endblock %}
