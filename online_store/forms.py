@@ -124,7 +124,26 @@ class AddProductForm(FlaskForm):
     submit = SubmitField("Add Product")
 
 
-class AddCategoryForm(FlaskForm):
+class UpdateProductForm(FlaskForm):
+    """Update product form."""
+
+    name = StringField(
+        "Name", validators=[DataRequired(), Length(min=2, max=100)]
+    )
+    category = QuerySelectField(
+        "Category",
+        query_factory=lambda: Category.query,
+        allow_blank=False,
+        validators=[DataRequired()],
+    )
+    price = DecimalField("Price", validators=[DataRequired()])
+    image = FileField(
+        "Add Product Image", validators=[FileAllowed(["jpg", "png"])]
+    )
+    submit = SubmitField("Update Product")
+
+
+class CategoryForm(FlaskForm):
     """Add category form."""
 
     name = StringField(
