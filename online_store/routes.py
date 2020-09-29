@@ -96,31 +96,23 @@ def product_detail(product_id):
     return render_template("product-details.html", **context)
 
 
-@app.route("/category/<category>")
-def product_category(category):
+@app.route("/category/<category_link>")
+def product_category(category_link):
     """Category page."""
     categories = Category.query.all()
-    title = category.replace("-", " ").title()
-    try:
-        products = (
-            Product.query.filter_by(link=category)
-            .order_by(Product.date_created)
-            .all()
-        )
-        context = {
-            "products": products,
-            "title": title,
-            "categories": categories,
-        }
-        return render_template("home.html", **context)
-    except:
-        message = "No products found."
-        context = {
-            "title": title,
-            "categories": categories,
-            "message": message,
-        }
-        return render_template("home.html", **context)
+    category = Category.query.filter_by(link=category_link).first()
+    title = category.name
+    products = (
+        Product.query.filter_by(category_id=category.id)
+        .order_by(Product.date_created)
+        .all()
+    )
+    context = {
+        "products": products,
+        "title": title,
+        "categories": categories,
+    }
+    return render_template("home.html", **context)
 
 
 ###############################################################################
