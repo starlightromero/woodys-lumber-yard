@@ -18,7 +18,8 @@ from online_store.forms import (
     LoginForm,
     UpdateAccountForm,
     AddProductForm,
-    AddCategoryForm,
+    UpdateProductForm,
+    CategoryForm,
 )
 
 ###############################################################################
@@ -144,6 +145,7 @@ def login():
     """Show login page."""
     if current_user.is_authenticated:
         redirect(url_for("home"))
+    categories = Category.query.all()
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
@@ -156,7 +158,8 @@ def login():
                 else redirect(url_for("home"))
             )
         flash("Login Unsuccessful. Please verify email and password.")
-    return render_template("login.html", title="Login", form=form)
+    context = {"title": "Login", "form": form, "categories": categories}
+    return render_template("login.html", **context)
 
 
 @app.route("/logout")
@@ -216,7 +219,7 @@ def admin():
 def add_category():
     """Admin add category page."""
     categories = Category.query.all()
-    form = AddCategoryForm()
+    form = CategoryForm()
     if form.validate_on_submit():
         name = form.name.data.title()
         new_category = Category(name=name)
@@ -233,7 +236,7 @@ def add_category():
     return render_template("admin-add-category.html", **context)
 
 
-@app.route("/admin/<category_id>/delete", methods=["POST"])
+@app.route("/admin/<int:category_id>/delete", methods=["POST"])
 @login_required
 def delete_category(category_id):
     """Admin delete category."""
@@ -269,8 +272,41 @@ def add_product():
     return render_template("admin-add-product.html", **context)
 
 
-@app.route("/admin/<product_id>/delete", methods=["POST"])
+@app.route("/admin/<int:product_id>/update", methods=["GET", "POST"])
+@login_required
+def update_product(product_id):
+    """Admin update product."""
+    categories = Category.query.all()
+    product = Product.query.get_or_404(product_id)
+    form = UpdateProductForm()
+    if form.validate_on_submit():
+        if form.image.data:
+            product.image = save_image(form.image.data, "product-images", 800)
+        product.name = form.name.data.title()
+        product.category = form.category.data
+        product.price = form.price.data
+        db.session.commit()
+        flash(f"{product.name} product has been updated.")
+        return redirect(url_for("admin"))
+    form.name.data = product.name
+    form.category.data = product.category
+    form.price.data = product.price
+    context = {
+        "title": "Update Product",
+        "product": product,
+        "categories": categories,
+        "form": form,
+    }
+    return render_template("admin-update-product.html", **context)
+
+
+@app.route("/admin/<int:product_id>/delete", methods=["POST"])
 @login_required
 def delete_product(product_id):
-    """Admin delete projects."""
+    """Admin delete product."""
+    product = Product.query.get_or_404(product_id)
+    print(product)
+    db.session.delete(product)
+    db.session.commit()
+    flash(f"{product.name} product has been deleted.")
     return redirect(url_for("admin"))
