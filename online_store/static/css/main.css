@@ -8,7 +8,7 @@
   src: url("../fonts/Open-Sans-Light.eot?#iefix") format("embedded-opentype");
   src: url("../fonts/OpenSans-Light.ttf") format("truetype");
   src: url("../fonts/OpenSans-Light.woff") format("woff"); }
-body main .product-grid .product-item button, body main form input[type=submit], body footer button {
+body main .product-grid .product-item button, body main .product-grid .product-item .product-form input[type=submit], body main .full-form input[type=submit], body footer button {
   -ms-appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -178,6 +178,17 @@ body {
             outline: 1px solid #FFFFFF; }
           body main .product-grid .product-item button:active {
             transform: scale(0.95); }
+        body main .product-grid .product-item .product-form {
+          width: 100%; }
+          body main .product-grid .product-item .product-form input[type=submit] {
+            margin-bottom: 1rem;
+            width: 100%; }
+            body main .product-grid .product-item .product-form input[type=submit]:hover, body main .product-grid .product-item .product-form input[type=submit]:focus {
+              background-color: #B09C7D; }
+            body main .product-grid .product-item .product-form input[type=submit]:focus {
+              outline: 1px solid #FFFFFF; }
+            body main .product-grid .product-item .product-form input[type=submit]:active {
+              transform: scale(0.95); }
     body main .product-detail {
       display: flex;
       flex-direction: row;
@@ -200,7 +211,7 @@ body {
         padding: 10px;
         background-color: #FCDFB3;
         width: 35%; }
-    body main form {
+    body main .full-form {
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -212,19 +223,19 @@ body {
       justify-content: space-around;
       width: 500px;
       line-height: 2; }
-      body main form * {
+      body main .full-form * {
         margin: 0.5rem 0; }
-      body main form fieldset {
+      body main .full-form fieldset {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         border: none;
         width: 80%; }
-        body main form fieldset legend {
+        body main .full-form fieldset legend {
           border: none;
           font-size: 2rem; }
-        body main form fieldset select {
+        body main .full-form fieldset select {
           -ms-appearance: none;
           -moz-appearance: none;
           -webkit-appearance: none;
@@ -236,47 +247,47 @@ body {
           cursor: pointer;
           font-size: 1.5rem;
           padding: 12px; }
-          body main form fieldset select:hover {
+          body main .full-form fieldset select:hover {
             background-color: #B09C7D; }
-          body main form fieldset select:focus {
+          body main .full-form fieldset select:focus {
             outline: none; }
-        body main form fieldset input, body main form fieldset label {
+        body main .full-form fieldset input, body main .full-form fieldset label {
           color: #634C29; }
-        body main form fieldset input {
+        body main .full-form fieldset input {
           font-size: 1.5rem;
           text-align: left; }
-          body main form fieldset input[type=text], body main form fieldset input[type=email], body main form fieldset input[type=password], body main form fieldset input[type=number] {
+          body main .full-form fieldset input[type=text], body main .full-form fieldset input[type=email], body main .full-form fieldset input[type=password], body main .full-form fieldset input[type=number] {
             background-color: transparent;
             border: none;
             border-bottom: 3px solid #634C29;
             outline: #634C29; }
-          body main form fieldset input[type="file"] {
+          body main .full-form fieldset input[type="file"] {
             z-index: 0; }
-        body main form fieldset .remember {
+        body main .full-form fieldset .remember {
           display: flex;
           flex-direction: row;
           justify-content: center;
           align-items: center;
           justify-content: space-around;
           width: 100%; }
-          body main form fieldset .remember .switch {
+          body main .full-form fieldset .remember .switch {
             position: relative;
             display: inline-block;
             width: 60px;
             height: 34px; }
-            body main form fieldset .remember .switch input {
+            body main .full-form fieldset .remember .switch input {
               opacity: 0;
               width: 0;
               height: 0; }
-            body main form fieldset .remember .switch input:checked + .slider {
+            body main .full-form fieldset .remember .switch input:checked + .slider {
               background-color: #634C29; }
-            body main form fieldset .remember .switch input:focus + .slider {
+            body main .full-form fieldset .remember .switch input:focus + .slider {
               box-shadow: 0 0 1px #634C29; }
-            body main form fieldset .remember .switch input:checked + .slider:before {
+            body main .full-form fieldset .remember .switch input:checked + .slider:before {
               -webkit-transform: translateX(26px);
               -ms-transform: translateX(26px);
               transform: translateX(26px); }
-            body main form fieldset .remember .switch .slider {
+            body main .full-form fieldset .remember .switch .slider {
               position: absolute;
               cursor: pointer;
               top: 0;
@@ -287,7 +298,7 @@ body {
               -webkit-transition: 0.4s;
               transition: 0.4s;
               border-radius: 34px; }
-              body main form fieldset .remember .switch .slider:before {
+              body main .full-form fieldset .remember .switch .slider:before {
                 position: absolute;
                 content: "";
                 height: 26px;
@@ -298,16 +309,16 @@ body {
                 -webkit-transition: 0.4s;
                 transition: 0.4s;
                 border-radius: 50%; }
-      body main form input[type=submit] {
+      body main .full-form input[type=submit] {
         width: 100%; }
-        body main form input[type=submit]:hover, body main form input[type=submit]:focus {
+        body main .full-form input[type=submit]:hover, body main .full-form input[type=submit]:focus {
           background: #B09C7D; }
-        body main form input[type=submit]:focus {
+        body main .full-form input[type=submit]:focus {
           outline: 1px solid #B09C7D;
           outline-offset: -4px; }
-        body main form input[type=submit]:active {
+        body main .full-form input[type=submit]:active {
           transform: scale(0.95); }
-      body main form small a {
+      body main .full-form small a {
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;

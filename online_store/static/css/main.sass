@@ -175,6 +175,23 @@ body
           &:active
             transform: scale(0.95)
 
+        .product-form
+          width: 100%
+
+          input[type=submit]
+            @extend %btn
+            margin-bottom: 1rem
+            width: 100%
+
+            &:hover, &:focus
+              background-color: $primary-color
+
+            &:focus
+              outline: 1px solid $white
+
+            &:active
+              transform: scale(0.95)
+
     .product-detail
       +flexbox(row)
       justify-content: space-between
@@ -195,7 +212,7 @@ body
         background-color: $light-color
         width: 35%
 
-    form
+    .full-form
       +flexbox(column)
       background-color: $light-color
       margin: auto
