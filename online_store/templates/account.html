@@ -7,6 +7,7 @@
 >
 <h2>{{ current_user.username }}</h2>
 <p>{{ current_user.email }}</p>
+<button><a href="{{ url_for('logout') }}">Log Out</a></button>
 
 <form class="full-form" method="POST" enctype="multipart/form-data">
   {{ form.hidden_tag() }}
