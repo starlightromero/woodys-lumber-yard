@@ -1,3 +1,4 @@
+"""Import login, wtf, and wtforms."""
 from flask_login import current_user
 from flask_wtf import FlaskForm
 from flask_wtf.file import FileField, FileAllowed
@@ -6,9 +7,6 @@ from wtforms import (
     PasswordField,
     SubmitField,
     BooleanField,
-    TextAreaField,
-    DecimalField,
-    SelectField,
 )
 from wtforms.validators import (
     DataRequired,
@@ -17,8 +15,7 @@ from wtforms.validators import (
     EqualTo,
     ValidationError,
 )
-from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from online_store.models import User, Category
+from online_store.models import User
 
 
 class RegistrationForm(FlaskForm):
@@ -103,50 +100,3 @@ class UpdateAccountForm(FlaskForm):
                     page and click \"Forgot Password\".
                     """
                 )
-
-
-class AddProductForm(FlaskForm):
-    """Add product form."""
-
-    name = StringField(
-        "Name", validators=[DataRequired(), Length(min=2, max=100)]
-    )
-    category = QuerySelectField(
-        "Category",
-        query_factory=lambda: Category.query,
-        allow_blank=False,
-        validators=[DataRequired()],
-    )
-    price = DecimalField("Price", validators=[DataRequired()])
-    image = FileField(
-        "Add Product Image", validators=[FileAllowed(["jpg", "png"])]
-    )
-    submit = SubmitField("Add Product")
-
-
-class UpdateProductForm(FlaskForm):
-    """Update product form."""
-
-    name = StringField(
-        "Name", validators=[DataRequired(), Length(min=2, max=100)]
-    )
-    category = QuerySelectField(
-        "Category",
-        query_factory=lambda: Category.query,
-        allow_blank=False,
-        validators=[DataRequired()],
-    )
-    price = DecimalField("Price", validators=[DataRequired()])
-    image = FileField(
-        "Add Product Image", validators=[FileAllowed(["jpg", "png"])]
-    )
-    submit = SubmitField("Update Product")
-
-
-class CategoryForm(FlaskForm):
-    """Add category form."""
-
-    name = StringField(
-        "Name", validators=[DataRequired(), Length(min=2, max=20)]
-    )
-    submit = SubmitField("Add Category")

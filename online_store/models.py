@@ -2,7 +2,7 @@ from datetime import datetime
 from flask_login import UserMixin
 from passlib.hash import sha256_crypt
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from online_store import db, login_manager, app
+from online_store import db, login_manager
 
 
 @login_manager.user_loader
@@ -32,6 +32,7 @@ class User(db.Model, UserMixin):
         return f"User('{self.username}', '{self.email}')"
 
     def set_password(self, password):
+        """Set user's password as hash."""
         self.password = sha256_crypt.hash(password)
 
     def check_password(self, password):

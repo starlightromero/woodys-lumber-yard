@@ -1,5 +1,7 @@
 """Import and run app."""
-from online_store import app
+from online_store import create_app
+
+app = create_app()
 
 if __name__ == "__main__":
     app.run(debug=True)

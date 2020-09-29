@@ -25,12 +25,12 @@
           <input class="search-submit" type="image" src="{{ url_for('static', filename='assets/search.svg') }}" alt="Submit Form" />
         </form>
       </div>
-      <h1><a href="{{ url_for('home') }}">Woody's Lumber Yard</a></h1>
+      <h1><a href="{{ url_for('main.home') }}">Woody's Lumber Yard</a></h1>
       <div class="user-icons">
-        <a href="{{ url_for('account') }}">
+        <a href="{{ url_for('users.account') }}">
           <img src="{{ url_for('static', filename='assets/user.svg') }}" alt="My Account">
         </a>
-        <a href="{{ url_for('cart') }}">
+        <a href="{{ url_for('main.cart') }}">
           <img class="cart" src="{{ url_for('static', filename='assets/shopping-cart.svg') }}" alt="Shopping Cart">
           <div class="circle">1</div>
         </a>
