@@ -2,7 +2,7 @@
 import os
 import secrets
 from PIL import Image
-from online_store import app
+from online_store import create_app
 
 
 def save_image(form_image, folder, size):
