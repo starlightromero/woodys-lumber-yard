@@ -30,7 +30,7 @@ class User(db.Model, UserMixin):
 
     def __str__(self):
         """Return username and email for User."""
-        return f"User('{self.username}', '{self.email}')"
+        return self.username
 
     def set_password(self, password):
         """Set user's password as hash."""
