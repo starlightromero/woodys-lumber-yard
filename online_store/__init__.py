@@ -6,7 +6,7 @@ from online_store.config import Config
 db = SQLAlchemy()
 login_manager = LoginManager()
 login_manager.session_protection = "strong"
-login_manager.login_view = "login"
+login_manager.login_view = "users.login"
 
 
 def create_app(config_class=Config):
