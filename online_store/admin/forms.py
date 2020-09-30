@@ -51,7 +51,7 @@ class UpdateProductForm(FlaskForm):
     )
     price = DecimalField("Price", validators=[DataRequired()])
     image = FileField(
-        "Add Product Image", validators=[FileAllowed(["jpg", "png"])]
+        "Update Product Image", validators=[FileAllowed(["jpg", "png"])]
     )
     submit = SubmitField("Update Product")
 
