@@ -1,12 +1,28 @@
 {% extends "base.html" %}
-{% block title %}Admin{% endblock %}
+
+{% block title %}
+{% if current_user.is_superadmin %}
+Super Admin
+{% else %}
+Admin
+{% endif %}
+{% endblock %}
 
 {% block nav %}
-<h1><a href="{{ url_for('admin.admin_home') }}">Admin</a></h1>
+<h1><a href="{{ url_for('admin.home') }}">
+  {% if current_user.is_superadmin %}
+  Super Admin
+  {% else %}
+  Admin
+  {% endif %}
+</a></h1>
 <nav>
   <ul>
     <li><a href="{{ url_for('admin.add_product') }}">Add Product</a></li>
     <li><a href="{{ url_for('admin.add_category') }}">Add Category</a></li>
+    {% if current_user.is_superadmin %}
+    <li><a href="{{ url_for('admin.add_admin') }}">Add Admin</a></li>
+    {% endif %}
   </ul>
 </nav>
 {% endblock %}
