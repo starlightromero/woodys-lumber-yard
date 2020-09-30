@@ -14,6 +14,7 @@ from online_store.admin.forms import (
     AddProductForm,
     UpdateProductForm,
 )
+from online_store.utils import admin_required
 from online_store.main.utils import save_image
 
 admin = Blueprint("admin", __name__)
@@ -21,6 +22,7 @@ admin = Blueprint("admin", __name__)
 
 @admin.route("/admin", methods=["POST", "GET"])
 @login_required
+@admin_required
 def admin_home():
     """Admin page."""
     categories = Category.query.all()
@@ -31,6 +33,7 @@ def admin_home():
 
 @admin.route("/admin/add-category", methods=["GET", "POST"])
 @login_required
+@admin_required
 def add_category():
     """Admin add category page."""
     categories = Category.query.all()
@@ -53,6 +56,7 @@ def add_category():
 
 @admin.route("/admin/<int:category_id>/delete", methods=["POST"])
 @login_required
+@admin_required
 def delete_category(category_id):
     """Admin delete category."""
     return redirect(url_for("admin.admin_home"))
@@ -60,6 +64,7 @@ def delete_category(category_id):
 
 @admin.route("/admin/add-product", methods=["GET", "POST"])
 @login_required
+@admin_required
 def add_product():
     """Admin add products page."""
     categories = Category.query.all()
@@ -89,6 +94,7 @@ def add_product():
 
 @admin.route("/admin/<int:product_id>/update", methods=["GET", "POST"])
 @login_required
+@admin_required
 def update_product(product_id):
     """Admin update product."""
     categories = Category.query.all()
@@ -119,6 +125,8 @@ def update_product(product_id):
 @login_required
 def delete_product(product_id):
     """Admin delete product."""
+    print(1)
+    print(product_id)
     product = Product.query.get_or_404(product_id)
     print(product)
     db.session.delete(product)
