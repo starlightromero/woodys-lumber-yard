@@ -8,7 +8,7 @@
   src: url("../fonts/Open-Sans-Light.eot?#iefix") format("embedded-opentype");
   src: url("../fonts/OpenSans-Light.ttf") format("truetype");
   src: url("../fonts/OpenSans-Light.woff") format("woff"); }
-body main .product-grid .product-item button, body main .product-grid .product-item .product-form input[type=submit], body main .full-form input[type=submit], body footer button {
+body main button, body main .product-grid .product-item button, body main .product-grid .product-item .product-form input[type=submit], body main .product-detail .product-detail-text button, body main .full-form input[type=submit], body footer button {
   -ms-appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -87,14 +87,14 @@ body {
         margin: 0; }
         body header .top-row .user-icons .circle {
           display: block;
+          position: absolute;
           color: #FCDFB3;
           background-color: #634C29;
           border-radius: 50%;
           height: 24px;
           width: 24px;
-          transform: translate(17px, -35px); }
-        body header .top-row .user-icons .cart {
-          transform: translate(-19px, 16px); }
+          top: 26px;
+          right: 40px; }
         body header .top-row .user-icons a {
           margin: 0 10px;
           text-decoration: none; }
@@ -141,6 +141,8 @@ body {
       color: #FCDFB3;
       font-size: 2rem;
       margin-top: 0; }
+    body main button {
+      width: 100%; }
     body main .product-grid {
       align-items: center;
       display: flex;
@@ -211,6 +213,8 @@ body {
         padding: 10px;
         background-color: #FCDFB3;
         width: 35%; }
+        body main .product-detail .product-detail-text button {
+          width: 100%; }
     body main .full-form {
       display: flex;
       flex-direction: column;
@@ -231,7 +235,7 @@ body {
         justify-content: center;
         align-items: center;
         border: none;
-        margin: auto;
+        margin: 0;
         width: 100%; }
         body main .full-form fieldset legend {
           border: none;
@@ -263,7 +267,7 @@ body {
             border-bottom: 3px solid #634C29;
             outline: #634C29; }
           body main .full-form fieldset input[type="file"] {
-            z-index: 0; }
+            width: 100%; }
         body main .full-form fieldset .remember {
           display: flex;
           flex-direction: row;
@@ -343,6 +347,15 @@ body {
         color: #FCDFB3;
         cursor: pointer;
         text-decoration: underline; }
+    body main .account {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem;
+      background-color: #FCDFB3;
+      width: 440px;
+      margin: auto; }
   body footer {
     background-color: #FCDFB3;
     padding: 20px; }

@@ -61,15 +61,16 @@ body
 
         .circle
           display: block
+          position: absolute
           color: $light-color
           background-color: $dark-color
           border-radius: 50%
           height: 24px
           width: 24px
-          transform: translate(17px, -35px)
+          top: 26px
+          right: 40px
 
         .cart
-          transform: translate(-19px, 16px)
 
         a
           margin: 0 10px
@@ -127,6 +128,10 @@ body
       color: $light-color
       font-size: 2rem
       margin-top: 0
+
+    button
+      @extend %btn
+      width: 100%
 
     .product-grid
       align-items: center
@@ -212,6 +217,10 @@ body
         background-color: $light-color
         width: 35%
 
+        button
+          @extend %btn
+          width: 100%
+
     .full-form
       +flexbox(column)
       background-color: $light-color
@@ -228,7 +237,7 @@ body
       fieldset
         +flexbox(column)
         border: none
-        margin: auto
+        margin: 0
         width: 100%
 
         legend
@@ -265,7 +274,7 @@ body
             outline: $dark-color
 
           &[type="file"]
-            z-index: 0
+            width: 100%
 
         .remember
           +flexbox(row)
@@ -352,6 +361,13 @@ body
           color: $light-color
           cursor: pointer
           text-decoration: underline
+
+    .account
+      +flexbox(column)
+      padding: 2rem
+      background-color: $light-color
+      width: 440px
+      margin: auto
 
   footer
     background-color: $light-color
