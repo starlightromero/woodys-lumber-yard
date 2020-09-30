@@ -31,7 +31,7 @@ def product_detail(product_id):
     categories = Category.query.all()
     product = Product.query.filter_by(id=product_id).first()
     context = {"categories": categories, "product": product}
-    return render_template("product-details.html", **context)
+    return render_template("product_details.html", **context)
 
 
 @main.route("/category/<category_link>")
