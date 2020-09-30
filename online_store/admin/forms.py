@@ -15,7 +15,7 @@ from wtforms.validators import (
     ValidationError,
 )
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from online_store.models import Category
+from online_store.models import Category, User
 
 
 class AddProductForm(FlaskForm):
@@ -63,3 +63,15 @@ class CategoryForm(FlaskForm):
         "Name", validators=[DataRequired(), Length(min=2, max=20)]
     )
     submit = SubmitField("Add Category")
+
+
+class AddAdminForm(FlaskForm):
+    """Add admin form."""
+
+    user = QuerySelectField(
+        "User",
+        query_factory=lambda: User.query.filter_by(is_admin=False),
+        allow_blank=False,
+        validators=[DataRequired()],
+    )
+    submit = SubmitField("Grant Admin Permissions")
