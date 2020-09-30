@@ -8,13 +8,14 @@ from flask import (
 )
 from flask_login import login_required
 from online_store import db
-from online_store.models import Category, Product
+from online_store.models import Category, Product, User
 from online_store.admin.forms import (
     CategoryForm,
     AddProductForm,
     UpdateProductForm,
+    AddAdminForm,
 )
-from online_store.utils import admin_required
+from online_store.admin.utils import admin_required, super_admin_required
 from online_store.main.utils import save_image
 
 admin = Blueprint("admin", __name__)
@@ -23,7 +24,7 @@ admin = Blueprint("admin", __name__)
 @admin.route("/admin", methods=["POST", "GET"])
 @login_required
 @admin_required
-def admin_home():
+def home():
     """Admin page."""
     categories = Category.query.all()
     products = Product.query.order_by(Product.date_created).all()
@@ -31,7 +32,7 @@ def admin_home():
     return render_template("admin/admin.html", **context)
 
 
-@admin.route("/admin/add-category", methods=["GET", "POST"])
+@admin.route("/admin/add_category", methods=["GET", "POST"])
 @login_required
 @admin_required
 def add_category():
@@ -51,7 +52,7 @@ def add_category():
         "form": form,
         "categories": categories,
     }
-    return render_template("admin/add-category.html", **context)
+    return render_template("admin/add_category.html", **context)
 
 
 @admin.route("/admin/<int:category_id>/delete", methods=["POST"])
@@ -59,10 +60,10 @@ def add_category():
 @admin_required
 def delete_category(category_id):
     """Admin delete category."""
-    return redirect(url_for("admin.admin_home"))
+    return redirect(url_for("admin.home"))
 
 
-@admin.route("/admin/add-product", methods=["GET", "POST"])
+@admin.route("/admin/add_product", methods=["GET", "POST"])
 @login_required
 @admin_required
 def add_product():
@@ -89,7 +90,7 @@ def add_product():
         "form": form,
         "categories": categories,
     }
-    return render_template("admin/add-product.html", **context)
+    return render_template("admin/add_product.html", **context)
 
 
 @admin.route("/admin/<int:product_id>/update", methods=["GET", "POST"])
@@ -108,7 +109,7 @@ def update_product(product_id):
         product.price = form.price.data
         db.session.commit()
         flash(f"{product.name} product has been updated.")
-        return redirect(url_for("admin.admin_home"))
+        return redirect(url_for("admin.home"))
     form.name.data = product.name
     form.category.data = product.category
     form.price.data = product.price
@@ -118,11 +119,12 @@ def update_product(product_id):
         "categories": categories,
         "form": form,
     }
-    return render_template("admin/update-product.html", **context)
+    return render_template("admin/update_product.html", **context)
 
 
 @admin.route("/admin/<int:product_id>/delete", methods=["POST"])
 @login_required
+@admin_required
 def delete_product(product_id):
     """Admin delete product."""
     print(1)
@@ -132,4 +134,25 @@ def delete_product(product_id):
     db.session.delete(product)
     db.session.commit()
     flash(f"{product.name} product has been deleted.")
-    return redirect(url_for("admin.admin_home"))
+    return redirect(url_for("admin.home"))
+
+
+@admin.route("/admin/add_admin", methods=["GET", "POST"])
+@login_required
+@super_admin_required
+def add_admin():
+    """Super admin add admin."""
+    categories = Category.query.all()
+    form = AddAdminForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(name=form.user.data)
+        user.is_admin = True
+        db.session.commit()
+        flash(f"{user.name} has been granted admin permissions!")
+        return redirect(url_for("admin.home"))
+    context = {
+        "title": "Add Admin",
+        "form": form,
+        "categories": categories,
+    }
+    return render_template("admin/add_admin.html", **context)
