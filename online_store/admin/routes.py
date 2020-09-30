@@ -26,7 +26,7 @@ def admin_home():
     categories = Category.query.all()
     products = Product.query.order_by(Product.date_created).all()
     context = {"products": products, "categories": categories}
-    return render_template("admin.html", **context)
+    return render_template("admin/base.html", **context)
 
 
 @admin.route("/admin/add-category", methods=["GET", "POST"])
@@ -48,7 +48,7 @@ def add_category():
         "form": form,
         "categories": categories,
     }
-    return render_template("admin-add-category.html", **context)
+    return render_template("admin/add-category.html", **context)
 
 
 @admin.route("/admin/<int:category_id>/delete", methods=["POST"])
@@ -84,7 +84,7 @@ def add_product():
         "form": form,
         "categories": categories,
     }
-    return render_template("admin-add-product.html", **context)
+    return render_template("admin/add-product.html", **context)
 
 
 @admin.route("/admin/<int:product_id>/update", methods=["GET", "POST"])
@@ -112,7 +112,7 @@ def update_product(product_id):
         "categories": categories,
         "form": form,
     }
-    return render_template("admin-update-product.html", **context)
+    return render_template("admin/update-product.html", **context)
 
 
 @admin.route("/admin/<int:product_id>/delete", methods=["POST"])
