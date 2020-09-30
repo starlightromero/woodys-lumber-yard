@@ -14,8 +14,11 @@ from online_store.users.forms import (
     LoginForm,
     RegistrationForm,
     UpdateAccountForm,
+    RequestResetForm,
+    ResetPasswordForm,
 )
 from online_store.main.utils import save_image
+from online_store.users.utils import send_reset_email
 
 
 users = Blueprint("users", __name__)
@@ -89,3 +92,37 @@ def account():
     form.email.data = current_user.email
     context = {"title": "Account", "form": form, "categories": categories}
     return render_template("account.html", **context)
+
+
+@users.route("/reset_password", methods=["GET", "POST"])
+def reset_request():
+    """Show route for requesting user password reset."""
+    if current_user.is_authenticated:
+        redirect(url_for("main.home"))
+    form = RequestResetForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        send_reset_email(user)
+        flash("An email has been sent to reset your password.")
+        return redirect(url_for("users.login"))
+    context = {"title": "Reset Password", "form": form}
+    return render_template("reset_request.html", **context)
+
+
+@users.route("/reset_password/<token>", methods=["GET", "POST"])
+def reset_token(token):
+    """Show route for resetting user password."""
+    if current_user.is_authenticated:
+        redirect(url_for("main.home"))
+    user = User.verify_reset_token(token)
+    if user is None:
+        flash("The token is invalid or expired.")
+        return redirect(url_for("users.reset_request"))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash("Your password has been updated! You are now able to log in.")
+        return redirect(url_for("users.login"))
+    context = {"title": "Reset Password", "form": form}
+    return render_template("reset_token.html", **context)
