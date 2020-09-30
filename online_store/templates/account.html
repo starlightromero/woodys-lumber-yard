@@ -8,7 +8,7 @@
   >
   <h2>{{ current_user.username }}</h2>
   <p>{{ current_user.email }}</p>
-  <button onclick="{{ url_for('users.logout') }}">Log Out</button>
+  <a href="{{ url_for('users.logout') }}"><button>Log Out</button></a>
 </div>
 
 <form class="full-form" method="POST" enctype="multipart/form-data">
