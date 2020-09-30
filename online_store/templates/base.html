@@ -25,7 +25,7 @@
           <input class="search-submit" type="image" src="{{ url_for('static', filename='assets/search.svg') }}" alt="Submit Form" />
         </form>
       </div>
-      {% if current_user.is_superadmin || current_user.is_admin %}
+      {% if current_user.is_superadmin or current_user.is_admin %}
       <h1><a href="{{ url_for('admin.home') }}">Woody's Lumber Yard</a></h1>
       {% else %}
       <h1><a href="{{ url_for('main.home') }}">Woody's Lumber Yard</a></h1>
