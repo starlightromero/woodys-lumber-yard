@@ -40,8 +40,8 @@
     {% else %}
       {{ form.price }}
     {% endif %}
-    {{ form.image.label }}
-    {{ form.image }}
+    {{ form.image.label(class_="filelabel") }}
+    {{ form.image(class_="inputfile") }}
     {% if form.image.errors %}
       {% for error in form.image.errors %}
         {{ error }}
