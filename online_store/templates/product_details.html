@@ -7,8 +7,10 @@
       <img src="{{ url_for('static', filename='product-images/' + product.image) }}" alt="{{ product.name }}">
     </div>
     <div class="product-detail-text">
-      <p>{{ product.name }}</p>
-      <p>${{ product.price }}</p>
+      <h2>{{ product.category }}</h2>
+      <h3>{{ product.name }}</h3>
+      <h4>${{ product.price }}</h4>
+      <button type="button" name="add-to-cart">Add To Cart</button>
     </div>
   </div>
 {% endblock %}
