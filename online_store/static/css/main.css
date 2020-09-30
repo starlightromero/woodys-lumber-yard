@@ -266,7 +266,7 @@ body {
             border: none;
             border-bottom: 3px solid #634C29;
             outline: #634C29; }
-          body main .full-form fieldset input[type="file"] {
+          body main .full-form fieldset input[type=file] {
             width: 100%; }
         body main .full-form fieldset .remember {
           display: flex;
