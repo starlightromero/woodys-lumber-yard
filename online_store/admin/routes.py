@@ -26,7 +26,7 @@ def admin_home():
     categories = Category.query.all()
     products = Product.query.order_by(Product.date_created).all()
     context = {"products": products, "categories": categories}
-    return render_template("admin/base.html", **context)
+    return render_template("admin/admin.html", **context)
 
 
 @admin.route("/admin/add-category", methods=["GET", "POST"])
