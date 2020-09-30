@@ -1,6 +1,7 @@
 """Import flask and models."""
 from flask import Blueprint, render_template, request
 from flask_login import current_user
+from online_store import db
 from online_store.models import Category, Product
 
 main = Blueprint("main", __name__)
