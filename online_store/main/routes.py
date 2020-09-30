@@ -1,5 +1,6 @@
 """Import flask and models."""
 from flask import Blueprint, render_template, request
+from flask_login import current_user
 from online_store.models import Category, Product
 
 main = Blueprint("main", __name__)
@@ -22,6 +23,8 @@ def home():
     else:
         products = Product.query.order_by(Product.date_created).all()
         context = {"categories": categories, "products": products}
+    if current_user.is_admin:
+        return render_template("admin/admin.html", **context)
     return render_template("home.html", **context)
 
 
