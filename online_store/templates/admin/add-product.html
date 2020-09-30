@@ -7,54 +7,46 @@
   {{ form.hidden_tag() }}
   <fieldset>
     <legend>{{ title }}</legend>
-    <div>
-      {{ form.name.label }}
-      {% if form.name.errors %}
-        {{ form.name(class="is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.name.errors %}
-            {{ error }}
-          {% endfor %}
-        </div>
-      {% else %}
-        {{ form.name }}
-      {% endif %}
-    </div>
-    <div>
-      {{ form.category.label }}
-      {% if form.category.errors %}
-        {{ form.category(class="is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.category.errors %}
-            {{ error }}
-          {% endfor %}
-        </div>
-      {% else %}
-        {{ form.category }}
-      {% endif %}
-    </div>
-    <div>
-      {{ form.price.label }}
-      {% if form.price.errors %}
-        {{ form.price(class="is-invalid") }}
-        <div class="invalid-feedback">
-          {% for error in form.price.errors %}
-            {{ error }}
-          {% endfor %}
-        </div>
-      {% else %}
-        {{ form.price }}
-      {% endif %}
-    </div>
-    <div>
-      {{ form.image.label }}
-      {{ form.image }}
-      {% if form.image.errors %}
-        {% for error in form.image.errors %}
+    {{ form.name.label }}
+    {% if form.name.errors %}
+      {{ form.name(class="is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.name.errors %}
           {{ error }}
         {% endfor %}
-      {% endif %}
-    </div>
+      </div>
+    {% else %}
+      {{ form.name }}
+    {% endif %}
+    {{ form.category.label }}
+    {% if form.category.errors %}
+      {{ form.category(class="is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.category.errors %}
+          {{ error }}
+        {% endfor %}
+      </div>
+    {% else %}
+      {{ form.category }}
+    {% endif %}
+    {{ form.price.label }}
+    {% if form.price.errors %}
+      {{ form.price(class="is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.price.errors %}
+          {{ error }}
+        {% endfor %}
+      </div>
+    {% else %}
+      {{ form.price }}
+    {% endif %}
+    {{ form.image.label }}
+    {{ form.image }}
+    {% if form.image.errors %}
+      {% for error in form.image.errors %}
+        {{ error }}
+      {% endfor %}
+    {% endif %}
   </fieldset>
   <div>
     {{ form.submit }}
