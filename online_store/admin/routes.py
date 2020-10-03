@@ -122,15 +122,12 @@ def update_product(product_id):
     return render_template("admin/update_product.html", **context)
 
 
-@admin.route("/admin/<int:product_id>/delete", methods=["POST"])
+@admin.route("/admin/<int:product_id>", methods=["DELETE"])
 @login_required
 @admin_required
 def delete_product(product_id):
     """Admin delete product."""
-    print(1)
-    print(product_id)
     product = Product.query.get_or_404(product_id)
-    print(product)
     db.session.delete(product)
     db.session.commit()
     flash(f"{product.name} product has been deleted.")
