@@ -144,3 +144,5 @@ templates/solutions/
 
 # sass
 .sass-cache
+
+.flaskenv
