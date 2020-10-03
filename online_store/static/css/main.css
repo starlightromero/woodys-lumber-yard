@@ -8,7 +8,7 @@
   src: url("../fonts/Open-Sans-Light.eot?#iefix") format("embedded-opentype");
   src: url("../fonts/OpenSans-Light.ttf") format("truetype");
   src: url("../fonts/OpenSans-Light.woff") format("woff"); }
-body main button, body main .product-grid .product-item button, body main .product-grid .product-item .product-form input[type=submit], body main .product-detail .product-detail-text button, body main .full-form input[type=submit], body footer button {
+body main button, body main .product-grid .product-item button, body main .product-grid .product-item .product-form input[type=submit], body main .product-detail .product-detail-text button, body main .categories .category-list .category-item .category-actions .update input, body main .categories .category-list .category-item .category-actions .delete, body main .full-form input[type=submit], body footer button {
   -ms-appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -215,6 +215,59 @@ body {
         width: 35%; }
         body main .product-detail .product-detail-text button {
           width: 100%; }
+    body main .categories {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center; }
+      body main .categories .category-list {
+        flex-basis: 80%;
+        padding-right: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center; }
+        body main .categories .category-list .category-item {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          padding: 1rem;
+          font-size: 1.5rem;
+          justify-content: space-between;
+          background-color: #FCDFB3;
+          color: #634C29;
+          width: 70%; }
+          body main .categories .category-list .category-item .category-actions {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            flex-basis: 40%; }
+            body main .categories .category-list .category-item .category-actions .update {
+              margin-right: 0.5rem;
+              flex-basis: 50%; }
+              body main .categories .category-list .category-item .category-actions .update input {
+                width: 100%; }
+                body main .categories .category-list .category-item .category-actions .update input:hover, body main .categories .category-list .category-item .category-actions .update input:focus {
+                  background: #B09C7D; }
+                body main .categories .category-list .category-item .category-actions .update input:focus {
+                  outline: 1px solid #B09C7D;
+                  outline-offset: -4px; }
+                body main .categories .category-list .category-item .category-actions .update input:active {
+                  transform: scale(0.95); }
+            body main .categories .category-list .category-item .category-actions .delete {
+              flex-basis: 50%;
+              margin-left: 0.5rem; }
+              body main .categories .category-list .category-item .category-actions .delete:hover, body main .categories .category-list .category-item .category-actions .delete:focus {
+                background: #B09C7D; }
+              body main .categories .category-list .category-item .category-actions .delete:focus {
+                outline: 1px solid #B09C7D;
+                outline-offset: -4px; }
+              body main .categories .category-list .category-item .category-actions .delete:active {
+                transform: scale(0.95); }
+      body main .categories form {
+        flex-basis: 20%; }
     body main .full-form {
       display: flex;
       flex-direction: column;

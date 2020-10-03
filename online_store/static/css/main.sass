@@ -221,6 +221,63 @@ body
           @extend %btn
           width: 100%
 
+    .categories
+      +flexbox(row)
+
+      .category-list
+        flex-basis: 80%
+        padding-right: 20px
+        +flexbox(column)
+
+        .category-item
+          +flexbox(row)
+          padding: 1rem
+          font-size: 1.5rem
+          justify-content: space-between
+          background-color: $light-color
+          color: $dark-color
+          width: 70%
+
+          .category-actions
+            +flexbox(row)
+            flex-basis: 40%
+
+            .update
+              margin-right: 0.5rem
+              flex-basis: 50%
+
+              input
+                @extend %btn
+                width: 100%
+
+                &:hover, &:focus
+                  background: $primary-color
+
+                &:focus
+                  outline: 1px solid $primary-color
+                  outline-offset: -4px
+
+                &:active
+                  transform: scale(0.95)
+
+            .delete
+              @extend %btn
+              flex-basis: 50%
+              margin-left: 0.5rem
+
+              &:hover, &:focus
+                background: $primary-color
+
+              &:focus
+                outline: 1px solid $primary-color
+                outline-offset: -4px
+
+              &:active
+                transform: scale(0.95)
+
+      form
+        flex-basis: 20%
+
     .full-form
       +flexbox(column)
       background-color: $light-color
