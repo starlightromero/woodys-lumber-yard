@@ -56,13 +56,22 @@ class UpdateProductForm(FlaskForm):
     submit = SubmitField("Update Product")
 
 
-class CategoryForm(FlaskForm):
+class AddCategoryForm(FlaskForm):
     """Add category form."""
 
     name = StringField(
         "Name", validators=[DataRequired(), Length(min=2, max=20)]
     )
     submit = SubmitField("Add Category")
+
+
+class UpdateCategoryForm(FlaskForm):
+    """Update category form."""
+
+    name = StringField(
+        "Name", validators=[DataRequired(), Length(min=2, max=20)]
+    )
+    submit = SubmitField("Update")
 
 
 class AddAdminForm(FlaskForm):
