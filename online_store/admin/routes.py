@@ -32,10 +32,10 @@ def home():
     return render_template("admin/admin.html", **context)
 
 
-@admin.route("/admin/add_category", methods=["GET", "POST"])
+@admin.route("/admin/category", methods=["GET", "POST"])
 @login_required
 @admin_required
-def add_category():
+def show_categories():
     """Admin add category page."""
     categories = Category.query.all()
     form = CategoryForm()
@@ -46,21 +46,25 @@ def add_category():
         db.session.add(new_category)
         db.session.commit()
         flash(f"{name} category has been added!")
-        return redirect(url_for("admin.add_category"))
+        return redirect(url_for("admin.show_categories"))
     context = {
-        "title": "Add Category",
+        "title": "Category",
         "form": form,
         "categories": categories,
     }
-    return render_template("admin/add_category.html", **context)
+    return render_template("admin/category.html", **context)
 
 
-@admin.route("/admin/<int:category_id>/delete", methods=["POST"])
+@admin.route("/admin/category/<int:category_id>", methods=["DELETE"])
 @login_required
 @admin_required
 def delete_category(category_id):
     """Admin delete category."""
-    return redirect(url_for("admin.home"))
+    category = Category.query.get_or_404(category_id)
+    db.session.delete(category)
+    db.session.commit()
+    flash(f"{category.name} category has been deleted.")
+    return redirect(url_for("admin.show_categories"))
 
 
 @admin.route("/admin/add_product", methods=["GET", "POST"])
@@ -84,7 +88,7 @@ def add_product():
         db.session.add(new_product)
         db.session.commit()
         flash(f"{name} product has been added!")
-        return redirect(url_for("admin.add_category"))
+        return redirect(url_for("admin.show_categories"))
     context = {
         "title": "Add Product",
         "form": form,
