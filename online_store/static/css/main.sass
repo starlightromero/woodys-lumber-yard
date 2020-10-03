@@ -225,8 +225,7 @@ body
       +flexbox(row)
 
       .category-list
-        flex-basis: 80%
-        padding-right: 20px
+        flex-basis: 60%
         +flexbox(column)
 
         .category-item
@@ -236,34 +235,27 @@ body
           justify-content: space-between
           background-color: $light-color
           color: $dark-color
-          width: 70%
+          margin: 1rem 0
+          width: 80%
 
-          .category-actions
+          .update
             +flexbox(row)
-            flex-basis: 40%
+            align-items: flex-end
+            justify-content: space-between
+            flex-basis: 90%
+            margin-right: 0.5rem
 
-            .update
-              margin-right: 0.5rem
-              flex-basis: 50%
+            input[type=text]
+              font-size: 1.5rem
+              background-color: transparent
+              border: none
+              border-bottom: 3px solid $dark-color
+              color: $dark-color
+              outline: none
+              width: 300px
 
-              input
-                @extend %btn
-                width: 100%
-
-                &:hover, &:focus
-                  background: $primary-color
-
-                &:focus
-                  outline: 1px solid $primary-color
-                  outline-offset: -4px
-
-                &:active
-                  transform: scale(0.95)
-
-            .delete
+            input[type=submit]
               @extend %btn
-              flex-basis: 50%
-              margin-left: 0.5rem
 
               &:hover, &:focus
                 background: $primary-color
@@ -275,8 +267,20 @@ body
               &:active
                 transform: scale(0.95)
 
-      form
-        flex-basis: 20%
+          .delete
+            @extend %btn
+            flex-basis: 10%
+            margin-left: 0.5rem
+
+            &:hover, &:focus
+              background: $primary-color
+
+            &:focus
+              outline: 1px solid $primary-color
+              outline-offset: -4px
+
+            &:active
+              transform: scale(0.95)
 
     .full-form
       +flexbox(column)
