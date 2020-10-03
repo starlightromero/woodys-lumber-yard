@@ -24,8 +24,11 @@ def home():
     else:
         products = Product.query.order_by(Product.date_created).all()
         context = {"categories": categories, "products": products}
-    if current_user.is_admin:
-        return render_template("admin/admin.html", **context)
+    try:
+        if current_user.is_admin:
+            return render_template("admin/admin.html", **context)
+    except AttributeError:
+        pass
     return render_template("home.html", **context)
 
 
