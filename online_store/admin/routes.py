@@ -10,7 +10,7 @@ from flask_login import login_required
 from online_store import db
 from online_store.models import Category, Product, User
 from online_store.admin.forms import (
-    CategoryForm,
+    AddCategoryForm,
     AddProductForm,
     UpdateProductForm,
     AddAdminForm,
@@ -38,7 +38,7 @@ def home():
 def show_categories():
     """Admin add category page."""
     categories = Category.query.all()
-    form = CategoryForm()
+    form = AddCategoryForm()
     if form.validate_on_submit():
         name = form.name.data.title()
         new_category = Category(name=name)
