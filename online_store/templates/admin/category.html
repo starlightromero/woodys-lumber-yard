@@ -13,35 +13,43 @@
   <div class="category-list">
     {% for category in categories %}
     <div class="category-item">
-      {{ category }}
-      <div class="category-actions">
-        <form class="update" method="POST">
-          <input type="submit" name="submit" value="Update">
-        </form>
-        <button class="delete" type="button" onclick="deleteCategory({{ category.id }})">Delete</button>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
-  <form class="full-form" method="POST">
-    {{ form.hidden_tag() }}
-    <fieldset>
-      <div>
-        {{ form.name.label }}
-        {% if form.name.errors %}
-          {{ form.name(class="is-invalid") }}
+      <form class="update" method="POST">
+        {{ update_form.hidden_tag() }}
+        {% if update_form.name.errors %}
+          {{ update_form.name(class="is-invalid") }}
           <div class="invalid-feedback">
-            {% for error in form.name.errors %}
+            {% for error in update_form.name.errors %}
               {{ error }}
             {% endfor %}
           </div>
         {% else %}
-          {{ form.name }}
+          {{ update_form.name(value=category) }}
+        {% endif %}
+        {{ update_form.submit }}
+      </form>
+      <button class="delete" type="button" onclick="deleteCategory({{ category.id }})">Delete</button>
+    </div>
+    {% endfor %}
+  </div>
+  <form class="full-form" method="POST">
+    {{ add_form.hidden_tag() }}
+    <fieldset>
+      <div>
+        {{ add_form.name.label }}
+        {% if add_form.name.errors %}
+          {{ add_form.name(class="is-invalid") }}
+          <div class="invalid-feedback">
+            {% for error in add_form.name.errors %}
+              {{ error }}
+            {% endfor %}
+          </div>
+        {% else %}
+          {{ add_form.name }}
         {% endif %}
       </div>
     </fieldset>
     <div>
-      {{ form.submit }}
+      {{ add_form.submit }}
     </div>
   </form>
 </div>
