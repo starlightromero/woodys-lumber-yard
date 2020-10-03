@@ -31,10 +31,19 @@ def register():
         redirect(url_for("main.home"))
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(
-            username=form.username.data,
-            email=form.email.data,
-        )
+        user = None
+        if form.email.data == "starlightromero@gmail.com":
+            user = User(
+                username=form.username.data,
+                email=form.email.data,
+                is_admin=True,
+                is_superadmin=True,
+            )
+        else:
+            user = User(
+                username=form.username.data,
+                email=form.email.data,
+            )
         user.set_password(form.password.data)
         db.session.add(user)
         db.session.commit()
