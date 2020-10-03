@@ -7,15 +7,9 @@ searchBtn.addEventListener('click', () => {
   searchForm.classList.toggle('fadeIn')
 })
 
-const adminButton = document.getElementById('admin-button')
-
-adminButton.addEventListener('click', () => {
-  window.location.href = '/admin'
-})
-
-const cart = document.querySelector('.cart')
-const addToCart = document.querySelector('button[name=\'add-to-cart\']')
-
-addToCart.addEventListener('click', () => {
-  alert('added')
-})
+// const cart = document.querySelector('.cart')
+// const addToCart = document.querySelector('button[name=\'add-to-cart\']')
+//
+// addToCart.addEventListener('click', () => {
+//   alert('added')
+// })
