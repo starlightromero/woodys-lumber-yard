@@ -2,7 +2,7 @@
 import os
 import secrets
 from PIL import Image
-from online_store import create_app
+from flask import current_app
 
 
 def save_image(form_image, folder, size):
@@ -11,7 +11,7 @@ def save_image(form_image, folder, size):
     _, f_ext = os.path.splitext(form_image.filename)
     image_filename = random_hex + f_ext
     image_path = os.path.join(
-        app.root_path, f"static/{folder}", image_filename
+        current_app.root_path, f"static/{folder}", image_filename
     )
     output_size = (size, size)
     i = Image.open(form_image)
