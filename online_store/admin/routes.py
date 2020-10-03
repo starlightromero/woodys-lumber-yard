@@ -11,6 +11,7 @@ from online_store import db
 from online_store.models import Category, Product, User
 from online_store.admin.forms import (
     AddCategoryForm,
+    UpdateCategoryForm,
     AddProductForm,
     UpdateProductForm,
     AddAdminForm,
@@ -38,18 +39,21 @@ def home():
 def show_categories():
     """Admin add category page."""
     categories = Category.query.all()
-    form = AddCategoryForm()
-    if form.validate_on_submit():
-        name = form.name.data.title()
+    add_form = AddCategoryForm()
+    update_form = UpdateCategoryForm()
+    if add_form.validate_on_submit():
+        name = add_form.name.data.title()
         new_category = Category(name=name)
         new_category.add_link()
         db.session.add(new_category)
         db.session.commit()
         flash(f"{name} category has been added!")
         return redirect(url_for("admin.show_categories"))
+    update_form.name.data = ""
     context = {
         "title": "Category",
-        "form": form,
+        "add_form": add_form,
+        "update_form": update_form,
         "categories": categories,
     }
     return render_template("admin/category.html", **context)
