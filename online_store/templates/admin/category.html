@@ -1,5 +1,12 @@
 {% extends "admin/base.html" %}
 {% block title %}Categories{% endblock %}
+{% block head %}
+{{ super() }}
+
+<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+<script type="text/javascript" src="{{ url_for('static', filename='delete-category.js') }}" defer></script>
+
+{% endblock %}
 
 {% block content %}
 <div class="categories">
@@ -11,7 +18,7 @@
         <form class="update" method="POST">
           <input type="submit" name="submit" value="Update">
         </form>
-        <button class="delete" type="button" onclick="deleteCategory({{ category.id }})">Delete</button>      
+        <button class="delete" type="button" onclick="deleteCategory({{ category.id }})">Delete</button>
       </div>
     </div>
     {% endfor %}
