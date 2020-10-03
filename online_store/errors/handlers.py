@@ -11,7 +11,7 @@ def page_not_found(error):
     print(error)
     categories = Category.query.all()
     context = {"categories": categories}
-    return render_template("404.html", **context), 404
+    return render_template("errors/404.html", **context), 404
 
 
 @errors.app_errorhandler(413)
