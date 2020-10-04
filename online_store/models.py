@@ -11,25 +11,22 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
-class User(db.Model, UserMixin):
-    """User database class."""
+class BaseUser(db.Model, UserMixin):
+    """BaseUser database class."""
 
+    __abstract__ = True
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     image = db.Column(db.String(20), nullable=False, default="default.jpg")
     password = db.Column(db.String(60), nullable=True)
-    is_admin = db.Column(db.Boolean, nullable=False, default=False)
-    is_superadmin = db.Column(db.Boolean, nullable=False, default=False)
-    categories = db.relationship("Category", backref="created_by", lazy=True)
-    products = db.relationship("Product", backref="created_by", lazy=True)
 
     def __repr__(self):
-        """Return username and email for User."""
-        return f"User('{self.username}', '{self.email}')"
+        """Return username and email for BaseUser."""
+        return f"BaseUser('{self.username}', '{self.email}')"
 
     def __str__(self):
-        """Return username and email for User."""
+        """Return username and email for BaseUser."""
         return self.username
 
     def set_password(self, password):
@@ -56,6 +53,29 @@ class User(db.Model, UserMixin):
         return User.query.get(user_id)
 
 
+class User(BaseUser):
+    """User database class."""
+
+    is_employee = db.Column(db.Boolean, nullable=False, default=False)
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
+
+
+class Employee(BaseUser):
+    """Employee database class."""
+
+    is_employee = db.Column(db.Boolean, nullable=False, default=True)
+    is_admin = db.Column(db.Boolean, nullable=False, default=False)
+    categories = db.relationship("Category", backref="created_by", lazy=True)
+    products = db.relationship("Product", backref="created_by", lazy=True)
+
+
+class Admin(BaseUser):
+    """Admin database class."""
+
+    is_employee = db.Column(db.Boolean, nullable=False, default=False)
+    is_admin = db.Column(db.Boolean, nullable=False, default=True)
+
+
 class Category(db.Model):
     """Product Category database class."""
 
@@ -64,7 +84,7 @@ class Category(db.Model):
     link = db.Column(db.String(20), nullable=True)
     products = db.relationship("Product", backref="category", lazy=True)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    created_by_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    created_by_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
 
     def __repr__(self):
         """Return name for Category."""
@@ -88,7 +108,7 @@ class Product(db.Model):
     price = db.Column(db.Float, nullable=False)
     image = db.Column(db.String(40), nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
-    created_by_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    created_by_id = db.Column(db.Integer, db.ForeignKey("employee.id"))
 
     def __repr__(self):
         """Return name and price for Product."""

@@ -17,7 +17,7 @@ from online_store.admin.forms import (
     AddProductForm,
     UpdateProductForm,
 )
-from online_store.admin.utils import admin_required, super_admin_required
+from online_store.admin.utils import admin_required, employee_required
 from online_store.main.utils import save_image
 
 admin = Blueprint("admin", __name__)
@@ -25,7 +25,7 @@ admin = Blueprint("admin", __name__)
 
 @admin.route("/admin", methods=["GET"])
 @login_required
-@admin_required
+@employee_required
 def home():
     """Admin page."""
     return redirect(url_for("admin.show_products"))
@@ -33,7 +33,7 @@ def home():
 
 @admin.route("/admin/products", methods=["GET", "POST"])
 @login_required
-@admin_required
+@employee_required
 def show_products():
     """Admin add products page."""
     categories = Category.query.all()
@@ -65,7 +65,7 @@ def show_products():
 
 @admin.route("/admin/<int:product_id>", methods=["GET", "POST"])
 @login_required
-@admin_required
+@employee_required
 def update_product(product_id):
     """Admin update product."""
     categories = Category.query.all()
@@ -94,7 +94,7 @@ def update_product(product_id):
 
 @admin.route("/admin/products/<int:product_id>", methods=["DELETE"])
 @login_required
-@admin_required
+@employee_required
 def delete_product(product_id):
     """Admin delete product."""
     product = Product.query.get_or_404(product_id)
@@ -106,7 +106,7 @@ def delete_product(product_id):
 
 @admin.route("/admin/categories", methods=["GET", "POST"])
 @login_required
-@admin_required
+@employee_required
 def show_categories():
     """Admin add category page."""
     categories = Category.query.all()
@@ -131,7 +131,7 @@ def show_categories():
 
 @admin.route("/admin/categories/<int:category_id>", methods=["PUT"])
 @login_required
-@admin_required
+@employee_required
 def update_category(category_id):
     """Update delete category."""
     category = Category.query.get_or_404(category_id)
@@ -144,7 +144,7 @@ def update_category(category_id):
 
 @admin.route("/admin/categories/<int:category_id>", methods=["DELETE"])
 @login_required
-@admin_required
+@employee_required
 def delete_category(category_id):
     """Admin delete category."""
     category = Category.query.get_or_404(category_id)
@@ -156,16 +156,16 @@ def delete_category(category_id):
 
 @admin.route("/admin/admins", methods=["GET"])
 @login_required
-@super_admin_required
+@admin_required
 def show_admins():
     """Super admin add admin."""
     categories = Category.query.all()
     users = (
-        User.query.filter_by(is_admin=False)
-        .filter_by(is_superadmin=False)
+        User.query.filter_by(is_emplyeen=False)
+        .filter_by(is_admin=False)
         .all()
     )
-    admins = User.query.filter_by(is_admin=True).all()
+    admins = User.query.filter_by(is_employee=True).all()
     context = {
         "title": "Admins",
         "categories": categories,
@@ -177,15 +177,15 @@ def show_admins():
 
 @admin.route("/admin/admins/<int:user_id>", methods=["PUT"])
 @login_required
-@super_admin_required
+@admin_required
 def update_admins(user_id):
     """Update admin permissions."""
     user = User.query.get_or_404(user_id)
-    if user.is_admin:
-        user.is_admin = False
+    if user.is_employee:
+        user.is_employee = False
         flash(f"{user.username} had admin permissions revoked.")
     else:
-        user.is_admin = True
+        user.is_employee = True
         flash(f"{user.username} had admin permissions granted.")
     db.session.commit()
     return redirect(url_for("admin.show_admins"))

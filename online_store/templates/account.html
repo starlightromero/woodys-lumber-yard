@@ -9,7 +9,7 @@
     >
     <h2>{{ current_user.username }}</h2>
     <p>{{ current_user.email }}</p>
-    {% if current_user.is_admin or current_user.is_superadmin %}
+    {% if current_user.is_employee or current_user.is_admin %}
       <a href="{{ url_for('admin.home') }}"><button>Go To Admin</button></a>
     {% endif %}
     <a href="{{ url_for('users.logout') }}"><button>Log Out</button></a>

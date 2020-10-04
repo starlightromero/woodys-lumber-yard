@@ -1,26 +1,28 @@
 {% extends "base.html" %}
 
 {% block title %}
-{% if current_user.is_superadmin %}
-Super Admin
-{% else %}
+{% if current_user.is_admin %}
 Admin
+{% else %}
+Employee
 {% endif %}
 {% endblock %}
 
 {% block nav %}
 <h1>
-  {% if current_user.is_superadmin %}
-  Super Admin
-  {% else %}
+  {% if current_user.is_admin %}
   Admin
+  {% else %}
+  Employee
   {% endif %}
 </h1>
 <nav>
   <ul>
+    {% if current_user.is_employee %}
     <li><a href="{{ url_for('admin.show_products') }}">Products</a></li>
     <li><a href="{{ url_for('admin.show_categories') }}">Categories</a></li>
-    {% if current_user.is_superadmin %}
+    {% endif %}
+    {% if current_user.is_admin %}
     <li><a href="{{ url_for('admin.show_admins') }}">Admins</a></li>
     {% endif %}
   </ul>

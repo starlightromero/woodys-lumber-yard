@@ -15,7 +15,7 @@ from wtforms.validators import (
     ValidationError,
 )
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from online_store.models import Category, User
+from online_store.models import Category
 
 
 class AddProductForm(FlaskForm):

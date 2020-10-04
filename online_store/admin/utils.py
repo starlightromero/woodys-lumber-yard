@@ -17,13 +17,13 @@ def admin_required(func):
     return wrapper
 
 
-def super_admin_required(func):
+def employee_required(func):
     """Super admin required decorator."""
 
     @wraps(func)
     def wrapper(*args, **kwargs):
-        """Check is current user is a super admin."""
-        if current_user.is_superadmin:
+        """Check is current user is a employee."""
+        if current_user.is_employee:
             return func(*args, **kwargs)
         else:
             return login_manager.unauthorized()

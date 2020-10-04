@@ -1,6 +1,5 @@
 # TODO
 
-* allow superadmin to remove admins
 * create cart db class
 * add products to cart
 * show details on cart page
