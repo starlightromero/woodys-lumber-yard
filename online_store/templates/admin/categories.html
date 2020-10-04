@@ -13,7 +13,7 @@
   <div class="category-list">
     {% for category in categories %}
     <div class="category-item">
-      <form method="POST">
+      <form>
         {{ update_form.hidden_tag() }}
         {% if update_form.name.errors %}
           {{ update_form.name(class="is-invalid") }}
