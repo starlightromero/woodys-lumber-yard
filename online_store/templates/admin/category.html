@@ -4,7 +4,7 @@
 {{ super() }}
 
 <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
-<script type="text/javascript" src="{{ url_for('static', filename='delete-category.js') }}" defer></script>
+<script type="text/javascript" src="{{ url_for('static', filename='category.js') }}" defer></script>
 
 {% endblock %}
 
@@ -13,7 +13,7 @@
   <div class="category-list">
     {% for category in categories %}
     <div class="category-item">
-      <form class="update" method="POST">
+      <form method="POST">
         {{ update_form.hidden_tag() }}
         {% if update_form.name.errors %}
           {{ update_form.name(class="is-invalid") }}
@@ -23,11 +23,11 @@
             {% endfor %}
           </div>
         {% else %}
-          {{ update_form.name(value=category) }}
+          {{ update_form.name(value=category, **{"data-id": category.id}) }}
         {% endif %}
-        {{ update_form.submit }}
       </form>
-      <button class="delete" type="button" onclick="deleteCategory({{ category.id }})">Delete</button>
+      <button type="button" onclick="updateCategory({{ category.id }})">Update</button>
+      <button type="button" onclick="deleteCategory({{ category.id }})">Delete</button>
     </div>
     {% endfor %}
   </div>
