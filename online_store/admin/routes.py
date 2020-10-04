@@ -6,6 +6,7 @@ from flask import (
     url_for,
     flash,
     request,
+    jsonify,
 )
 from flask_login import login_required
 from online_store import db
@@ -15,7 +16,6 @@ from online_store.admin.forms import (
     UpdateCategoryForm,
     AddProductForm,
     UpdateProductForm,
-    AddAdminForm,
 )
 from online_store.admin.utils import admin_required, super_admin_required
 from online_store.main.utils import save_image
@@ -34,7 +34,7 @@ def home():
     return render_template("admin/admin.html", **context)
 
 
-@admin.route("/admin/category", methods=["GET", "POST"])
+@admin.route("/admin/categories", methods=["GET", "POST"])
 @login_required
 @admin_required
 def show_categories():
@@ -56,10 +56,10 @@ def show_categories():
         "update_form": update_form,
         "categories": categories,
     }
-    return render_template("admin/category.html", **context)
+    return render_template("admin/categories.html", **context)
 
 
-@admin.route("/admin/category/<int:category_id>", methods=["PUT"])
+@admin.route("/admin/categories/<int:category_id>", methods=["PUT"])
 @login_required
 @admin_required
 def update_category(category_id):
@@ -72,7 +72,7 @@ def update_category(category_id):
     return url_for("admin.show_categories")
 
 
-@admin.route("/admin/category/<int:category_id>", methods=["DELETE"])
+@admin.route("/admin/categories/<int:category_id>", methods=["DELETE"])
 @login_required
 @admin_required
 def delete_category(category_id):
@@ -155,22 +155,30 @@ def delete_product(product_id):
     return redirect(url_for("admin.home"))
 
 
-@admin.route("/admin/add_admin", methods=["GET", "POST"])
+@admin.route("/admin/admins", methods=["GET", "POST"])
 @login_required
 @super_admin_required
-def add_admin():
+def show_admins():
     """Super admin add admin."""
     categories = Category.query.all()
-    form = AddAdminForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(name=form.user.data)
-        user.is_admin = True
-        db.session.commit()
-        flash(f"{user.name} has been granted admin permissions!")
-        return redirect(url_for("admin.home"))
+    users = (
+        User.query.filter_by(is_admin=False)
+        .filter_by(is_superadmin=False)
+        .all()
+    )
+    admins = User.query.filter_by(is_admin=True).all()
     context = {
-        "title": "Add Admin",
-        "form": form,
+        "title": "Admins",
         "categories": categories,
+        "users": users,
+        "admins": admins,
     }
-    return render_template("admin/add_admin.html", **context)
+    return render_template("admin/admins.html", **context)
+
+
+@admin.route("/admin/admins/<int:id>", methods=["PUT"])
+@login_required
+@super_admin_required
+def update_admins(id):
+    """Update admin permissions."""
+    return url_for(show_admins)
