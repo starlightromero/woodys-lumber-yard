@@ -8,6 +8,7 @@ from flask import (
     request,
 )
 from flask_login import current_user, login_required, login_user, logout_user
+from sqlalchemy.exc import OperationalError
 from online_store import db
 from online_store.models import Category, User
 from online_store.users.forms import (
@@ -60,16 +61,18 @@ def login():
     categories = Category.query.all()
     form = LoginForm()
     if form.validate_on_submit():
-        user = User.query.filter_by(email=form.email.data).first()
-        if user and user.check_password(form.password.data):
-            login_user(user, remember=form.remember.data)
-            next_page = request.args.get("next")
-            return (
-                redirect(next_page)
-                if next_page
-                else redirect(url_for("main.home"))
-            )
-        flash("Login Unsuccessful. Please verify email and password.")
+        try:
+            user = User.query.filter_by(email=form.email.data).first()
+            if user and user.check_password(form.password.data):
+                login_user(user, remember=form.remember.data)
+                next_page = request.args.get("next")
+                return (
+                    redirect(next_page)
+                    if next_page
+                    else redirect(url_for("main.home"))
+                )
+        except OperationalError:
+            flash("Login Unsuccessful. Please verify email and password.")
     context = {"title": "Login", "form": form, "categories": categories}
     return render_template("login.html", **context)
 
