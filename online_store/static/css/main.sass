@@ -223,6 +223,7 @@ body
 
     .categories
       +flexbox(row)
+      align-items: flex-start
 
       .category-list
         flex-basis: 60%
@@ -238,12 +239,12 @@ body
           margin: 1rem 0
           width: 80%
 
-          .update
+          form
             +flexbox(row)
             align-items: flex-end
             justify-content: space-between
-            flex-basis: 90%
             margin-right: 0.5rem
+            flex-basis: 60%
 
             input[type=text]
               font-size: 1.5rem
@@ -252,25 +253,11 @@ body
               border-bottom: 3px solid $dark-color
               color: $dark-color
               outline: none
-              width: 300px
 
-            input[type=submit]
-              @extend %btn
-
-              &:hover, &:focus
-                background: $primary-color
-
-              &:focus
-                outline: 1px solid $primary-color
-                outline-offset: -4px
-
-              &:active
-                transform: scale(0.95)
-
-          .delete
+          button
             @extend %btn
-            flex-basis: 10%
             margin-left: 0.5rem
+            flex-basis: 20%
 
             &:hover, &:focus
               background: $primary-color
@@ -281,6 +268,9 @@ body
 
             &:active
               transform: scale(0.95)
+
+      .full-form
+        margin-top: 1rem
 
     .full-form
       +flexbox(column)

@@ -8,7 +8,7 @@
   src: url("../fonts/Open-Sans-Light.eot?#iefix") format("embedded-opentype");
   src: url("../fonts/OpenSans-Light.ttf") format("truetype");
   src: url("../fonts/OpenSans-Light.woff") format("woff"); }
-body main button, body main .product-grid .product-item button, body main .product-grid .product-item .product-form input[type=submit], body main .product-detail .product-detail-text button, body main .categories .category-list .category-item .update input[type=submit], body main .categories .category-list .category-item .delete, body main .full-form input[type=submit], body footer button {
+body main button, body main .product-grid .product-item button, body main .product-grid .product-item .product-form input[type=submit], body main .product-detail .product-detail-text button, body main .categories .category-list .category-item button, body main .full-form input[type=submit], body footer button {
   -ms-appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -218,7 +218,8 @@ body {
       display: flex;
       flex-direction: row;
       justify-content: center;
-      align-items: center; }
+      align-items: center;
+      align-items: flex-start; }
       body main .categories .category-list {
         flex-basis: 60%;
         display: flex;
@@ -237,40 +238,34 @@ body {
           color: #634C29;
           margin: 1rem 0;
           width: 80%; }
-          body main .categories .category-list .category-item .update {
+          body main .categories .category-list .category-item form {
             display: flex;
             flex-direction: row;
             justify-content: center;
             align-items: center;
             align-items: flex-end;
             justify-content: space-between;
-            flex-basis: 90%;
-            margin-right: 0.5rem; }
-            body main .categories .category-list .category-item .update input[type=text] {
+            margin-right: 0.5rem;
+            flex-basis: 60%; }
+            body main .categories .category-list .category-item form input[type=text] {
               font-size: 1.5rem;
               background-color: transparent;
               border: none;
               border-bottom: 3px solid #634C29;
               color: #634C29;
-              outline: none;
-              width: 300px; }
-            body main .categories .category-list .category-item .update input[type=submit]:hover, body main .categories .category-list .category-item .update input[type=submit]:focus {
+              outline: none; }
+          body main .categories .category-list .category-item button {
+            margin-left: 0.5rem;
+            flex-basis: 20%; }
+            body main .categories .category-list .category-item button:hover, body main .categories .category-list .category-item button:focus {
               background: #B09C7D; }
-            body main .categories .category-list .category-item .update input[type=submit]:focus {
+            body main .categories .category-list .category-item button:focus {
               outline: 1px solid #B09C7D;
               outline-offset: -4px; }
-            body main .categories .category-list .category-item .update input[type=submit]:active {
+            body main .categories .category-list .category-item button:active {
               transform: scale(0.95); }
-          body main .categories .category-list .category-item .delete {
-            flex-basis: 10%;
-            margin-left: 0.5rem; }
-            body main .categories .category-list .category-item .delete:hover, body main .categories .category-list .category-item .delete:focus {
-              background: #B09C7D; }
-            body main .categories .category-list .category-item .delete:focus {
-              outline: 1px solid #B09C7D;
-              outline-offset: -4px; }
-            body main .categories .category-list .category-item .delete:active {
-              transform: scale(0.95); }
+      body main .categories .full-form {
+        margin-top: 1rem; }
     body main .full-form {
       display: flex;
       flex-direction: column;
