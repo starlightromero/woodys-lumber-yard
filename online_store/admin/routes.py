@@ -29,9 +29,81 @@ admin = Blueprint("admin", __name__)
 def home():
     """Admin page."""
     categories = Category.query.all()
-    products = Product.query.order_by(Product.date_created).all()
-    context = {"products": products, "categories": categories}
+    context = {"categories": categories}
     return render_template("admin/admin.html", **context)
+
+
+@admin.route("/admin/products", methods=["GET", "POST"])
+@login_required
+@admin_required
+def show_products():
+    """Admin add products page."""
+    categories = Category.query.all()
+    products = Product.query.order_by(Product.date_created).all()
+    form = AddProductForm()
+    if form.validate_on_submit():
+        image_file = None
+        if form.image.data:
+            image_file = save_image(form.image.data, "product-images", 800)
+        name = form.name.data.title()
+        new_product = Product(
+            name=name,
+            category=form.category.data,
+            price=form.price.data,
+            image=image_file,
+        )
+        db.session.add(new_product)
+        db.session.commit()
+        flash(f"{name} product has been added!")
+        return redirect(url_for("admin.show_products"))
+    context = {
+        "title": "Products",
+        "form": form,
+        "categories": categories,
+        "products": products,
+    }
+    return render_template("admin/products.html", **context)
+
+
+@admin.route("/admin/<int:product_id>/update", methods=["GET", "POST"])
+@login_required
+@admin_required
+def update_product(product_id):
+    """Admin update product."""
+    categories = Category.query.all()
+    product = Product.query.get_or_404(product_id)
+    form = UpdateProductForm()
+    if form.validate_on_submit():
+        if form.image.data:
+            product.image = save_image(form.image.data, "product-images", 800)
+        product.name = form.name.data.title()
+        product.category = form.category.data
+        product.price = form.price.data
+        db.session.commit()
+        flash(f"{product.name} product has been updated.")
+        return redirect(url_for("admin.home"))
+    form.name.data = product.name
+    form.category.data = product.category
+    form.price.data = product.price
+    context = {
+        "title": "Update Product",
+        "product": product,
+        "categories": categories,
+        "form": form,
+    }
+    return render_template("admin/update_product.html", **context)
+
+
+@admin.route("/admin/products/<int:product_id>", methods=["DELETE"])
+@login_required
+@admin_required
+def delete_product(product_id):
+    """Admin delete product."""
+    product = Product.query.get_or_404(product_id)
+    db.session.delete(product)
+    db.session.commit()
+    flash(f"{product.name} product has been deleted.")
+    return redirect(url_for("admin.home"))
 
 
 @admin.route("/admin/categories", methods=["GET", "POST"])
@@ -51,7 +123,7 @@ def show_categories():
         flash(f"{name} category has been added!")
         return redirect(url_for("admin.show_categories"))
     context = {
-        "title": "Category",
+        "title": "Categories",
         "add_form": add_form,
         "update_form": update_form,
         "categories": categories,
@@ -84,78 +156,7 @@ def delete_category(category_id):
     return url_for("admin.show_categories")
 
 
-@admin.route("/admin/add_product", methods=["GET", "POST"])
-@login_required
-@admin_required
-def add_product():
-    """Admin add products page."""
-    categories = Category.query.all()
-    form = AddProductForm()
-    if form.validate_on_submit():
-        image_file = None
-        if form.image.data:
-            image_file = save_image(form.image.data, "product-images", 800)
-        name = form.name.data.title()
-        new_product = Product(
-            name=name,
-            category=form.category.data,
-            price=form.price.data,
-            image=image_file,
-        )
-        db.session.add(new_product)
-        db.session.commit()
-        flash(f"{name} product has been added!")
-        return redirect(url_for("admin.show_categories"))
-    context = {
-        "title": "Add Product",
-        "form": form,
-        "categories": categories,
-    }
-    return render_template("admin/add_product.html", **context)
-
-
-@admin.route("/admin/<int:product_id>/update", methods=["GET", "POST"])
-@login_required
-@admin_required
-def update_product(product_id):
-    """Admin update product."""
-    categories = Category.query.all()
-    product = Product.query.get_or_404(product_id)
-    form = UpdateProductForm()
-    if form.validate_on_submit():
-        if form.image.data:
-            product.image = save_image(form.image.data, "product-images", 800)
-        product.name = form.name.data.title()
-        product.category = form.category.data
-        product.price = form.price.data
-        db.session.commit()
-        flash(f"{product.name} product has been updated.")
-        return redirect(url_for("admin.home"))
-    form.name.data = product.name
-    form.category.data = product.category
-    form.price.data = product.price
-    context = {
-        "title": "Update Product",
-        "product": product,
-        "categories": categories,
-        "form": form,
-    }
-    return render_template("admin/update_product.html", **context)
-
-
-@admin.route("/admin/<int:product_id>", methods=["DELETE"])
-@login_required
-@admin_required
-def delete_product(product_id):
-    """Admin delete product."""
-    product = Product.query.get_or_404(product_id)
-    db.session.delete(product)
-    db.session.commit()
-    flash(f"{product.name} product has been deleted.")
-    return redirect(url_for("admin.home"))
-
-
-@admin.route("/admin/admins", methods=["GET", "POST"])
+@admin.route("/admin/admins", methods=["GET"])
 @login_required
 @super_admin_required
 def show_admins():
