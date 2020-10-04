@@ -72,15 +72,3 @@ class UpdateCategoryForm(FlaskForm):
         "Name", validators=[DataRequired(), Length(min=2, max=20)]
     )
     submit = SubmitField("Update")
-
-
-class AddAdminForm(FlaskForm):
-    """Add admin form."""
-
-    user = QuerySelectField(
-        "User",
-        query_factory=lambda: User.query.filter_by(is_admin=False),
-        allow_blank=False,
-        validators=[DataRequired()],
-    )
-    submit = SubmitField("Grant Admin Permissions")
