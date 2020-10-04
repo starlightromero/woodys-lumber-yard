@@ -1,0 +1,84 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block head %}
+{{ super() }}
+
+<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+<script type="text/javascript" src="{{ url_for('static', filename='products.js') }}" defer></script>
+
+{% endblock %}
+{% block content %}
+
+<div class="products">
+  <div class="product-grid">
+    {% for product in products %}
+    <div class="product-item">
+      <p>
+        <a href="/products/{{ product.id }}">
+          <img src="{{ url_for('static', filename='product-images/' + product.image) }}" alt="{{ product.name }}">
+        </a>
+      </p>
+      <p>
+        <a href="/products/{{ product.id }}">{{ product.name }}</a>
+      </p>
+      <p class="price">${{ product.price }}</p>
+      <form class="product-form" action="{{ url_for('admin.update_product', product_id=product.id) }}" method="POST">
+        <input type="submit" value="Update">
+      </form>
+      <button type="button" onclick="deleteProduct({{ product.id }})">Delete</button>
+    </div>
+    {% endfor %}
+  </div>
+
+  <form class="full-form" method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <fieldset>
+      <legend>{{ title }}</legend>
+      {{ form.name.label }}
+      {% if form.name.errors %}
+        {{ form.name(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.name.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.name }}
+      {% endif %}
+      {{ form.category.label }}
+      {% if form.category.errors %}
+        {{ form.category(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.category.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.category }}
+      {% endif %}
+      {{ form.price.label }}
+      {% if form.price.errors %}
+        {{ form.price(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.price.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.price }}
+      {% endif %}
+      {{ form.image.label(class_="filelabel") }}
+      {{ form.image(class_="inputfile") }}
+      {% if form.image.errors %}
+        {% for error in form.image.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </fieldset>
+    <div>
+      {{ form.submit }}
+    </div>
+  </form>
+</div>
+
+{% endblock %}
