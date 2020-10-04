@@ -1,10 +1,10 @@
 {% extends "admin/base.html" %}
-{% block title %}Categories{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 {% block head %}
 {{ super() }}
 
 <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
-<script type="text/javascript" src="{{ url_for('static', filename='category.js') }}" defer></script>
+<script type="text/javascript" src="{{ url_for('static', filename='categories.js') }}" defer></script>
 
 {% endblock %}
 
