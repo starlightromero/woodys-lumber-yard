@@ -1,32 +1,5 @@
 {% extends "admin/base.html" %}
-{% block head %}
-{{ super() }}
-
-<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
-<script type="text/javascript" src="{{ url_for('static', filename='delete-product.js') }}" defer></script>
-
-{% endblock %}
 
 {% block content %}
-
-<div class="product-grid">
-  {% for product in products %}
-  <div class="product-item">
-    <p>
-      <a href="/products/{{ product.id }}">
-        <img src="{{ url_for('static', filename='product-images/' + product.image) }}" alt="{{ product.name }}">
-      </a>
-    </p>
-    <p>
-      <a href="/products/{{ product.id }}">{{ product.name }}</a>
-    </p>
-    <p class="price">${{ product.price }}</p>
-    <form class="product-form" action="{{ url_for('admin.update_product', product_id=product.id) }}" method="POST">
-      <input type="submit" value="Update">
-    </form>
-    <button type="button" onclick="deleteProduct({{ product.id }})">Delete</button>
-  </div>
-  {% endfor %}
-</div>
 
 {% endblock %}
