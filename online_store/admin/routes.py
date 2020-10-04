@@ -176,9 +176,15 @@ def show_admins():
     return render_template("admin/admins.html", **context)
 
 
-@admin.route("/admin/admins/<int:id>", methods=["PUT"])
+@admin.route("/admin/admins/<int:user_id>", methods=["PUT"])
 @login_required
 @super_admin_required
-def update_admins(id):
+def update_admins(user_id):
     """Update admin permissions."""
+    user = User.query.get_or_404(user_id)
+    if user.is_admin:
+        user.is_admin = False
+    else:
+        user.is_admin = True
+    db.session.commit()
     return url_for(show_admins)
