@@ -52,7 +52,7 @@ def show_products():
         )
         db.session.add(new_product)
         db.session.commit()
-        flash(f"{name} product has been added!")
+        flash(f"{name} product has been added.")
         return redirect(url_for("admin.show_products"))
     context = {
         "title": "Products",
@@ -63,7 +63,7 @@ def show_products():
     return render_template("admin/products.html", **context)
 
 
-@admin.route("/admin/<int:product_id>/update", methods=["GET", "POST"])
+@admin.route("/admin/<int:product_id>", methods=["GET", "POST"])
 @login_required
 @admin_required
 def update_product(product_id):
@@ -118,7 +118,7 @@ def show_categories():
         new_category.add_link()
         db.session.add(new_category)
         db.session.commit()
-        flash(f"{name} category has been added!")
+        flash(f"{name} category has been added.")
         return redirect(url_for("admin.show_categories"))
     context = {
         "title": "Categories",
@@ -138,7 +138,7 @@ def update_category(category_id):
     name = request.json.get("name")
     category.name = name
     db.session.commit()
-    flash(f"{category.name} has been updated!")
+    flash(f"{category.name} has been updated.")
     return url_for("admin.show_categories")
 
 
