@@ -5,7 +5,7 @@
   {% block head %}
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-  <script type="text/javascript" charset="utf-8" src="/static/main.js" defer></script>
+  <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='scripts/main.js')" defer></script>
   {% if title %}
     <title>Woody's Lumber Yard - {{ title }}</title>
   {% else %}
