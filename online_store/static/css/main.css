@@ -151,14 +151,15 @@ body {
       justify-content: center;
       align-items: center;
       align-items: flex-start;
-      justify-content: space-between; }
+      justify-content: space-between;
+      margin: auto; }
       body main .products .product-grid {
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        justify-content: flex-start;
         flex-wrap: wrap;
+        margin: auto;
         height: 100%;
         width: 100%; }
         body main .products .product-grid .product-item {
@@ -169,7 +170,7 @@ body {
           background-color: #FCDFB3;
           color: #634C29;
           padding: 0 1rem;
-          margin: 0 1rem;
+          margin: 1rem;
           width: 240px; }
           body main .products .product-grid .product-item a {
             color: #634C29;
@@ -201,6 +202,8 @@ body {
                 outline: 1px solid #FFFFFF; }
               body main .products .product-grid .product-item .product-form input[type=submit]:active {
                 transform: scale(0.95); }
+      body main .products .full-form {
+        margin-top: 1rem; }
     body main .product-detail {
       display: flex;
       flex-direction: row;
@@ -450,13 +453,20 @@ body {
         text-decoration: underline; }
     body main .account {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       justify-content: center;
-      align-items: center;
-      padding: 2rem;
-      background-color: #FCDFB3;
-      width: 440px;
-      margin: auto; }
+      align-items: center; }
+      body main .account .account-profile {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        background-color: #FCDFB3;
+        margin: auto; }
+        body main .account .account-profile a {
+          width: 100%;
+          margin: 1rem; }
   body footer {
     background-color: #FCDFB3;
     padding: 20px; }

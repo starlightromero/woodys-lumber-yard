@@ -139,11 +139,13 @@ body
       +flexbox(row)
       align-items: flex-start
       justify-content: space-between
+      margin: auto
 
       .product-grid
         +flexbox(row)
-        justify-content: flex-start
+        // justify-content: flex-start
         flex-wrap: wrap
+        margin: auto
         height: 100%
         width: 100%
 
@@ -152,7 +154,7 @@ body
           background-color: $light-color
           color: $dark-color
           padding: 0 1rem
-          margin: 0 1rem
+          margin: 1rem
           width: 240px
 
           a
@@ -201,6 +203,9 @@ body
 
               &:active
                 transform: scale(0.95)
+
+      .full-form
+        margin-top: 1rem
 
     .product-detail
       +flexbox(row)
@@ -457,11 +462,17 @@ body
           text-decoration: underline
 
     .account
-      +flexbox(column)
-      padding: 2rem
-      background-color: $light-color
-      width: 440px
-      margin: auto
+      +flexbox(row)
+
+      .account-profile
+        +flexbox(column)
+        padding: 2rem
+        background-color: $light-color
+        margin: auto
+
+        a
+          width: 100%
+          margin: 1rem
 
   footer
     background-color: $light-color
