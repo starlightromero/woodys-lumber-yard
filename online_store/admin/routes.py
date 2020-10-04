@@ -42,7 +42,7 @@ def show_products():
     if form.validate_on_submit():
         image_file = None
         if form.image.data:
-            image_file = save_image(form.image.data, "product-images", 800)
+            image_file = save_image(form.image.data, "product-images", 1000)
         name = form.name.data.title()
         new_product = Product(
             name=name,
