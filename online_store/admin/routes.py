@@ -183,7 +183,9 @@ def update_admins(user_id):
     user = User.query.get_or_404(user_id)
     if user.is_admin:
         user.is_admin = False
+        flash(f"{user.username} had admin permissions revoked.")
     else:
         user.is_admin = True
+        flash(f"{user.username} had admin permissions granted.")
     db.session.commit()
-    return url_for(show_admins)
+    return redirect(url_for("admin.show_admins"))
