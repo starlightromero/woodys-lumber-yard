@@ -2,52 +2,57 @@
 {% block content %}
 
 <div class="account">
-  <img
-    src="{{ url_for('static', filename='profile-images/' + current_user.image) }}"
-    alt="{{ current_user.username }}"
-  >
-  <h2>{{ current_user.username }}</h2>
-  <p>{{ current_user.email }}</p>
-  <a href="{{ url_for('users.logout') }}"><button>Log Out</button></a>
-</div>
-
-<form class="full-form" method="POST" enctype="multipart/form-data">
-  {{ form.hidden_tag() }}
-  <fieldset>
-    <legend>{{ title }}</legend>
-    {{ form.username.label }}
-    {% if form.username.errors %}
-      {{ form.username(class="is-invalid") }}
-      <div class="invalid-feedback">
-        {% for error in form.username.errors %}
-          {{ error }}
-        {% endfor %}
-      </div>
-    {% else %}
-      {{ form.username }}
+  <div class="account-profile">
+    <img
+      src="{{ url_for('static', filename='profile-images/' + current_user.image) }}"
+      alt="{{ current_user.username }}"
+    >
+    <h2>{{ current_user.username }}</h2>
+    <p>{{ current_user.email }}</p>
+    {% if current_user.is_admin or current_user.is_superadmin %}
+      <a href="{{ url_for('admin.home') }}"><button>Go To Admin</button></a>
     {% endif %}
-    {{ form.email.label }}
-    {% if form.email.errors %}
-      {{ form.email(class="is-invalid") }}
-      <div class="invalid-feedback">
-        {% for error in form.email.errors %}
-          {{ error }}
-        {% endfor %}
-      </div>
-    {% else %}
-      {{ form.email }}
-    {% endif %}
-    {{ form.image.label }}
-    {{ form.image }}
-    {% if form.image.errors %}
-      {% for error in form.image.errors %}
-        {{ error }}
-      {% endfor %}
-    {% endif %}
-  </fieldset>
-  <div>
-    {{ form.submit }}
+    <a href="{{ url_for('users.logout') }}"><button>Log Out</button></a>
   </div>
-</form>
+
+  <form class="full-form" method="POST" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <fieldset>
+      <legend>{{ title }}</legend>
+      {{ form.username.label }}
+      {% if form.username.errors %}
+        {{ form.username(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.username.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.username }}
+      {% endif %}
+      {{ form.email.label }}
+      {% if form.email.errors %}
+        {{ form.email(class="is-invalid") }}
+        <div class="invalid-feedback">
+          {% for error in form.email.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.email }}
+      {% endif %}
+      {{ form.image.label }}
+      {{ form.image }}
+      {% if form.image.errors %}
+        {% for error in form.image.errors %}
+          {{ error }}
+        {% endfor %}
+      {% endif %}
+    </fieldset>
+    <div>
+      {{ form.submit }}
+    </div>
+  </form>
+</div>
 
 {% endblock %}
