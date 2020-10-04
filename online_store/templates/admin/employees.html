@@ -4,19 +4,19 @@
 {{ super() }}
 
 <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
-<script type="text/javascript" src="{{ url_for('static', filename='admins.js') }}" defer></script>
+<script type="text/javascript" src="{{ url_for('static', filename='employees.js') }}" defer></script>
 
 {% endblock %}
 
 {% block content %}
 
 <div class="roles">
-  <div class="admins">
-    <h1>Admins</h1>
-    {% for admin in admins %}
-    <div class="admin">
-      <p>{{ admin.email }} ("{{ admin.username }}")</p>
-      <button type="button" onclick="revoke({{ admin.id }})">Revoke Admin Permissions</button>
+  <div class="employees">
+    <h1>Employees</h1>
+    {% for employee in employees %}
+    <div class="employee">
+      <p>{{ employee.email }} ("{{ employee.username }}")</p>
+      <button type="button" onclick="revoke({{ employee.id }})">Revoke Employee Permissions</button>
     </div>
     {% endfor %}
   </div>
@@ -26,7 +26,7 @@
     {% for user in users %}
     <div class="user">
       <p>{{ user.email }} ("{{ user.username }}")</p>
-      <button type="button" onclick="grant({{ user.id }})">Grant Admin Permissions</button>
+      <button type="button" onclick="grant({{ user.id }})">Grant Employee Permissions</button>
     </div>
     {% endfor %}
   </div>
