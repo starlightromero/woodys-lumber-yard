@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request
 from flask_login import current_user
 from online_store import db
-from online_store.models import Category, Product
+from online_store.models import Category, Product, Cart
 
 main = Blueprint("main", __name__)
 
@@ -64,5 +64,6 @@ def product_category(category_link):
 def cart():
     """Cart page."""
     categories = Category.query.all()
-    context = {"categories": categories}
+    cart = Cart.query.filter_by(user_id=current_user.id).first()
+    context = {"categories": categories, "cart": cart}
     return render_template("cart.html", **context)

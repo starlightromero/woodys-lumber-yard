@@ -3,4 +3,10 @@
 
 {% block content %}
 <h1>Cart</h1>
+{% for product in cart.products %}
+  <div class="product">
+    {{ product.name }}
+  </div>>
+{% endfor %}
+<p>{{ cart.quantity }}</p>
 {% endblock %}
