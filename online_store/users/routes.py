@@ -19,7 +19,6 @@ from online_store.users.forms import (
     ResetPasswordForm,
 )
 from online_store.main.utils import save_image
-from online_store.users.utils import send_reset_email
 
 
 users = Blueprint("users", __name__)
@@ -114,7 +113,7 @@ def reset_request():
     form = RequestResetForm()
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
-        send_reset_email(user)
+        user.send_reset_email()
         flash("An email has been sent to reset your password.")
         return redirect(url_for("users.login"))
     context = {"title": "Reset Password", "form": form}
