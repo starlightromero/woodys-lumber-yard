@@ -266,6 +266,42 @@ body {
               transform: scale(0.95); }
       body main .categories .full-form {
         margin-top: 1rem; }
+    body main .roles {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      align-items: flex-start;
+      justify-content: space-around; }
+      body main .roles .admins, body main .roles .users {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 1rem; }
+        body main .roles .admins .admin, body main .roles .admins .user, body main .roles .users .admin, body main .roles .users .user {
+          display: flex;
+          flex-direction: row;
+          justify-content: center;
+          align-items: center;
+          justify-content: space-between;
+          background-color: #FCDFB3;
+          width: 100%;
+          padding: 1rem; }
+          body main .roles .admins .admin p, body main .roles .admins .user p, body main .roles .users .admin p, body main .roles .users .user p {
+            flex-basis: 55;
+            font-size: 1.2rem;
+            text-align: left; }
+          body main .roles .admins .admin button, body main .roles .admins .user button, body main .roles .users .admin button, body main .roles .users .user button {
+            flex-basis: 45%; }
+            body main .roles .admins .admin button:hover, body main .roles .admins .admin button:focus, body main .roles .admins .user button:hover, body main .roles .admins .user button:focus, body main .roles .users .admin button:hover, body main .roles .users .admin button:focus, body main .roles .users .user button:hover, body main .roles .users .user button:focus {
+              background: #B09C7D; }
+            body main .roles .admins .admin button:focus, body main .roles .admins .user button:focus, body main .roles .users .admin button:focus, body main .roles .users .user button:focus {
+              outline: 1px solid #B09C7D;
+              outline-offset: -4px; }
+            body main .roles .admins .admin button:active, body main .roles .admins .user button:active, body main .roles .users .admin button:active, body main .roles .users .user button:active {
+              transform: scale(0.95); }
     body main .full-form {
       display: flex;
       flex-direction: column;

@@ -270,6 +270,41 @@ body
       .full-form
         margin-top: 1rem
 
+    .roles
+      +flexbox(row)
+      align-items: flex-start
+      justify-content: space-around
+
+      .admins, .users
+        +flexbox(column)
+        width: 100%
+        padding: 1rem
+
+        .admin, .user
+          +flexbox(row)
+          justify-content: space-between
+          background-color: $light-color
+          width: 100%
+          padding: 1rem
+
+          p
+            flex-basis: 55
+            font-size: 1.2rem
+            text-align: left
+
+          button
+            flex-basis: 45%
+
+            &:hover, &:focus
+              background: $primary-color
+
+            &:focus
+              outline: 1px solid $primary-color
+              outline-offset: -4px
+
+            &:active
+              transform: scale(0.95)
+
     .full-form
       +flexbox(column)
       background-color: $light-color
