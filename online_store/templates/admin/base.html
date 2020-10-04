@@ -19,9 +19,9 @@ Admin
 <nav>
   <ul>
     <li><a href="{{ url_for('admin.add_product') }}">Add Product</a></li>
-    <li><a href="{{ url_for('admin.show_categories') }}">Category</a></li>
+    <li><a href="{{ url_for('admin.show_categories') }}">Categories</a></li>
     {% if current_user.is_superadmin %}
-    <li><a href="{{ url_for('admin.add_admin') }}">Add Admin</a></li>
+    <li><a href="{{ url_for('admin.show_admins') }}">Admins</a></li>
     {% endif %}
   </ul>
 </nav>
