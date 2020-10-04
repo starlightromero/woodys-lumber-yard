@@ -131,57 +131,43 @@ body
       @extend %btn
       width: 100%
 
-    .product-grid
-      align-items: center
-      display: flex
-      flex-direction: row
-      flex-wrap: wrap
-      height: 100%
-      justify-content: flex-start
-      width: 100%
+    .products
+      +flexbox(row)
+      align-items: flex-start
 
-      .product-item
-        +flexbox(column)
-        background-color: $light-color
-        color: $dark-color
-        padding: 0 1rem
-        margin: 0 1rem
-        width: 240px
+      .product-grid
+        flex-basis: 60%
+        +flexbox(row)
+        justify-content: flex-start
+        flex-wrap: wrap
+        height: 100%
+        width: 100%
 
-        a
+        .product-item
+          +flexbox(column)
+          background-color: $light-color
           color: $dark-color
-          text-decoration: none
-
-          img
-            width: 100%
-
-        .title
+          padding: 0 1rem
+          margin: 0 1rem
+          width: 240px
 
           a
-            font-size: 1rem
+            color: $dark-color
+            text-decoration: none
 
-        .price
-          font-size: 1.2rem
-          font-weight: 900
+            img
+              width: 100%
 
-        button
-          @extend %btn
-          margin-bottom: 1rem
-          width: 100%
+          .title
 
-          &:hover, &:focus
-            background-color: $primary-color
+            a
+              font-size: 1rem
 
-          &:focus
-            outline: 1px solid $white
+          .price
+            font-size: 1.2rem
+            font-weight: 900
 
-          &:active
-            transform: scale(0.95)
-
-        .product-form
-          width: 100%
-
-          input[type=submit]
+          button
             @extend %btn
             margin-bottom: 1rem
             width: 100%
@@ -194,6 +180,23 @@ body
 
             &:active
               transform: scale(0.95)
+
+          .product-form
+            width: 100%
+
+            input[type=submit]
+              @extend %btn
+              margin-bottom: 1rem
+              width: 100%
+
+              &:hover, &:focus
+                background-color: $primary-color
+
+              &:focus
+                outline: 1px solid $white
+
+              &:active
+                transform: scale(0.95)
 
     .product-detail
       +flexbox(row)

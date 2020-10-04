@@ -8,7 +8,7 @@
   src: url("../fonts/Open-Sans-Light.eot?#iefix") format("embedded-opentype");
   src: url("../fonts/OpenSans-Light.ttf") format("truetype");
   src: url("../fonts/OpenSans-Light.woff") format("woff"); }
-body main button, body main .product-grid .product-item button, body main .product-grid .product-item .product-form input[type=submit], body main .product-detail .product-detail-text button, body main .categories .category-list .category-item button, body main .full-form input[type=submit], body footer button {
+body main button, body main .products .product-grid .product-item button, body main .products .product-grid .product-item .product-form input[type=submit], body main .product-detail .product-detail-text button, body main .categories .category-list .category-item button, body main .full-form input[type=submit], body footer button {
   -ms-appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -142,54 +142,62 @@ body {
       margin-top: 0; }
     body main button {
       width: 100%; }
-    body main .product-grid {
-      align-items: center;
+    body main .products {
       display: flex;
       flex-direction: row;
-      flex-wrap: wrap;
-      height: 100%;
-      justify-content: flex-start;
-      width: 100%; }
-      body main .product-grid .product-item {
+      justify-content: center;
+      align-items: center;
+      align-items: flex-start; }
+      body main .products .product-grid {
+        flex-basis: 60%;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
-        background-color: #FCDFB3;
-        color: #634C29;
-        padding: 0 1rem;
-        margin: 0 1rem;
-        width: 240px; }
-        body main .product-grid .product-item a {
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        height: 100%;
+        width: 100%; }
+        body main .products .product-grid .product-item {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          background-color: #FCDFB3;
           color: #634C29;
-          text-decoration: none; }
-          body main .product-grid .product-item a img {
-            width: 100%; }
-        body main .product-grid .product-item .title a {
-          font-size: 1rem; }
-        body main .product-grid .product-item .price {
-          font-size: 1.2rem;
-          font-weight: 900; }
-        body main .product-grid .product-item button {
-          margin-bottom: 1rem;
-          width: 100%; }
-          body main .product-grid .product-item button:hover, body main .product-grid .product-item button:focus {
-            background-color: #B09C7D; }
-          body main .product-grid .product-item button:focus {
-            outline: 1px solid #FFFFFF; }
-          body main .product-grid .product-item button:active {
-            transform: scale(0.95); }
-        body main .product-grid .product-item .product-form {
-          width: 100%; }
-          body main .product-grid .product-item .product-form input[type=submit] {
+          padding: 0 1rem;
+          margin: 0 1rem;
+          width: 240px; }
+          body main .products .product-grid .product-item a {
+            color: #634C29;
+            text-decoration: none; }
+            body main .products .product-grid .product-item a img {
+              width: 100%; }
+          body main .products .product-grid .product-item .title a {
+            font-size: 1rem; }
+          body main .products .product-grid .product-item .price {
+            font-size: 1.2rem;
+            font-weight: 900; }
+          body main .products .product-grid .product-item button {
             margin-bottom: 1rem;
             width: 100%; }
-            body main .product-grid .product-item .product-form input[type=submit]:hover, body main .product-grid .product-item .product-form input[type=submit]:focus {
+            body main .products .product-grid .product-item button:hover, body main .products .product-grid .product-item button:focus {
               background-color: #B09C7D; }
-            body main .product-grid .product-item .product-form input[type=submit]:focus {
+            body main .products .product-grid .product-item button:focus {
               outline: 1px solid #FFFFFF; }
-            body main .product-grid .product-item .product-form input[type=submit]:active {
+            body main .products .product-grid .product-item button:active {
               transform: scale(0.95); }
+          body main .products .product-grid .product-item .product-form {
+            width: 100%; }
+            body main .products .product-grid .product-item .product-form input[type=submit] {
+              margin-bottom: 1rem;
+              width: 100%; }
+              body main .products .product-grid .product-item .product-form input[type=submit]:hover, body main .products .product-grid .product-item .product-form input[type=submit]:focus {
+                background-color: #B09C7D; }
+              body main .products .product-grid .product-item .product-form input[type=submit]:focus {
+                outline: 1px solid #FFFFFF; }
+              body main .products .product-grid .product-item .product-form input[type=submit]:active {
+                transform: scale(0.95); }
     body main .product-detail {
       display: flex;
       flex-direction: row;
