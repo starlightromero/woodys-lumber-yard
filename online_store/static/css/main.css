@@ -288,7 +288,8 @@ body {
           justify-content: space-between;
           background-color: #FCDFB3;
           width: 100%;
-          padding: 1rem; }
+          padding: 1rem;
+          margin: 1rem; }
           body main .roles .admins .admin p, body main .roles .admins .user p, body main .roles .users .admin p, body main .roles .users .user p {
             flex-basis: 55;
             font-size: 1.2rem;
