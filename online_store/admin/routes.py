@@ -154,38 +154,38 @@ def delete_category(category_id):
     return url_for("admin.show_categories")
 
 
-@admin.route("/admin/admins", methods=["GET"])
+@admin.route("/admin/employees", methods=["GET"])
 @login_required
 @admin_required
-def show_admins():
-    """Super admin add admin."""
+def show_employees():
+    """Admin add employee."""
     categories = Category.query.all()
     users = (
-        User.query.filter_by(is_emplyeen=False)
+        User.query.filter_by(is_employee=False)
         .filter_by(is_admin=False)
         .all()
     )
-    admins = User.query.filter_by(is_employee=True).all()
+    employees = User.query.filter_by(is_employee=True).all()
     context = {
         "title": "Admins",
         "categories": categories,
         "users": users,
-        "admins": admins,
+        "employees": employees,
     }
-    return render_template("admin/admins.html", **context)
+    return render_template("admin/employees.html", **context)
 
 
-@admin.route("/admin/admins/<int:user_id>", methods=["PUT"])
+@admin.route("/admin/employees/<int:user_id>", methods=["PUT"])
 @login_required
 @admin_required
-def update_admins(user_id):
-    """Update admin permissions."""
+def update_employees(user_id):
+    """Update employee permissions."""
     user = User.query.get_or_404(user_id)
     if user.is_employee:
         user.is_employee = False
-        flash(f"{user.username} had admin permissions revoked.")
+        flash(f"{user.username} had employee permissions revoked.")
     else:
         user.is_employee = True
-        flash(f"{user.username} had admin permissions granted.")
+        flash(f"{user.username} had employee permissions granted.")
     db.session.commit()
-    return redirect(url_for("admin.show_admins"))
+    return redirect(url_for("admin.show_employees"))
