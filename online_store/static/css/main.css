@@ -142,6 +142,9 @@ body {
       margin-top: 0; }
     body main button {
       width: 100%; }
+    body main .invalid-feedback {
+      color: red;
+      font-size: 0.8rem; }
     body main .products {
       display: flex;
       flex-direction: row;
@@ -203,9 +206,10 @@ body {
       flex-direction: row;
       justify-content: center;
       align-items: center;
-      justify-content: space-between; }
+      justify-content: space-between;
+      align-items: flex-start; }
       body main .product-detail .product-detail-image {
-        width: 60%;
+        flex-basis: 50%;
         background-color: #FCDFB3;
         padding: 10px; }
         body main .product-detail .product-detail-image img {
@@ -215,6 +219,7 @@ body {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        flex-basis: 30%;
         align-items: flex-start;
         align-self: flex-start;
         padding: 10px;

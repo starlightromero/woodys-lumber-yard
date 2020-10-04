@@ -131,6 +131,10 @@ body
       @extend %btn
       width: 100%
 
+    .invalid-feedback
+      color: red
+      font-size: 0.8rem
+
     .products
       +flexbox(row)
       align-items: flex-start
@@ -201,9 +205,10 @@ body
     .product-detail
       +flexbox(row)
       justify-content: space-between
+      align-items: flex-start
 
       .product-detail-image
-        width: 60%
+        flex-basis: 50%
         background-color: $light-color
         padding: 10px
 
@@ -212,6 +217,7 @@ body
 
       .product-detail-text
         +flexbox(column)
+        flex-basis: 30%
         align-items: flex-start
         align-self: flex-start
         padding: 10px
