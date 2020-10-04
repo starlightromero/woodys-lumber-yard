@@ -5,6 +5,7 @@ from flask import (
     redirect,
     url_for,
     flash,
+    request,
 )
 from flask_login import login_required
 from online_store import db
@@ -49,7 +50,6 @@ def show_categories():
         db.session.commit()
         flash(f"{name} category has been added!")
         return redirect(url_for("admin.show_categories"))
-    update_form.name.data = ""
     context = {
         "title": "Category",
         "add_form": add_form,
@@ -57,6 +57,19 @@ def show_categories():
         "categories": categories,
     }
     return render_template("admin/category.html", **context)
+
+
+@admin.route("/admin/category/<int:category_id>", methods=["PUT"])
+@login_required
+@admin_required
+def update_category(category_id):
+    """Update delete category."""
+    category = Category.query.get_or_404(category_id)
+    name = request.json.get("name")
+    category.name = name
+    db.session.commit()
+    flash(f"{category.name} has been updated!")
+    return url_for("admin.show_categories")
 
 
 @admin.route("/admin/category/<int:category_id>", methods=["DELETE"])
@@ -68,7 +81,7 @@ def delete_category(category_id):
     db.session.delete(category)
     db.session.commit()
     flash(f"{category.name} category has been deleted.")
-    return redirect(url_for("admin.show_categories"))
+    return url_for("admin.show_categories")
 
 
 @admin.route("/admin/add_product", methods=["GET", "POST"])
