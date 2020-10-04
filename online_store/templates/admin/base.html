@@ -9,16 +9,16 @@ Admin
 {% endblock %}
 
 {% block nav %}
-<h1><a href="{{ url_for('admin.home') }}">
+<h1>
   {% if current_user.is_superadmin %}
   Super Admin
   {% else %}
   Admin
   {% endif %}
-</a></h1>
+</h1>
 <nav>
   <ul>
-    <li><a href="{{ url_for('admin.add_product') }}">Add Product</a></li>
+    <li><a href="{{ url_for('admin.show_products') }}">Products</a></li>
     <li><a href="{{ url_for('admin.show_categories') }}">Categories</a></li>
     {% if current_user.is_superadmin %}
     <li><a href="{{ url_for('admin.show_admins') }}">Admins</a></li>
