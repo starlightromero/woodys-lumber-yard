@@ -23,14 +23,12 @@ from online_store.main.utils import save_image
 admin = Blueprint("admin", __name__)
 
 
-@admin.route("/admin", methods=["POST", "GET"])
+@admin.route("/admin", methods=["GET"])
 @login_required
 @admin_required
 def home():
     """Admin page."""
-    categories = Category.query.all()
-    context = {"categories": categories}
-    return render_template("admin/admin.html", **context)
+    return redirect(url_for("admin.show_products"))
 
 
 @admin.route("/admin/products", methods=["GET", "POST"])
@@ -81,7 +79,7 @@ def update_product(product_id):
         product.price = form.price.data
         db.session.commit()
         flash(f"{product.name} product has been updated.")
-        return redirect(url_for("admin.home"))
+        return redirect(url_for("admin.show_products"))
     form.name.data = product.name
     form.category.data = product.category
     form.price.data = product.price
@@ -91,7 +89,7 @@ def update_product(product_id):
         "categories": categories,
         "form": form,
     }
-    return render_template("admin/update_product.html", **context)
+    return render_template("admin/product_details.html", **context)
 
 
 @admin.route("/admin/products/<int:product_id>", methods=["DELETE"])
