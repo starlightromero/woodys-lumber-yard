@@ -48,6 +48,7 @@ def show_products():
             name=name,
             category=form.category.data,
             price=form.price.data,
+            quantity=form.quantity.data,
             image=image_file,
         )
         db.session.add(new_product)
