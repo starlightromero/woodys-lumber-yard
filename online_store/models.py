@@ -25,6 +25,9 @@ class User(db.Model, UserMixin):
     is_admin = db.Column(db.Boolean, nullable=False, default=False)
     categories = db.relationship("Category", backref="created_by", lazy=True)
     products = db.relationship("Product", backref="created_by", lazy=True)
+    cart = db.relationship(
+        "Cart", cascade="all, delete", backref="created_by", lazy=True
+    )
 
     def __repr__(self):
         """Return username and email for User."""
@@ -118,7 +121,7 @@ class Product(db.Model):
         """Return name and price for Product."""
         return f"Product('{self.name}', '{self.category}', '{self.price}')"
 
-    def set_product_quantity(self):
+    def set_quantity(self):
         """Decrement product quantity."""
         if self.quantity > 0:
             self.quantity -= 1
@@ -150,11 +153,13 @@ class Cart(db.Model):
 
     def __repr__(self):
         """Return quantity and subtotal for Cart."""
-        return f"Cart('{self.quantity}', '${self.subtotal}')"
+        return f"Cart('{self.quantity}', '${self.subtotal}', '{self.user_id}'"
 
     def __str__(self):
         """Return quantity and subtotal for Cart."""
-        return f"Cart('{self.quantity}', '${self.subtotal}')"
+        return (
+            f"Cart('{self.quantity}', '${self.subtotal}', '{self.user_id}')"
+        )
 
     def update_subtotal(self):
         """Update cart subtotal."""
@@ -164,13 +169,10 @@ class Cart(db.Model):
         self.subtotal = subtotal
         return self.subtotal
 
-    def add_to_cart(self, product):
-        """
-        Increment product quantity in cart and append new prod to cart.
-        Call set product quantity on product.
-        """
+    def add(self, product):
+        """Add given product to cart."""
         self.products.append(product)
         self.quantity += 1
-        product.set_product_quantity()
-        self.update_cart_subtotal()
+        product.set_quantity()
+        self.update_subtotal()
         return self
