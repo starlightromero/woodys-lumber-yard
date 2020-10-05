@@ -36,7 +36,7 @@
         </a>
         <a href="{{ url_for('main.show_cart') }}">
           <img class="cart" src="{{ url_for('static', filename='assets/shopping-cart.svg') }}" alt="Shopping Cart">
-          <div class="circle">1</div>
+          <div class="cart-total">{{ cart.quantity }}</div>
         </a>
       </div>
     </div>
