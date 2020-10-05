@@ -1,6 +1,6 @@
 """Import flask and models."""
 from flask import Blueprint, render_template, request, url_for
-from flask_login import current_user
+from flask_login import current_user, login_required
 from online_store import db
 from online_store.models import Category, Product, Cart
 from online_store.main.forms import ChooseProductQuantity
@@ -13,7 +13,9 @@ main = Blueprint("main", __name__)
 def home():
     """Home page."""
     categories = Category.query.all()
-    cart = Cart.query.filter_by(user_id=current_user.id).first()
+    cart = None
+    if not current_user.is_anonymous:
+        cart = Cart.query.get_or_404(user_id=current_user.id).first()
     if request.method == "POST":
         name = request.form["name"]
         products = Product.query.filter(Product.name.contains(name))
@@ -31,11 +33,6 @@ def home():
             "products": products,
             "cart": cart,
         }
-    # try:
-    #     if current_user.is_employee:
-    #         return render_template("admin/admin.html", **context)
-    # except AttributeError:
-    #     pass
     return render_template("home.html", **context)
 
 
@@ -43,7 +40,9 @@ def home():
 def product_detail(product_id):
     """Product detail page."""
     categories = Category.query.all()
-    cart = Cart.query.filter_by(user_id=current_user.id).first()
+    cart = None
+    if not current_user.is_anonymous:
+        cart = Cart.query.get_or_404(user_id=current_user.id).first()
     product = Product.query.filter_by(id=product_id).first()
     form = ChooseProductQuantity()
     context = {
@@ -60,7 +59,9 @@ def product_category(category_link):
     """Category page."""
     categories = Category.query.all()
     category = Category.query.filter_by(link=category_link).first()
-    cart = Cart.query.filter_by(user_id=current_user.id).first()
+    cart = None
+    if not current_user.is_anonymous:
+        cart = Cart.query.get_or_404(user_id=current_user.id).first()
     title = category.name
     products = (
         Product.query.filter_by(category_id=category.id)
@@ -77,6 +78,7 @@ def product_category(category_link):
 
 
 @main.route("/cart", methods=["GET"])
+@login_required
 def show_cart():
     """Cart page."""
     categories = Category.query.all()
@@ -86,6 +88,7 @@ def show_cart():
 
 
 @main.route("/cart/<int:product_id>", methods=["PUT"])
+@login_required
 def add_to_cart(product_id):
     """Add product to cart."""
     product = Product.query.get_or_404(product_id)
@@ -103,6 +106,7 @@ def add_to_cart(product_id):
 
 
 @main.route("/cart/<int:product_id>", methods=["DELETE"])
+@login_required
 def remove_from_cart(product_id):
     """Remove product from cart."""
     product = Product.query.get_or_404(product_id)
