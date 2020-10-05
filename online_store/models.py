@@ -106,9 +106,10 @@ class Product(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
-    price = db.Column(db.Float, nullable=False)
+    price = db.Column(db.Numeric(scale=2), nullable=False)
     image = db.Column(db.String(40), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
+    quantity_in_cart = db.Column(db.Integer, default=0, nullable=False)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
     created_by_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     carts = db.relationship("Cart", secondary="product_cart_link")
@@ -121,11 +122,13 @@ class Product(db.Model):
         """Return name and price for Product."""
         return f"Product('{self.name}', '{self.category}', '{self.price}')"
 
-    def set_quantity(self):
+    def set_quantity(self, quantity):
         """Decrement product quantity."""
-        if self.quantity > 0:
-            self.quantity -= 1
-        return self.quantity
+        if self.quantity >= quantity:
+            self.quantity -= quantity
+            self.quantity_in_cart += quantity
+            return quantity
+        return 0
 
 
 class ProductCartLink(db.Model):
@@ -148,31 +151,31 @@ class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     products = db.relationship("Product", secondary="product_cart_link")
     quantity = db.Column(db.Integer, default=0, nullable=False)
-    subtotal = db.Column(db.Float, default=0, nullable=False)
+    subtotal = db.Column(db.Numeric(scale=2), default=0, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
 
     def __repr__(self):
         """Return quantity and subtotal for Cart."""
-        return f"Cart('{self.quantity}', '${self.subtotal}', '{self.user_id}'"
+        return f"Cart('Quantity: {self.quantity}', '${self.subtotal}', '{self.products}')"
 
     def __str__(self):
         """Return quantity and subtotal for Cart."""
-        return (
-            f"Cart('{self.quantity}', '${self.subtotal}', '{self.user_id}')"
-        )
+        return f"Cart('Quantity: {self.quantity}', '${self.subtotal}', '{self.products}')"
 
     def update_subtotal(self):
         """Update cart subtotal."""
         subtotal = 0
         for product in self.products:
+            print(product)
             subtotal += product.price
         self.subtotal = subtotal
         return self.subtotal
 
-    def add(self, product):
+    def add(self, product, quantity=1):
         """Add given product to cart."""
-        self.products.append(product)
-        self.quantity += 1
-        product.set_quantity()
-        self.update_subtotal()
+        added_quantity = product.set_quantity(quantity)
+        if added_quantity:
+            self.products.append(product)
+            self.quantity += added_quantity
+            self.update_subtotal()
         return self
