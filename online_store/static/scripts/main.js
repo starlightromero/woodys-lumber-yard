@@ -7,12 +7,12 @@ searchBtn.addEventListener('click', () => {
   searchForm.classList.toggle('fadeIn')
 })
 
-const cart = document.querySelector('.cart')
+const cartTotal = document.querySelector('.cart-total')
 
 const addToCart = productId => {
   axios.put('/cart/' + productId)
     .then(function (response) {
-      console.log(response)
+      cartTotal.innerHTML = +cartTotal.innerHTML + 1
     })
     .catch(function (error) {
       console.log(error)
