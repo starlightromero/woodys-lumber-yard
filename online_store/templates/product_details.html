@@ -1,16 +1,38 @@
 {% extends "base.html" %}
 {% block title %}{{ product.title }}{% endblock %}
+{% block head %}
+{{ super() }}
 
+<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/details.js') }}" defer></script>
+
+{% endblock %}
 {% block content %}
-  <div class="product-detail">
-    <div class="product-detail-image">
-      <img src="{{ url_for('static', filename='product-images/' + product.image) }}" alt="{{ product.name }}">
-    </div>
-    <div class="product-detail-text">
-      <h2>{{ product.category }}</h2>
-      <h3>{{ product.name }}</h3>
-      <h4>${{ product.price }}</h4>
-      <button type="button" name="add-to-cart">Add To Cart</button>
-    </div>
+
+<div class="product-detail">
+  <div class="product-detail-image">
+    <img src="{{ url_for('static', filename='product-images/' + product.image) }}" alt="{{ product.name }}">
   </div>
+  <div class="product-detail-text">
+    <h2>{{ product.category }}</h2>
+    <h3>{{ product.name }}</h3>
+    <h4>${{ product.price }}</h4>
+    <form method="POST">
+      {{ form.hidden_tag() }}
+      {{ form.quantity.label }}:
+      {% if form.quantity.errors %}
+        {{ form.quantity(class="is-invalid form-quantity") }}
+        <div class="invalid-feedback">
+          {% for error in form.quantity.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.quantity(class="form-quantity") }}
+      {% endif %}
+    </form>
+    <button type="button" onclick="addToCart({{ product.id }})">Add To Cart</button>
+  </div>
+</div>
+
 {% endblock %}
