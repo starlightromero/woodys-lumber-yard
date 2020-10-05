@@ -36,7 +36,7 @@ def register():
             user = User(
                 username=form.username.data,
                 email=form.email.data,
-                is_employee=True,
+                is_employee=False,
                 is_admin=True,
             )
         else:
