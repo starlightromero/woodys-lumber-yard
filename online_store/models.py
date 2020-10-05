@@ -162,28 +162,39 @@ class Cart(db.Model):
         """Return quantity and subtotal for Cart."""
         return f"Cart('Quantity: {self.quantity}', '${self.subtotal}', '{self.products}')"
 
-    def update_subtotal(self):
-        """Update cart subtotal."""
-        subtotal = 0
-        for product in self.products:
-            print(product)
-            subtotal += product.price
-        self.subtotal = subtotal
-        return self.subtotal
+    # def update_subtotal(self, product, quantity):
+    #     """Update cart subtotal."""
+    #     self.subtotal += product.price * quantity
+    #     return self.subtotal
 
     def add(self, product, quantity=1):
         """Add given product to cart."""
         added_quantity = product.set_quantity(quantity)
+        print("========================================================")
+        print(quantity)
+        print(added_quantity)
+        print(product.quantity)
         if added_quantity:
             self.products.append(product)
             self.quantity += added_quantity
-            self.update_subtotal()
+            self.subtotal += product.price * added_quantity
         return self
 
     def remove(self, product):
-        """Remove given product from cart.."""
+        """Remove given product from cart."""
         self.products.pop(self.products.index(product))
         product.quantity += product.quantity_in_cart
         self.quantity -= product.quantity_in_cart
+        self.subtotal -= product.price * product.quantity_in_cart
         product.quantity_in_cart = 0
+        return self
+
+    def remove_all(self):
+        """Remove all products from cart."""
+        for product in self.products:
+            self.products.remove(product)
+            product.quantity += product.quantity_in_cart
+            product.quantity_in_cart = 0
+        self.quantity = 0
+        self.subtotal = 0
         return self
