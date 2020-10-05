@@ -179,3 +179,11 @@ class Cart(db.Model):
             self.quantity += added_quantity
             self.update_subtotal()
         return self
+
+    def remove(self, product):
+        """Remove given product from cart.."""
+        self.products.pop(self.products.index(product))
+        product.quantity += product.quantity_in_cart
+        self.quantity -= product.quantity_in_cart
+        product.quantity_in_cart = 0
+        return self
