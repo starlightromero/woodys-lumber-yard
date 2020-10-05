@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, url_for
 from flask_login import current_user
 from online_store import db
 from online_store.models import Category, Product, Cart
+from online_store.main.forms import ChooseProductQuantity
 
 main = Blueprint("main", __name__)
 
@@ -44,7 +45,13 @@ def product_detail(product_id):
     categories = Category.query.all()
     cart = Cart.query.filter_by(user_id=current_user.id).first()
     product = Product.query.filter_by(id=product_id).first()
-    context = {"categories": categories, "product": product, "cart": cart}
+    form = ChooseProductQuantity()
+    context = {
+        "categories": categories,
+        "product": product,
+        "cart": cart,
+        "form": form,
+    }
     return render_template("product_details.html", **context)
 
 
@@ -82,11 +89,24 @@ def show_cart():
 def add_to_cart(product_id):
     """Add product to cart."""
     product = Product.query.get_or_404(product_id)
+    quantity = request.json.get("quantity")
+    if not quantity:
+        quantity = 1
     cart = Cart.query.filter_by(user_id=current_user.id).first()
     if cart is None:
         cart = Cart(user_id=current_user.id)
         db.session.add(cart)
         db.session.commit()
     cart.add(product)
+    db.session.commit()
+    return url_for("main.show_cart")
+
+
+@main.route("/cart/<int:product_id>", methods=["DELETE"])
+def remove_from_cart(product_id):
+    """Remove product from cart."""
+    product = Product.query.get_or_404(product_id)
+    cart = Cart.query.filter_by(user_id=current_user.id).first()
+    cart.remove(product)
     db.session.commit()
     return url_for("main.show_cart")
