@@ -84,7 +84,6 @@ def show_cart():
     """Cart page."""
     categories = Category.query.all()
     cart = Cart.query.filter_by(user_id=current_user.id).first()
-    print(cart)
     context = {"categories": categories, "cart": cart, "title": "Cart"}
     return render_template("cart.html", **context)
 
@@ -96,7 +95,6 @@ def clear_cart():
     cart = Cart.query.filter_by(user_id=current_user.id).first()
     cart.remove_all()
     db.session.commit()
-    print(cart)
     return url_for("main.show_cart")
 
 
@@ -117,7 +115,6 @@ def add_to_cart(product_id):
         db.session.commit()
     cart.add(product, quantity)
     db.session.commit()
-    print(cart)
     return url_for("main.show_cart")
 
 
@@ -129,7 +126,6 @@ def remove_from_cart(product_id):
     cart = Cart.query.filter_by(user_id=current_user.id).first()
     cart.remove(product)
     db.session.commit()
-    print(cart)
     return url_for("main.show_cart")
 
 
