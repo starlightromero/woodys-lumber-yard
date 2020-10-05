@@ -78,12 +78,14 @@ def update_product(product_id):
         product.name = form.name.data.title()
         product.category = form.category.data
         product.price = form.price.data
+        product.quantity = form.quantity.data
         db.session.commit()
         flash(f"{product.name} product has been updated.")
         return redirect(url_for("admin.show_products"))
     form.name.data = product.name
     form.category.data = product.category
     form.price.data = product.price
+    form.quantity.data = product.quantity
     context = {
         "title": "Update Product",
         "product": product,
