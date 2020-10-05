@@ -25,11 +25,7 @@
           <input class="search-submit" type="image" src="{{ url_for('static', filename='assets/search.svg') }}" alt="Submit Form" />
         </form>
       </div>
-      {% if current_user.is_admin or current_user.is_employee %}
-      <h1><a href="{{ url_for('admin.home') }}">Woody's Lumber Yard</a></h1>
-      {% else %}
       <h1><a href="{{ url_for('main.home') }}">Woody's Lumber Yard</a></h1>
-      {% endif %}
       <div class="user-icons">
         <a href="{{ url_for('users.account') }}">
           <img src="{{ url_for('static', filename='assets/user.svg') }}" alt="My Account">
