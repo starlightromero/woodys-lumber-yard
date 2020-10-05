@@ -80,7 +80,7 @@ class Category(db.Model):
     """Product Category database class."""
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(20), nullable=False)
+    name = db.Column(db.String(20), unique=True, nullable=False)
     link = db.Column(db.String(20), nullable=True)
     products = db.relationship("Product", backref="category", lazy=True)
     date_created = db.Column(db.DateTime, default=datetime.utcnow)
@@ -104,7 +104,7 @@ class Product(db.Model):
     """Product database class."""
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(100), nullable=False)
+    name = db.Column(db.String(100), unique=True, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey("category.id"))
     price = db.Column(db.Numeric(scale=2), nullable=False)
     image = db.Column(db.String(40), nullable=False)
