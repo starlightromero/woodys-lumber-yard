@@ -8,7 +8,7 @@ from flask import (
     request,
     jsonify,
 )
-from flask_login import login_required
+from flask_login import login_required, current_user
 from online_store import db
 from online_store.models import Category, Product, User
 from online_store.admin.forms import (
@@ -25,10 +25,13 @@ admin = Blueprint("admin", __name__)
 
 @admin.route("/admin", methods=["GET"])
 @login_required
-@employee_required
 def home():
-    """Employee page."""
-    return redirect(url_for("admin.show_products"))
+    """Employee/Admin home page."""
+    if current_user.is_employee:
+        return redirect(url_for("admin.show_products"))
+    if current_user.is_admin:
+        return redirect(url_for("admin.show_employees"))
+    return redirect(url_for("main.home"))
 
 
 @admin.route("/admin/products", methods=["GET", "POST"])
@@ -64,7 +67,7 @@ def show_products():
     return render_template("admin/products.html", **context)
 
 
-@admin.route("/admin/<int:product_id>", methods=["GET", "POST"])
+@admin.route("/admin/products/<int:product_id>", methods=["GET", "POST"])
 @login_required
 @employee_required
 def update_product(product_id):
