@@ -1,4 +1,6 @@
+"""Import libraries and packages."""
 from datetime import datetime
+import secrets
 from flask import current_app, url_for
 from flask_login import UserMixin
 from flask_mail import Message
@@ -10,6 +12,7 @@ from online_store import db, login_manager, mail
 
 @login_manager.user_loader
 def load_user(user_id):
+    """Get current logged in user."""
     return User.query.get(int(user_id))
 
 
@@ -27,6 +30,9 @@ class User(db.Model, UserMixin):
     products = db.relationship("Product", backref="created_by", lazy=True)
     cart = db.relationship(
         "Cart", cascade="all, delete", backref="created_by", lazy=True
+    )
+    orders = db.relationship(
+        "Order", cascade="all, delete", backref="created_by", lazy=True
     )
 
     def __repr__(self):
@@ -156,24 +162,15 @@ class Cart(db.Model):
 
     def __repr__(self):
         """Return quantity and subtotal for Cart."""
-        return f"Cart('Quantity: {self.quantity}', '${self.subtotal}', '{self.products}')"
+        return f"Cart('Quantity: {self.quantity}', '${self.subtotal}')"
 
     def __str__(self):
         """Return quantity and subtotal for Cart."""
-        return f"Cart('Quantity: {self.quantity}', '${self.subtotal}', '{self.products}')"
-
-    # def update_subtotal(self, product, quantity):
-    #     """Update cart subtotal."""
-    #     self.subtotal += product.price * quantity
-    #     return self.subtotal
+        return f"Cart('Quantity: {self.quantity}', '${self.subtotal}')"
 
     def add(self, product, quantity=1):
         """Add given product to cart."""
         added_quantity = product.set_quantity(quantity)
-        print("========================================================")
-        print(quantity)
-        print(added_quantity)
-        print(product.quantity)
         if added_quantity:
             self.products.append(product)
             self.quantity += added_quantity
@@ -198,3 +195,25 @@ class Cart(db.Model):
         self.quantity = 0
         self.subtotal = 0
         return self
+
+    def checkout(self):
+        """Checkout cart."""
+        for product in self.products:
+            self.products.remove(product)
+            product.quantity_in_cart = 0
+        self.quantity = 0
+        self.subtotal = 0
+        return self
+
+
+class Order(db.Model):
+    """Order database class."""
+
+    id = db.Column(db.Integer, primary_key=True)
+    number = db.Column(db.String, unique=True, nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+
+    def generate_number(self):
+        """Generate order number."""
+        self.number = secrets.token_hex(4)
+        return self.number
