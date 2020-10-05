@@ -137,6 +137,10 @@ body
       color: $red
       font-size: 0.8rem
 
+    .is_invalid
+      color: $red
+      font-size: 0.8rem
+
     .products
       +flexbox(row)
       align-items: flex-start
@@ -230,7 +234,7 @@ body
         background-color: $light-color
         width: 35%
 
-        form
+        .product-detail-form
 
           input
             background-color: transparent
@@ -472,6 +476,59 @@ body
           color: $light-color
           cursor: pointer
           text-decoration: underline
+
+    .cart-products
+      +flexbox(column)
+
+      .cart-legend
+        +flexbox(row)
+        justify-content: space-between
+        background-color: $light-color
+        color: $dark-color
+        margin: 1rem
+        padding: 0 0.5rem
+        font-size: 1rem
+        width: 100%
+
+      .cart-product
+        +flexbox(row)
+        justify-content: space-between
+        background-color: $light-color
+        color: $dark-color
+        margin: 1rem
+        padding: 1rem
+        font-size: 1.5rem
+        width: 100%
+
+        img
+          height: 4rem
+
+        button
+          width: auto
+
+      .totals
+        +flexbox(row)
+        justify-content: space-between
+        background-color: $light-color
+        color: $dark-color
+        margin: 1rem
+        padding: 0 0.5rem
+        font-size: 1.5rem
+        width: 100%
+
+        p
+          margin: 1rem
+
+    .cart-actions
+      +flexbox(row)
+
+      .clear-cart
+        flex-basis: 20%
+        margin-right: 0.5rem
+
+      .checkout
+        flex-basis: 80%
+        margin-left: 0.5rem
 
     .account
       +flexbox(row)
