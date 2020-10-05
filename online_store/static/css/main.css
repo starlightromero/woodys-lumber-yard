@@ -498,6 +498,13 @@ body {
           height: 4rem; }
         body main .cart-products .cart-product button {
           width: auto; }
+          body main .cart-products .cart-product button:hover, body main .cart-products .cart-product button:focus {
+            background: #B09C7D; }
+          body main .cart-products .cart-product button:focus {
+            outline: 1px solid #B09C7D;
+            outline-offset: -4px; }
+          body main .cart-products .cart-product button:active {
+            transform: scale(0.95); }
       body main .cart-products .totals {
         display: flex;
         flex-direction: row;
@@ -516,13 +523,29 @@ body {
       display: flex;
       flex-direction: row;
       justify-content: center;
-      align-items: center; }
+      align-items: center;
+      background-color: #FCDFB3;
+      padding: 1rem; }
       body main .cart-actions .clear-cart {
         flex-basis: 20%;
         margin-right: 0.5rem; }
+        body main .cart-actions .clear-cart:hover, body main .cart-actions .clear-cart:focus {
+          background: #B09C7D; }
+        body main .cart-actions .clear-cart:focus {
+          outline: 1px solid #B09C7D;
+          outline-offset: -4px; }
+        body main .cart-actions .clear-cart:active {
+          transform: scale(0.95); }
       body main .cart-actions .checkout {
         flex-basis: 80%;
         margin-left: 0.5rem; }
+        body main .cart-actions .checkout:hover, body main .cart-actions .checkout:focus {
+          background: #B09C7D; }
+        body main .cart-actions .checkout:focus {
+          outline: 1px solid #B09C7D;
+          outline-offset: -4px; }
+        body main .cart-actions .checkout:active {
+          transform: scale(0.95); }
     body main .account {
       display: flex;
       flex-direction: row;
@@ -539,6 +562,9 @@ body {
         body main .account .account-profile a {
           width: 100%;
           margin: 1rem; }
+    body main .confirmation {
+      background-color: #FCDFB3;
+      padding: 1rem; }
   body footer {
     background-color: #FCDFB3;
     padding: 20px; }

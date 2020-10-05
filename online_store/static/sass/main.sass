@@ -506,6 +506,16 @@ body
         button
           width: auto
 
+          &:hover, &:focus
+            background: $primary-color
+
+          &:focus
+            outline: 1px solid $primary-color
+            outline-offset: -4px
+
+          &:active
+            transform: scale(0.95)
+
       .totals
         +flexbox(row)
         justify-content: space-between
@@ -521,14 +531,36 @@ body
 
     .cart-actions
       +flexbox(row)
+      background-color: $light-color
+      padding: 1rem
 
       .clear-cart
         flex-basis: 20%
         margin-right: 0.5rem
 
+        &:hover, &:focus
+          background: $primary-color
+
+        &:focus
+          outline: 1px solid $primary-color
+          outline-offset: -4px
+
+        &:active
+          transform: scale(0.95)
+
       .checkout
         flex-basis: 80%
         margin-left: 0.5rem
+
+        &:hover, &:focus
+          background: $primary-color
+
+        &:focus
+          outline: 1px solid $primary-color
+          outline-offset: -4px
+
+        &:active
+          transform: scale(0.95)
 
     .account
       +flexbox(row)
@@ -542,6 +574,10 @@ body
         a
           width: 100%
           margin: 1rem
+
+    .confirmation
+      background-color: $light-color
+      padding: 1rem
 
   footer
     background-color: $light-color
