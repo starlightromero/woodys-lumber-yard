@@ -1,18 +1,26 @@
 {% extends "base.html" %}
 {% block title %}Cart{% endblock %}
+{% block head %}
+{{ super() }}
 
+<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/cart.js') }}" defer></script>
+
+{% endblock %}
 {% block content %}
+
 <h1>Cart</h1>
 {% for product in cart.products %}
-  <div class="product">
-    {{ product.name }}
-    {{ product.price }}
-    {{ product.quantity_in_cart }}
-    <button type="button">Remove Item</button>
+  <div class="product" id="{{ product.id }}">
+    <p>{{ product.name }}</p>
+    <p>{{ product.price }}</p>
+    <h3>{{ product.quantity_in_cart }}</h3>
+    <button type="button" onclick="removeFromCart({{ product.id }})">Remove Item</button>
   </div>
 {% endfor %}
 <div class="totals">
   <p>Total Items: {{ cart.quantity }}</p>
   <p>Subtotal: {{ cart.subtotal }}</p>
 </div>
+
 {% endblock %}
