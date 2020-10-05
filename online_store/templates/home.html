@@ -22,7 +22,7 @@
 <div class="products">
   <div class="product-grid">
     {% for product in products %}
-    <div class="product-item" data-quantity="{{ product.quantity }}">
+    <div class="product-item" id="{{ product.id }}" data-quantity="{{ product.quantity }}">
       <p>
         <a href="/products/{{ product.id }}">
           <img src="{{ url_for('static', filename='product-images/' + product.image) }}" alt="{{ product.name }}">
@@ -32,7 +32,7 @@
         <a href="/products/{{ product.id }}">{{ product.name }}</a>
       </p>
       <p class="price">${{ product.price }}</p>
-      <button type="button" name="add-to-cart" onclick="addToCart({{ product.id }})">Add To Cart</button>
+      <button type="button" class="add-to-cart" name="add-to-cart" onclick="addToCart({{ product.id }})">Add To Cart</button>
     </div>
     {% endfor %}
   </div>
