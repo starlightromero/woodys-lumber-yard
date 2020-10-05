@@ -67,6 +67,17 @@
       {% else %}
         {{ form.price }}
       {% endif %}
+      {{ form.quantity.label }}
+      {% if form.quantity.errors %}
+        {{ form.quantity(class="is-invalid", value="1", min="1", max="999") }}
+        <div class="invalid-feedback">
+          {% for error in form.quantity.errors %}
+            {{ error }}
+          {% endfor %}
+        </div>
+      {% else %}
+        {{ form.quantity(value="1", min="1", max="999") }}
+      {% endif %}
       {{ form.image.label(class_="filelabel") }}
       {{ form.image(class_="inputfile") }}
       {% if form.image.errors %}
