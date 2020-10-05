@@ -128,13 +128,18 @@ class Product(db.Model):
         """Return name and price for Product."""
         return f"Product('{self.name}', '{self.category}', '{self.price}')"
 
-    def set_quantity(self, quantity):
+    def remove_quantity(self, quantity):
         """Decrement product quantity."""
         if self.quantity >= quantity:
             self.quantity -= quantity
             self.quantity_in_cart += quantity
             return quantity
         return 0
+
+    def add_quantity(self, quantity):
+        self.quantity += quantity
+        self.quantity_in_cart -= quantity
+        return quantity
 
 
 class ProductCartLink(db.Model):
@@ -162,15 +167,15 @@ class Cart(db.Model):
 
     def __repr__(self):
         """Return quantity and subtotal for Cart."""
-        return f"Cart('Quantity: {self.quantity}', '${self.subtotal}')"
+        return f"Cart('Quantity: {self.quantity}', '${self.subtotal}', '{self.products})"
 
     def __str__(self):
         """Return quantity and subtotal for Cart."""
-        return f"Cart('Quantity: {self.quantity}', '${self.subtotal}')"
+        return f"Cart('Quantity: {self.quantity}', '${self.subtotal}', '{self.products}')"
 
     def add(self, product, quantity=1):
         """Add given product to cart."""
-        added_quantity = product.set_quantity(quantity)
+        added_quantity = product.remove_quantity(quantity)
         if added_quantity:
             self.products.append(product)
             self.quantity += added_quantity
@@ -180,18 +185,16 @@ class Cart(db.Model):
     def remove(self, product):
         """Remove given product from cart."""
         self.products.pop(self.products.index(product))
-        product.quantity += product.quantity_in_cart
-        self.quantity -= product.quantity_in_cart
-        self.subtotal -= product.price * product.quantity_in_cart
-        product.quantity_in_cart = 0
+        quantity = product.add_quantity(product.quantity_in_cart)
+        self.quantity -= quantity
+        self.subtotal -= product.price * quantity
         return self
 
     def remove_all(self):
         """Remove all products from cart."""
         for product in self.products:
-            self.products.remove(product)
-            product.quantity += product.quantity_in_cart
-            product.quantity_in_cart = 0
+            product.add_quantity(product.quantity_in_cart)
+        self.products = []
         self.quantity = 0
         self.subtotal = 0
         return self
@@ -199,8 +202,8 @@ class Cart(db.Model):
     def checkout(self):
         """Checkout cart."""
         for product in self.products:
-            self.products.remove(product)
             product.quantity_in_cart = 0
+        self.products = []
         self.quantity = 0
         self.subtotal = 0
         return self

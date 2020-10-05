@@ -14,7 +14,7 @@ const removeFromCart = productId => {
       cartTotal.innerHTML = +cartTotal.innerHTML - quantity
       product.remove()
       totalProducts.innerHTML = +totalProducts.innerHTML - quantity
-      subtotal.innerHTML = +subtotal.innerHTML - ((quantity * +price.innerHTML).toFixed(2))
+      subtotal.innerHTML = (+subtotal.innerHTML - ((quantity * +price.innerHTML).toFixed(2))).toFixed(2)
     })
     .catch(function (error) {
       console.log(error)
@@ -22,7 +22,7 @@ const removeFromCart = productId => {
 }
 
 const clearCart = () => {
-  const allProducts = document.querySelectorAll('.cart-products')
+  const allProducts = document.querySelectorAll('.cart-product')
   const totalProducts = document.getElementById('total-products')
   const subtotal = document.getElementById('subtotal')
   axios.delete('/cart')
