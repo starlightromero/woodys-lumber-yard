@@ -133,6 +133,16 @@ body
       @extend %btn
       width: 100%
 
+      &:hover, &:focus
+        background: $primary-color
+
+      &:focus
+        outline: 1px solid $primary-color
+        outline-offset: -4px
+
+      &:active
+        transform: scale(0.95)
+
     .invalid-feedback
       color: $red
       font-size: 0.8rem
@@ -250,6 +260,16 @@ body
           @extend %btn
           margin-top: 1rem
           width: 100%
+
+          &:hover, &:focus
+            background: $primary-color
+
+          &:focus
+            outline: 1px solid $primary-color
+            outline-offset: -4px
+
+          &:active
+            transform: scale(0.95)
 
     .categories
       +flexbox(row)

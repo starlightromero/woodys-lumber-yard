@@ -144,6 +144,13 @@ body {
       margin-top: 0; }
     body main button {
       width: 100%; }
+      body main button:hover, body main button:focus {
+        background: #B09C7D; }
+      body main button:focus {
+        outline: 1px solid #B09C7D;
+        outline-offset: -4px; }
+      body main button:active {
+        transform: scale(0.95); }
     body main .invalid-feedback {
       color: #CC0000;
       font-size: 0.8rem; }
@@ -245,6 +252,13 @@ body {
         body main .product-detail .product-detail-text button {
           margin-top: 1rem;
           width: 100%; }
+          body main .product-detail .product-detail-text button:hover, body main .product-detail .product-detail-text button:focus {
+            background: #B09C7D; }
+          body main .product-detail .product-detail-text button:focus {
+            outline: 1px solid #B09C7D;
+            outline-offset: -4px; }
+          body main .product-detail .product-detail-text button:active {
+            transform: scale(0.95); }
     body main .categories {
       display: flex;
       flex-direction: row;
