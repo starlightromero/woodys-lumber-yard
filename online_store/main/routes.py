@@ -12,6 +12,7 @@ main = Blueprint("main", __name__)
 def home():
     """Home page."""
     categories = Category.query.all()
+    cart = Cart.query.filter_by(user_id=current_user.id).first()
     if request.method == "POST":
         name = request.form["name"]
         products = Product.query.filter(Product.name.contains(name))
@@ -20,15 +21,20 @@ def home():
             "categories": categories,
             "search_message": search_message,
             "products": products,
+            "cart": cart,
         }
     else:
         products = Product.query.order_by(Product.date_created).all()
-        context = {"categories": categories, "products": products}
-    try:
-        if current_user.is_employee:
-            return render_template("admin/admin.html", **context)
-    except AttributeError:
-        pass
+        context = {
+            "categories": categories,
+            "products": products,
+            "cart": cart,
+        }
+    # try:
+    #     if current_user.is_employee:
+    #         return render_template("admin/admin.html", **context)
+    # except AttributeError:
+    #     pass
     return render_template("home.html", **context)
 
 
@@ -36,8 +42,9 @@ def home():
 def product_detail(product_id):
     """Product detail page."""
     categories = Category.query.all()
+    cart = Cart.query.filter_by(user_id=current_user.id).first()
     product = Product.query.filter_by(id=product_id).first()
-    context = {"categories": categories, "product": product}
+    context = {"categories": categories, "product": product, "cart": cart}
     return render_template("product_details.html", **context)
 
 
@@ -46,6 +53,7 @@ def product_category(category_link):
     """Category page."""
     categories = Category.query.all()
     category = Category.query.filter_by(link=category_link).first()
+    cart = Cart.query.filter_by(user_id=current_user.id).first()
     title = category.name
     products = (
         Product.query.filter_by(category_id=category.id)
@@ -56,6 +64,7 @@ def product_category(category_link):
         "products": products,
         "title": title,
         "categories": categories,
+        "cart": cart,
     }
     return render_template("home.html", **context)
 
@@ -75,7 +84,7 @@ def add_to_cart(product_id):
     product = Product.query.get_or_404(product_id)
     cart = Cart.query.filter_by(user_id=current_user.id).first()
     if cart is None:
-        cart = Cart(user_id=current_user.id, quantity=0)
+        cart = Cart(user_id=current_user.id)
         db.session.add(cart)
         db.session.commit()
     cart.add(product)
