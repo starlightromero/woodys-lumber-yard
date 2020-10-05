@@ -2,9 +2,9 @@
     axios
 */
 
-const addToCart = productId => {
+const addManyToCart = productId => {
   const formQuantity = document.querySelector('.form-quantity')
-  const quantity = +formQuantity.innerHTML
+  const quantity = +formQuantity.value
   axios.put('/cart/' + productId, {
     quantity: quantity
   })
