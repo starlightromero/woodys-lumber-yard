@@ -364,14 +364,13 @@ body {
           color: #634C29; }
         body main .full-form fieldset input {
           font-size: 1.5rem;
-          text-align: left; }
-          body main .full-form fieldset input[type=text], body main .full-form fieldset input[type=email], body main .full-form fieldset input[type=password], body main .full-form fieldset input[type=number] {
+          text-align: left;
+          width: 100%; }
+          body main .full-form fieldset input[type=text], body main .full-form fieldset input[type=email], body main .full-form fieldset input[type=password], body main .full-form fieldset input[type=number], body main .full-form fieldset input[type=file] {
             background-color: transparent;
             border: none;
             border-bottom: 3px solid #634C29;
             outline: #634C29; }
-          body main .full-form fieldset input[type=file] {
-            width: 100%; }
         body main .full-form fieldset .remember {
           display: flex;
           flex-direction: row;
