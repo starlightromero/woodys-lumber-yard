@@ -14,8 +14,10 @@ def page_not_found(error):
     return render_template("errors/404.html", **context), 404
 
 
-@errors.app_errorhandler(413)
-def too_large(error):
-    """File is too large page."""
+@errors.app_errorhandler(500)
+def internal_error(error):
+    """Internal error page."""
     print(error)
-    return "File is too large", 413
+    categories = Category.query.all()
+    context = {"categories": categories}
+    return render_template("errors/500.html", **context), 500
