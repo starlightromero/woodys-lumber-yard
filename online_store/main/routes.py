@@ -15,7 +15,7 @@ def home():
     categories = Category.query.all()
     cart = None
     if not current_user.is_anonymous:
-        cart = Cart.query.get_or_404(user_id=current_user.id).first()
+        cart = Cart.query.filter_by(user_id=current_user.id).first()
     if request.method == "POST":
         name = request.form["name"]
         products = Product.query.filter(Product.name.contains(name))
@@ -42,7 +42,7 @@ def product_detail(product_id):
     categories = Category.query.all()
     cart = None
     if not current_user.is_anonymous:
-        cart = Cart.query.get_or_404(user_id=current_user.id).first()
+        cart = Cart.query.filter_by(user_id=current_user.id).first()
     product = Product.query.filter_by(id=product_id).first()
     form = ChooseProductQuantity()
     context = {
@@ -61,7 +61,7 @@ def product_category(category_link):
     category = Category.query.filter_by(link=category_link).first()
     cart = None
     if not current_user.is_anonymous:
-        cart = Cart.query.get_or_404(user_id=current_user.id).first()
+        cart = Cart.query.filter_by(user_id=current_user.id).first()
     title = category.name
     products = (
         Product.query.filter_by(category_id=category.id)
@@ -87,20 +87,32 @@ def show_cart():
     return render_template("cart.html", **context)
 
 
+@main.route("/cart", methods=["DELETE"])
+@login_required
+def clear_cart():
+    """Clear cart."""
+    cart = Cart.query.filter_by(user_id=current_user.id).first()
+    cart.remove_all()
+    db.session.commit()
+    return url_for("main.show_cart")
+
+
 @main.route("/cart/<int:product_id>", methods=["PUT"])
 @login_required
 def add_to_cart(product_id):
     """Add product to cart."""
     product = Product.query.get_or_404(product_id)
-    quantity = request.json.get("quantity")
-    if not quantity:
-        quantity = 1
+    quantity = 1
+    try:
+        quantity = request.json.get("quantity")
+    except AttributeError:
+        pass
     cart = Cart.query.filter_by(user_id=current_user.id).first()
     if cart is None:
         cart = Cart(user_id=current_user.id)
         db.session.add(cart)
         db.session.commit()
-    cart.add(product)
+    cart.add(product, quantity)
     db.session.commit()
     return url_for("main.show_cart")
 
