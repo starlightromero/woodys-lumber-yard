@@ -74,5 +74,10 @@ def add_to_cart(product_id):
     """Add product to cart."""
     product = Product.query.get_or_404(product_id)
     cart = Cart.query.filter_by(user_id=current_user.id).first()
-    cart.add_to_cart(product)
-    return url_for("show_cart")
+    if cart is None:
+        cart = Cart(user_id=current_user.id, quantity=0)
+        db.session.add(cart)
+        db.session.commit()
+    cart.add(product)
+    db.session.commit()
+    return url_for("main.show_cart")
