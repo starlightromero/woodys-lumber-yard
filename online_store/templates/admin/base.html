@@ -6,16 +6,10 @@ Admin
 {% else %}
 Employee
 {% endif %}
-{% endblock %}
 
+{% endblock %}
 {% block nav %}
-{# }<h1>
-  {% if current_user.is_admin %}
-  Admin
-  {% else %}
-  Employee
-  {% endif %}
-</h1> #}
+
 <nav>
   <ul>
     {% if current_user.is_employee %}
@@ -27,7 +21,5 @@ Employee
     {% endif %}
   </ul>
 </nav>
-{% endblock %}
 
-{% block content %}
 {% endblock %}
