@@ -2,6 +2,12 @@
 {% if title %}
 {% block title %}{{ title }}{% endblock %}
 {% endif %}
+{% block head %}
+{{ super() }}
+
+<script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+
+{% endblock %}
 
 {% block content %}
 
@@ -26,7 +32,7 @@
         <a href="/products/{{ product.id }}">{{ product.name }}</a>
       </p>
       <p class="price">${{ product.price }}</p>
-      <button type="button" name="add-to-cart">Add To Cart</button>
+      <button type="button" name="add-to-cart" onclick="addToCart({{ product.id }})">Add To Cart</button>
     </div>
     {% endfor %}
   </div>
