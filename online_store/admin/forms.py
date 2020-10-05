@@ -5,7 +5,6 @@ from wtforms import (
     PasswordField,
     SubmitField,
     BooleanField,
-    DecimalField,
 )
 from wtforms.validators import (
     DataRequired,
@@ -15,7 +14,7 @@ from wtforms.validators import (
     ValidationError,
     NumberRange,
 )
-from wtforms.fields.html5 import IntegerField
+from wtforms.fields.html5 import IntegerField, DecimalField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from online_store.models import Category
 
@@ -32,7 +31,12 @@ class AddProductForm(FlaskForm):
         allow_blank=False,
         validators=[DataRequired()],
     )
-    price = DecimalField("Price", validators=[DataRequired()])
+    price = DecimalField(
+        "Price",
+        default=0.00,
+        places=2,
+        validators=[DataRequired(), NumberRange(min=0)],
+    )
     quantity = IntegerField(
         "In Stock",
         validators=[DataRequired(), NumberRange(min=1, max=999)],
@@ -55,7 +59,13 @@ class UpdateProductForm(FlaskForm):
         allow_blank=False,
         validators=[DataRequired()],
     )
-    price = DecimalField("Price", validators=[DataRequired()])
+    price = DecimalField(
+        "Price", places=2, validators=[DataRequired(), NumberRange(min=0)]
+    )
+    quantity = IntegerField(
+        "In Stock",
+        validators=[DataRequired(), NumberRange(min=1, max=999)],
+    )
     image = FileField(
         "Update Product Image", validators=[FileAllowed(["jpg", "png"])]
     )
@@ -77,4 +87,3 @@ class UpdateCategoryForm(FlaskForm):
     name = StringField(
         "Name", validators=[DataRequired(), Length(min=2, max=20)]
     )
-    submit = SubmitField("Update")
