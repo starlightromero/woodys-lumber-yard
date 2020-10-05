@@ -10,7 +10,7 @@ from flask import (
 from flask_login import current_user, login_required, login_user, logout_user
 from sqlalchemy.exc import OperationalError
 from online_store import db
-from online_store.models import Category, User
+from online_store.models import Category, User, Cart
 from online_store.users.forms import (
     LoginForm,
     RegistrationForm,
@@ -89,6 +89,7 @@ def logout():
 def account():
     """Account page."""
     categories = Category.query.all()
+    cart = Cart.query.filter_by(user_id=current_user.id).first()
     form = UpdateAccountForm()
     if form.validate_on_submit():
         if form.image.data:
@@ -101,7 +102,12 @@ def account():
         return redirect(url_for("users.account"))
     form.username.data = current_user.username
     form.email.data = current_user.email
-    context = {"title": "Account", "form": form, "categories": categories}
+    context = {
+        "title": "Account",
+        "form": form,
+        "categories": categories,
+        "cart": cart,
+    }
     return render_template("account.html", **context)
 
 
