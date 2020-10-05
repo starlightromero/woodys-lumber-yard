@@ -1,5 +1,5 @@
 """Import flask and models."""
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, request, url_for
 from flask_login import current_user
 from online_store import db
 from online_store.models import Category, Product, Cart
@@ -60,10 +60,19 @@ def product_category(category_link):
     return render_template("home.html", **context)
 
 
-@main.route("/cart")
-def cart():
+@main.route("/cart", methods=["GET"])
+def show_cart():
     """Cart page."""
     categories = Category.query.all()
     cart = Cart.query.filter_by(user_id=current_user.id).first()
     context = {"categories": categories, "cart": cart}
     return render_template("cart.html", **context)
+
+
+@main.route("/cart/<int:product_id>", methods=["PUT"])
+def add_to_cart(product_id):
+    """Add product to cart."""
+    product = Product.query.get_or_404(product_id)
+    cart = Cart.query.filter_by(user_id=current_user.id).first()
+    cart.add_to_cart(product)
+    return url_for("show_cart")
