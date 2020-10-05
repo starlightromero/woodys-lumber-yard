@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% block title %}{{ product.title }}{% endblock %}
 {% block head %}
 {{ super() }}
 
@@ -15,20 +14,21 @@
   </div>
   <div class="product-detail-text">
     <h2>{{ product.category }}</h2>
+    <p>In Stock: {{ product.quantity }}</p>
     <h3>{{ product.name }}</h3>
     <h4>${{ product.price }}</h4>
     <form class="product-detail-form" method="POST">
       {{ form.hidden_tag() }}
       {{ form.quantity.label }}:
       {% if form.quantity.errors %}
-        {{ form.quantity(class="is-invalid form-quantity", min="1") }}
+        {{ form.quantity(class="is-invalid form-quantity", min="1", max=product.quantity) }}
         <div class="invalid-feedback">
           {% for error in form.quantity.errors %}
             {{ error }}
           {% endfor %}
         </div>
       {% else %}
-        {{ form.quantity(class="form-quantity", min="1") }}
+        {{ form.quantity(class="form-quantity", min="1", max=product.quantity) }}
       {% endif %}
     </form>
     <button type="button" onclick="addManyToCart({{ product.id }})">Add To Cart</button>
