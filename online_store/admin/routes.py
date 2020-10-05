@@ -27,7 +27,7 @@ admin = Blueprint("admin", __name__)
 @login_required
 @employee_required
 def home():
-    """Admin page."""
+    """Employee page."""
     return redirect(url_for("admin.show_products"))
 
 
@@ -35,7 +35,7 @@ def home():
 @login_required
 @employee_required
 def show_products():
-    """Admin add products page."""
+    """Employee add products page."""
     categories = Category.query.all()
     products = Product.query.order_by(Product.date_created).all()
     form = AddProductForm()
@@ -68,7 +68,7 @@ def show_products():
 @login_required
 @employee_required
 def update_product(product_id):
-    """Admin update product."""
+    """Employee update product."""
     categories = Category.query.all()
     product = Product.query.get_or_404(product_id)
     form = UpdateProductForm()
@@ -99,7 +99,7 @@ def update_product(product_id):
 @login_required
 @employee_required
 def delete_product(product_id):
-    """Admin delete product."""
+    """Employee delete product."""
     product = Product.query.get_or_404(product_id)
     db.session.delete(product)
     db.session.commit()
@@ -111,7 +111,7 @@ def delete_product(product_id):
 @login_required
 @employee_required
 def show_categories():
-    """Admin add category page."""
+    """Employee add category page."""
     categories = Category.query.all()
     add_form = AddCategoryForm()
     update_form = UpdateCategoryForm()
@@ -136,7 +136,7 @@ def show_categories():
 @login_required
 @employee_required
 def update_category(category_id):
-    """Update delete category."""
+    """Employee update category."""
     category = Category.query.get_or_404(category_id)
     name = request.json.get("name")
     category.name = name
@@ -149,7 +149,7 @@ def update_category(category_id):
 @login_required
 @employee_required
 def delete_category(category_id):
-    """Admin delete category."""
+    """Employee delete category."""
     category = Category.query.get_or_404(category_id)
     db.session.delete(category)
     db.session.commit()
@@ -182,7 +182,7 @@ def show_employees():
 @login_required
 @admin_required
 def update_employees(user_id):
-    """Update employee permissions."""
+    """Admin update employee permissions."""
     user = User.query.get_or_404(user_id)
     if user.is_employee:
         user.is_employee = False
