@@ -7,9 +7,14 @@ searchBtn.addEventListener('click', () => {
   searchForm.classList.toggle('fadeIn')
 })
 
-// const cart = document.querySelector('.cart')
-// const addToCart = document.querySelector('button[name=\'add-to-cart\']')
-//
-// addToCart.addEventListener('click', () => {
-//   alert('added')
-// })
+const cart = document.querySelector('.cart')
+
+const addToCart = productId => {
+  axios.put('/cart/' + productId)
+    .then(function (response) {
+      console.log(response)
+    })
+    .catch(function (error) {
+      console.log(error)
+    })
+}
