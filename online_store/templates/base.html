@@ -5,7 +5,7 @@
   {% block head %}
   <meta charset="utf-8">
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/main.css') }}">
-  <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='scripts/main.js')" defer></script>
+  <script type="text/javascript" charset="utf-8" src="{{ url_for('static', filename='scripts/main.js') }}" defer></script>
   {% if title %}
     <title>Woody's Lumber Yard - {{ title }}</title>
   {% else %}
@@ -34,7 +34,7 @@
         <a href="{{ url_for('users.account') }}">
           <img src="{{ url_for('static', filename='assets/user.svg') }}" alt="My Account">
         </a>
-        <a href="{{ url_for('main.cart') }}">
+        <a href="{{ url_for('main.show_cart') }}">
           <img class="cart" src="{{ url_for('static', filename='assets/shopping-cart.svg') }}" alt="Shopping Cart">
           <div class="circle">1</div>
         </a>
