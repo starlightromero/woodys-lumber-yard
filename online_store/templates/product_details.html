@@ -17,21 +17,21 @@
     <h2>{{ product.category }}</h2>
     <h3>{{ product.name }}</h3>
     <h4>${{ product.price }}</h4>
-    <form method="POST">
+    <form class="product-detail-form" method="POST">
       {{ form.hidden_tag() }}
       {{ form.quantity.label }}:
       {% if form.quantity.errors %}
-        {{ form.quantity(class="is-invalid form-quantity") }}
+        {{ form.quantity(class="is-invalid form-quantity", min="1") }}
         <div class="invalid-feedback">
           {% for error in form.quantity.errors %}
             {{ error }}
           {% endfor %}
         </div>
       {% else %}
-        {{ form.quantity(class="form-quantity") }}
+        {{ form.quantity(class="form-quantity", min="1") }}
       {% endif %}
     </form>
-    <button type="button" onclick="addToCart({{ product.id }})">Add To Cart</button>
+    <button type="button" onclick="addManyToCart({{ product.id }})">Add To Cart</button>
   </div>
 </div>
 
