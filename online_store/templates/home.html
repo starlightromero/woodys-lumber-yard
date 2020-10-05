@@ -22,7 +22,7 @@
 <div class="products">
   <div class="product-grid">
     {% for product in products %}
-    <div class="product-item">
+    <div class="product-item" data-quantity="{{ product.quantity }}">
       <p>
         <a href="/products/{{ product.id }}">
           <img src="{{ url_for('static', filename='product-images/' + product.image) }}" alt="{{ product.name }}">
