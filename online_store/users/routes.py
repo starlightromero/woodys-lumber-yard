@@ -60,18 +60,17 @@ def login():
     categories = Category.query.all()
     form = LoginForm()
     if form.validate_on_submit():
-        try:
-            user = User.query.filter_by(email=form.email.data).first()
-            if user and user.check_password(form.password.data):
-                login_user(user, remember=form.remember.data)
-                next_page = request.args.get("next")
-                return (
-                    redirect(next_page)
-                    if next_page
-                    else redirect(url_for("main.home"))
-                )
-        except OperationalError:
-            flash("Login Unsuccessful. Please verify email and password.")
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and user.check_password(form.password.data):
+            login_user(user, remember=form.remember.data)
+            Cart(user_id=current_user.id)
+            next_page = request.args.get("next")
+            return (
+                redirect(next_page)
+                if next_page
+                else redirect(url_for("main.home"))
+            )
+        flash("Login Unsuccessful. Please verify email and password.")
     context = {"title": "Login", "form": form, "categories": categories}
     return render_template("login.html", **context)
 
