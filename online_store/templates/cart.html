@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-{% block title %}Cart{% endblock %}
 {% block head %}
 {{ super() }}
 
@@ -40,7 +39,7 @@
 </div>
 <div class="cart-actions">
   <button type="button" class="clear-cart" onclick="clearCart()">Clear Cart</button>
-  <button type="button" class="checkout" onclick="">Checkout</button>
+  <a class="checkout" href="{{ url_for('main.checkout_cart') }}"><button type="button">Checkout</button></a>
 </div>
 
 {% endblock %}
