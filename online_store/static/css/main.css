@@ -84,11 +84,13 @@ body {
       body header .top-row .user-icons {
         padding: 0;
         margin: 0; }
-        body header .top-row .user-icons .circle {
+        body header .top-row .user-icons .cart-total {
           display: block;
           position: absolute;
           color: #FCDFB3;
-          background-color: #634C29;
+          background-color: #CC0000;
+          font-size: 0.8rem;
+          padding-top: 0.15rem;
           border-radius: 50%;
           height: 24px;
           width: 24px;
@@ -143,7 +145,7 @@ body {
     body main button {
       width: 100%; }
     body main .invalid-feedback {
-      color: red;
+      color: #CC0000;
       font-size: 0.8rem; }
     body main .products {
       display: flex;
