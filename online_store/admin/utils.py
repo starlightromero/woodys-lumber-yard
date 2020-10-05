@@ -1,3 +1,4 @@
+"""Import current_user, login_manager, and wraps."""
 from flask_login import current_user
 from online_store import login_manager
 from functools import wraps
@@ -11,8 +12,7 @@ def admin_required(func):
         """Check is current user is an admin."""
         if current_user.is_admin:
             return func(*args, **kwargs)
-        else:
-            return login_manager.unauthorized()
+        return login_manager.unauthorized()
 
     return wrapper
 
@@ -25,7 +25,6 @@ def employee_required(func):
         """Check is current user is a employee."""
         if current_user.is_employee:
             return func(*args, **kwargs)
-        else:
-            return login_manager.unauthorized()
+        return login_manager.unauthorized()
 
     return wrapper
