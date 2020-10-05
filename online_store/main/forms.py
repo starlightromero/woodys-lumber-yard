@@ -13,5 +13,6 @@ class ChooseProductQuantity(FlaskForm):
 
     quantity = IntegerField(
         "Quantity",
+        default=1,
         validators=[DataRequired(), NumberRange(min=1, max=999)],
     )
