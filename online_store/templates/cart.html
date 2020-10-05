@@ -10,17 +10,37 @@
 {% block content %}
 
 <h1>Cart</h1>
-{% for product in cart.products %}
-  <div class="product" id="{{ product.id }}">
+<div class="cart-products">
+  <div class="cart-legend">
+    <p>Image</p>
+    <p>Name</p>
+    <p>Piece Price</p>
+    <p>Quantity</p>
+    <p>Total</p>
+    <p>Remove Item</p>
+  </div>
+  {% for product in cart.products %}
+  <div class="cart-product" id="{{ product.id }}">
+    <img src="{{ url_for('static', filename='product-images/' + product.image) }}" alt="{{ product.name }}">
     <p>{{ product.name }}</p>
-    <p>{{ product.price }}</p>
-    <h3>{{ product.quantity_in_cart }}</h3>
+    <p>$<span class="price">{{ product.price }}</span></p>
+    <p class="quantity-in-cart">{{ product.quantity_in_cart }}</p>
+    <p>${{ product.quantity_in_cart * product.price}}</p>
     <button type="button" onclick="removeFromCart({{ product.id }})">Remove Item</button>
   </div>
-{% endfor %}
-<div class="totals">
-  <p>Total Items: {{ cart.quantity }}</p>
-  <p>Subtotal: {{ cart.subtotal }}</p>
+  {% endfor %}
+  <div class="totals">
+    <p></p>
+    <p></p>
+    <p></p>
+    <p>Total Items: <span id="total-products">{{ cart.quantity }}</span></p>
+    <p>Subtotal: $<span id="subtotal">{{ cart.subtotal }}</span></p>
+    <p></p>
+  </div>
+</div>
+<div class="cart-actions">
+  <button type="button" class="clear-cart" onclick="clearCart()">Clear Cart</button>
+  <button type="button" class="checkout" onclick="">Checkout</button>
 </div>
 
 {% endblock %}
