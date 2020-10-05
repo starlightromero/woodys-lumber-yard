@@ -6,7 +6,13 @@
 {% for product in cart.products %}
   <div class="product">
     {{ product.name }}
+    {{ product.price }}
+    {{ product.quantity_in_cart }}
+    <button type="button">Remove Item</button>
   </div>
 {% endfor %}
-<p>{{ cart.quantity }}</p>
+<div class="totals">
+  <p>Total Items: {{ cart.quantity }}</p>
+  <p>Subtotal: {{ cart.subtotal }}</p>
+</div>
 {% endblock %}
