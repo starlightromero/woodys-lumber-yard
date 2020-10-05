@@ -13,7 +13,9 @@ from wtforms.validators import (
     Email,
     EqualTo,
     ValidationError,
+    NumberRange,
 )
+from wtforms.fields.html5 import IntegerField
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
 from online_store.models import Category
 
@@ -31,6 +33,10 @@ class AddProductForm(FlaskForm):
         validators=[DataRequired()],
     )
     price = DecimalField("Price", validators=[DataRequired()])
+    quantity = IntegerField(
+        "In Stock",
+        validators=[DataRequired(), NumberRange(min=1, max=999)],
+    )
     image = FileField(
         "Add Product Image", validators=[FileAllowed(["jpg", "png"])]
     )
