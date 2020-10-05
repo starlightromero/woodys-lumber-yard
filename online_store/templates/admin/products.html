@@ -58,14 +58,14 @@
       {% endif %}
       {{ form.price.label }}
       {% if form.price.errors %}
-        {{ form.price(class="is-invalid") }}
+        {{ form.price(class="is-invalid", step=0.01) }}
         <div class="invalid-feedback">
           {% for error in form.price.errors %}
             {{ error }}
           {% endfor %}
         </div>
       {% else %}
-        {{ form.price }}
+        {{ form.price(step=0.01) }}
       {% endif %}
       {{ form.quantity.label }}
       {% if form.quantity.errors %}
