@@ -1,4 +1,10 @@
 {% extends "base.html" %}
+{% block head %}
+{{ super() }}
+
+<script type="text/javascript" src="{{ url_for('static', filename='scripts/login.js') }}" defer></script>
+
+{% endblock %}
 {% block content %}
 
 <div class="login">
