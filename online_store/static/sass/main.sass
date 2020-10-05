@@ -230,8 +230,21 @@ body
         background-color: $light-color
         width: 35%
 
+        form
+
+          input
+            background-color: transparent
+            border: none
+            border-bottom: 3px solid $dark-color
+            outline: none
+            font-size: 1rem
+            color: $dark-color
+            text-align: right
+            width: 50px
+
         button
           @extend %btn
+          margin-top: 1rem
           width: 100%
 
     .categories

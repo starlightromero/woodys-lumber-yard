@@ -230,7 +230,17 @@ body {
         padding: 10px;
         background-color: #FCDFB3;
         width: 35%; }
+        body main .product-detail .product-detail-text form input {
+          background-color: transparent;
+          border: none;
+          border-bottom: 3px solid #634C29;
+          outline: none;
+          font-size: 1rem;
+          color: #634C29;
+          text-align: right;
+          width: 50px; }
         body main .product-detail .product-detail-text button {
+          margin-top: 1rem;
           width: 100%; }
     body main .categories {
       display: flex;
