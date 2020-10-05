@@ -1,8 +1,8 @@
 """Import flask and models."""
-from flask import Blueprint, render_template, request, url_for
+from flask import Blueprint, render_template, request, url_for, redirect
 from flask_login import current_user, login_required
 from online_store import db
-from online_store.models import Category, Product, Cart
+from online_store.models import Category, Product, Cart, Order
 from online_store.main.forms import ChooseProductQuantity
 
 main = Blueprint("main", __name__)
@@ -50,6 +50,7 @@ def product_detail(product_id):
         "product": product,
         "cart": cart,
         "form": form,
+        "title": product.name,
     }
     return render_template("product_details.html", **context)
 
@@ -83,7 +84,7 @@ def show_cart():
     """Cart page."""
     categories = Category.query.all()
     cart = Cart.query.filter_by(user_id=current_user.id).first()
-    context = {"categories": categories, "cart": cart}
+    context = {"categories": categories, "cart": cart, "title": "Cart"}
     return render_template("cart.html", **context)
 
 
@@ -126,3 +127,32 @@ def remove_from_cart(product_id):
     cart.remove(product)
     db.session.commit()
     return url_for("main.show_cart")
+
+
+@main.route("/cart/checkout/<string:order_number>", methods=["GET"])
+@login_required
+def checkout_confirmation(order_number):
+    """Checkout confirmation page."""
+    categories = Category.query.all()
+    context = {
+        "categories": categories,
+        "order_number": order_number,
+        "title": "Confirmation",
+    }
+    return render_template("confirmation.html", **context)
+
+
+@main.route("/cart/checkout", methods=["GET"])
+@login_required
+def checkout_cart():
+    """Checkout cart."""
+    cart = Cart.query.filter_by(user_id=current_user.id).first()
+    order = Order(user_id=current_user.id)
+    db.session.add(order)
+    db.session.commit()
+    cart.checkout()
+    order_number = order.generate_number()
+    db.session.commit()
+    return redirect(
+        url_for("main.checkout_confirmation", order_number=order_number)
+    )
